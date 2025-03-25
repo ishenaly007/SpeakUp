@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: inarkozuev
+      changes:
+        - sqlFile:
+            path: classpath:db/changelog/v0_0_1/2025-03-25--01-init_tables.sql
+  - changeSet:
+      id: 2
+      author: inarkozuev
+      changes:
+        - sqlFile:
+            path: classpath:db/changelog/v0_0_1/2025-03-25--01-init_words_data.sql

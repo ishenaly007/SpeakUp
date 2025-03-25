@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/speakupengbot_db
+      - SPRING_DATASOURCE_USERNAME=ishenaly
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - DEEPL_API_KEY=${DEEPL_API_KEY}
+      - DEEPL_API_KEY2=${DEEPL_API_KEY2}
+      - MYMEMORY_API_KEY=${MYMEMORY_API_KEY}
+    depends_on:
+      - db
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=ishenaly
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=speakupengbot_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:
