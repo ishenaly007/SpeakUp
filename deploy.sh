@@ -20,7 +20,7 @@ fi
 
 # Обновить код
 echo "Pulling the latest code from the repository..."
-git pull origin main || { echo "Git pull failed"; exit 1; }
+git pull origin develop || { echo "Git pull failed"; exit 1; }
 
 # Собрать проект
 echo "Building the project with Maven..."
