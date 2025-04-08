@@ -1,5 +1,6 @@
 package com.abit8.speakupengbot.db.entity;
 
+import com.abit8.speakupengbot.db.entity.nonusesnow.LanguageLevel;
 import jakarta.persistence.*;
 
 @Entity
@@ -44,7 +45,6 @@ public class Word {
         this.level = level;
     }
 
-    // Геттеры и сеттеры
     public Long getId() { return id; }
     public String getEnglish() { return english; }
     public void setEnglish(String english) { this.english = english; }

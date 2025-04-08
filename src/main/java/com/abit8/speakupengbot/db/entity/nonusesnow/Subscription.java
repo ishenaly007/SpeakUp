@@ -1,5 +1,6 @@
-package com.abit8.speakupengbot.db.entity;
+package com.abit8.speakupengbot.db.entity.nonusesnow;
 
+import com.abit8.speakupengbot.db.entity.User;
 import jakarta.persistence.*;
 import lombok.Data;
 

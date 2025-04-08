@@ -44,3 +44,8 @@ Broo;Broo
 Monkey;Обезьяна
 Jucie;Juta
 hannaa;ханнаа
+/lesson1;/ урок1
+1;1
+/lesson;/урок
+11;11
+d;d

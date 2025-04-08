@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserWordRepository extends JpaRepository<UserWord, Long> {
-    long countByUser(User user); // Подсчёт выученных слов
-
+    long countByUser(User user);
     boolean existsByUserAndWord(User user, Word word);
 }

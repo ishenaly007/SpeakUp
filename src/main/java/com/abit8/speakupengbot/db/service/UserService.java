@@ -3,9 +3,12 @@ package com.abit8.speakupengbot.db.service;
 import com.abit8.speakupengbot.db.entity.User;
 import com.abit8.speakupengbot.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -32,5 +35,11 @@ public class UserService {
 
     public User saveUser(User user) {
         return userRepository.save(user);
+    }
+
+    public List<User> findTopUsersByXp(int limit) {
+        return userRepository.findAll(Sort.by(Sort.Direction.DESC, "xp")).stream()
+                .limit(limit)
+                .collect(Collectors.toList());
     }
 }

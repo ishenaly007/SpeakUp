@@ -28,7 +28,6 @@ public class UserWord {
         this.word = word;
     }
 
-    // Геттеры и сеттеры
     public Long getId() { return id; }
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }

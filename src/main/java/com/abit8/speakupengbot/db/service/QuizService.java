@@ -27,7 +27,7 @@ public class QuizService {
         quizResultRepository.save(result);
 
         // Начисление XP
-        int xp = score; // За правильные ответы
+        int xp = score;
         int bonusXp = (score == totalQuestions) ? 5 : 0; // Бонус за 100%
         user.setXp(user.getXp() + xp + bonusXp);
         userService.saveUser(user);
@@ -50,14 +50,6 @@ public class QuizService {
         int totalQuestions = results.stream().mapToInt(QuizResult::getTotalQuestions).sum();
         int percentage = totalQuestions > 0 ? (totalScore * 100 / totalQuestions) : 0;
         return String.format("%d/%d (%d%%)", totalScore, totalQuestions, percentage);
-    }
-
-    public String getRecentWinrate(User user, int limit) {
-        var results = quizResultRepository.findTopNByUserOrderByCompletedAtDesc(user, limit);
-        int totalScore = results.stream().mapToInt(QuizResult::getScore).sum();
-        int totalQuestions = results.stream().mapToInt(QuizResult::getTotalQuestions).sum();
-        int percentage = totalQuestions > 0 ? (totalScore * 100 / limit) : 0;
-        return String.format("%d/%d (%d%%)", totalScore, limit, percentage);
     }
 
     public long getLearnedWordsCount(User user) {

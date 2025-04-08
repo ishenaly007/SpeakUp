@@ -10,4 +10,16 @@ databaseChangeLog:
       author: inarkozuev
       changes:
         - sqlFile:
-            path: classpath:db/changelog/v0_0_1/2025-03-25--01-init_words_data.sql
+            path: classpath:db/changelog/v0_0_1/2025-03-25--02-init_words_data.sql
+  - changeSet:
+      id: 3
+      author: inarkozuev
+      changes:
+        - sqlFile:
+            path: classpath:db/changelog/v0_0_1/2025-04-08--03-add_lesson_and_tests.sql
+  - changeSet:
+      id: 4
+      author: inarkozuev
+      changes:
+        - sqlFile:
+            path: classpath:db/changelog/v0_0_1/2025-04-09--04-init_lesson_and_tests_data.sql

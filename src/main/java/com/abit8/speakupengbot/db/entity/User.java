@@ -1,5 +1,6 @@
 package com.abit8.speakupengbot.db.entity;
 
+import com.abit8.speakupengbot.db.entity.nonusesnow.LanguageLevel;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -17,13 +18,15 @@ public class User {
     private String username;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "level") // Уровень пользователя (A1-C2)
+    @Column(name = "level")
+    // Уровень пользователя (A1-C2)
     private LanguageLevel level;
 
-    @Column(name = "xp") // Очки опыта
+    @Column(name = "xp")
     private int xp = 0;
 
-    @Column(name = "keys") // Ключи для доп. квизов
+    //todo Убрать (не сейчас)
+    @Column(name = "keys")
     private int keys = 0;
 
     @Column(name = "created_at", nullable = false)
@@ -40,10 +43,10 @@ public class User {
     public int calculateLevel() {
         int xp = this.getXp();
         int level = 1;
-        double requiredXp = 100; // Базовый XP для уровня 2
+        double requiredXp = 100;
         while (xp >= requiredXp) {
             xp -= (int) requiredXp;
-            requiredXp *= 1.25; // Увеличение на 25% для следующего уровня
+            requiredXp *= 1.25;
             level++;
         }
         return level;
@@ -56,10 +59,9 @@ public class User {
             xp -= (int) requiredXp;
             requiredXp *= 1.25;
         }
-        return (int) requiredXp - xp; // Сколько осталось до следующего уровня
+        return (int) requiredXp - xp;
     }
 
-    // Геттеры и сеттеры
     public Long getId() { return id; }
     public Long getTelegramChatId() { return telegramChatId; }
     public void setTelegramChatId(Long telegramChatId) { this.telegramChatId = telegramChatId; }
