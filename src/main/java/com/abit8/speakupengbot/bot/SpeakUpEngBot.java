@@ -346,6 +346,13 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         }
     }
     private void sendLessonsList(long chatId, long userId) {
+        if (quizSessions.containsKey(userId)) {
+            quizSessions.remove(userId);
+        }
+        if (chatId < 0) {
+            sendMessage(chatId, "Уроки можно проходить только в личных сообщениях с ботом\\!");
+            return;
+        }
         List<Lesson> lessons = lessonService.findAll();
         User user = userService.loginTelegramUser(userId).get();
         if (lessons.isEmpty()) {
@@ -373,6 +380,10 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         userStates.put(userId, state);
     }
     private void sendLesson(long chatId, long userId, Lesson lesson) {
+        if (chatId < 0) {
+            sendMessage(chatId, "Уроки можно проходить только в личных сообщениях с ботом\\!");
+            return;
+        }
         StringBuilder lessonText = new StringBuilder();
         lessonText.append("*Урок ").append(lesson.getId()).append(": ").append(lesson.getTitle()).append(" (").append(lesson.getLevel()).append(")*\n");
         lessonText.append(lesson.getDescription()).append("\n");
@@ -775,6 +786,12 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         public void sendNextQuestion() {
             if (currentQuestion >= 10) {
                 finishQuiz();
+                return;
+            }
+
+            if (groupChatId == null && chatId < 0) {
+                bot.sendMessage(chatId, "Одиночные квизы можно проходить только в личных сообщениях с ботом\\!");
+                quizSessions.remove(userId);
                 return;
             }
 
