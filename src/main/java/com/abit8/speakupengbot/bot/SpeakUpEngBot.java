@@ -23,8 +23,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +36,6 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
     private final Random random = new Random();
     private final Map<Long, QuizSession> quizSessions = new ConcurrentHashMap<>(); // Ключ — userId
     private final Map<Long, State> userStates = new ConcurrentHashMap<>(); // Ключ — userId
-    private final Map<Long, GroupQuizSession> groupQuizSessions = new ConcurrentHashMap<>(); // Ключ — chatId группы
 
     private final WordService wordService;
     private final QuizService quizService;
@@ -130,11 +127,6 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
             if (update.getMessage().hasText()) {
                 String messageText = update.getMessage().getText().trim();
 
-                if (messageText.startsWith("/start join_")) {
-                    joinGroupQuizFromDeepLink(chatId, userId, messageText);
-                    return;
-                }
-
                 if (userStates.containsKey(userId)) {
                     State state = userStates.get(userId);
                     String word = messageText;
@@ -176,17 +168,9 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
                         userStates.remove(userId);
                     }
                 } else {
-                    if (messageText.startsWith("/groupquiz") || messageText.startsWith("/groupquiz@SpeakUpEngBot")) {
-                        String[] parts = messageText.split("\\s+", 2);
-                        String theme = parts.length > 1 ? parts[1] : null;
-                        startGroupQuiz(chatId, userId, theme);
-                    } else if (messageText.startsWith("/startgroupquiz") || messageText.startsWith("/startgroupquiz@SpeakUpEngBot")) {
-                        startGroupQuizForParticipants(chatId, userId);
-                    } else if (messageText.startsWith("/finishgroupquiz") || messageText.startsWith("/finishgroupquiz@SpeakUpEngBot")) {
-                        finishGroupQuiz(chatId, userId);
-                    } else if (messageText.startsWith("/quiz") || messageText.startsWith("/quiz@SpeakUpEngBot")) {
+                    if (messageText.startsWith("/quiz") || messageText.startsWith("/quiz@SpeakUpEngBot")) {
                         if (update.getMessage().isGroupMessage()) {
-                            sendMessage(chatId, "Одиночные квизы можно проходить только в боте\\!");
+                            sendMessage(chatId, "Квизы можно проходить только в боте\\!");
                             return;
                         }
                         String[] parts = messageText.split("\\s+", 2);
@@ -196,7 +180,7 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
                         switch (messageText) {
                             case "/start":
                             case "/start@SpeakUpEngBot":
-                                String welcomeText = "Привет\\! Я *SpeakUpEngBot* — твой учитель английского\\! 📚 Пройди уроки *`/lessons`* или сыграй в *`/quiz`*\\. А ещё могу перевести любой английский текст\\. *Начни прямо сейчас\\!*";
+                                String welcomeText = "Привет\\! Я *SpeakUpEngBot* — твой учитель английского\\! 📚 Пройди уроки *`/lessons`* или сыграй в *`/quiz`*\\. А ещё могу перевести любой английский текст прямо в чате\\. *Начинаем\\?*";
                                 sendMessageWithKeyboard(chatId, welcomeText, createMainKeyboard());
                                 break;
                             case "/lessons":
@@ -220,36 +204,14 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
                                 state.setSupportMode(true);
                                 userStates.put(userId, state);
                                 break;
-                            case "/leaderboard":
-                            case "/leaderboard@SpeakUpEngBot":
-                                sendLeaderboard(chatId);
-                                break;
                             case "/profile":
                             case "/profile@SpeakUpEngBot":
                             case "Профиль":
                                 sendProfile(chatId, user);
                                 break;
-                            case "Случайное слово":
-                            case "/word":
-                            case "/word@SpeakUpEngBot":
-                                Word word = wordService.getRandomWord();
-                                if (word != null) {
-                                    StringBuilder wordResponse = new StringBuilder();
-                                    wordResponse.append("*Слово:*\n*").append(escapeMarkdownV2(word.getEnglish())).append("* — ").append(escapeMarkdownV2(word.getRussian())).append("\n\n");
-                                    wordResponse.append("*Пример:*\n");
-                                    wordResponse.append("> _").append(escapeMarkdownV2(word.getExampleEn())).append("_\n");
-                                    if (!word.getExampleRu().isEmpty()) {
-                                        wordResponse.append("> *").append(escapeMarkdownV2(word.getExampleRu())).append("*");
-                                    }
-                                    sendMessage(chatId, wordResponse.toString());
-                                    if (word.getStickerId() != null && !word.getStickerId().isEmpty()) {
-                                        sendSticker(chatId, word.getStickerId());
-                                    }
-                                }
-                                break;
                             case "Викторина":
                                 if (update.getMessage().isGroupMessage()) {
-                                    sendMessage(chatId, "Одиночные квизы можно проходить только в боте\\!");
+                                    sendMessage(chatId, "Квизы можно проходить только в боте\\!");
                                     break;
                                 }
                                 startQuiz(chatId, userId, null);
@@ -280,16 +242,6 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
             String callbackData = update.getCallbackQuery().getData();
             long userId = update.getCallbackQuery().getFrom().getId();
 
-            if (callbackData.startsWith("join_group_quiz_")) {
-                String quizId = callbackData.split("_")[3];
-                joinGroupQuiz(chatId, userId, quizId);
-            } else {
-                QuizSession session = quizSessions.get(userId);
-                if (session != null) {
-                    session.handleAnswer(callbackData, chatId, messageId);
-                }
-            }
-
             if (callbackData.startsWith("test_")) {
                 String[] data = callbackData.split("_");
                 long lessonId = Long.parseLong(data[1]);
@@ -314,18 +266,14 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         commandsText.append("*Все команды @SpeakUpEngBot:*\n\n");
         commandsText.append("`/start` — Начать работу с ботом и увидеть меню.\n");
         commandsText.append("`/lessons` — Список уроков для изучения английского.\n");
-        commandsText.append("`/quiz <тема>` — Запустить одиночную викторину (тема необязательна).\n");
-        commandsText.append("`/groupquiz <тема>` — Создать групповую викторину в чате (тема необязательна).\n");
-        commandsText.append("`/startgroupquiz` — Начать групповую викторину (для создателя квиза).\n");
-        commandsText.append("`/finishgroupquiz` — Завершить групповую викторину (для создателя квиза).\n");
-        commandsText.append("`/word` — Получить случайное слово с переводом.\n");
+        commandsText.append("`/quiz <тема>` — Запустить викторину (тема необязательна).\n");
         commandsText.append("`/profile` — Посмотреть свой профиль и статистику.\n");
-        commandsText.append("`/leaderboard` — Топ пользователей по XP.\n");
         commandsText.append("`/support` — Написать в поддержку.\n");
         commandsText.append("\nПросто вводи слова или фразы на английском, и я переведу их для тебя!");
 
         sendMessage(chatId, commandsText.toString(), ParseMode.MARKDOWN);
     }
+
     private void sendProfile(long chatId, User user) {
         StringBuilder profile = new StringBuilder();
         profile.append("👤 *Профиль:* ").append(escapeMarkdownV2(user.getUsername())).append("\n");
@@ -345,6 +293,7 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
             System.err.println("Failed to send profile: " + e.getMessage());
         }
     }
+
     private void sendLessonsList(long chatId, long userId) {
         if (quizSessions.containsKey(userId)) {
             quizSessions.remove(userId);
@@ -364,7 +313,7 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         int index = 1;
         for (Lesson lesson : lessons) {
             boolean isCompleted = userLessonService.existsByUserIdAndLessonId(user.getId(), lesson.getId());
-            lessonsText.append("*"+index).append(")* ").append(lesson.getTitle())
+            lessonsText.append("*" + index).append(")* ").append(lesson.getTitle())
                     .append(" (").append(lesson.getLevel()).append(")");
             if (isCompleted) {
                 lessonsText.append(" - `пройден`");
@@ -379,6 +328,7 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         state.setLessonSelectionMode(true);
         userStates.put(userId, state);
     }
+
     private void sendLesson(long chatId, long userId, Lesson lesson) {
         if (chatId < 0) {
             sendMessage(chatId, "Уроки можно проходить только в личных сообщениях с ботом\\!");
@@ -489,17 +439,6 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         }
     }
 
-    private void sendLeaderboard(long chatId) {
-        List<User> topUsers = userService.findTopUsersByXp(10);
-        StringBuilder leaderboard = new StringBuilder("🏆 *Лидерборд (Топ-10):*\n");
-        int rank = 1;
-        for (User u : topUsers) {
-            leaderboard.append(rank).append(". ").append(escapeMarkdownV2(u.getUsername())).append(" — ").append(u.getXp()).append(" XP (Ур. ").append(u.calculateLevel()).append(")\n");
-            rank++;
-        }
-        sendMessage(chatId, leaderboard.toString(), ParseMode.MARKDOWN);
-    }
-
     private void processInput(String input, long chatId) {
         if (CYRILLIC_PATTERN.matcher(input).find()) {
             return;
@@ -537,7 +476,6 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
                 String translation = translationService.translate(word);
                 if (translation != null) {
                     sendMessage(chatId, "*" + escapeMarkdownV2(word) + "* — " + escapeMarkdownV2(translation));
-                    saveToFile(word, translation);
                 } else {
                     sendMessage(chatId, "Не удалось перевести слово\\.");
                 }
@@ -545,14 +483,6 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         } else {
             String translation = translationService.translate(input);
             sendMessage(chatId, translation != null ? escapeMarkdownV2(translation) : "Не удалось перевести предложение\\.");
-        }
-    }
-
-    private void saveToFile(String word, String translation) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/none_eng_ru_word.txt", true))) {
-            writer.write(word + ";" + translation + "\n");
-        } catch (Exception e) {
-            System.out.println("Failed to save word: " + e.getMessage());
         }
     }
 
@@ -617,7 +547,6 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         KeyboardRow row2 = new KeyboardRow();
         row.add("Викторина");
         row.add("Уроки");
-        row.add("Случайное слово");
         row2.add("Профиль");
         row2.add("Поддержка");
         keyboard.add(row);
@@ -630,88 +559,6 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         QuizSession session = new QuizSession(chatId, userId, this, theme);
         quizSessions.put(userId, session); // Используем userId
         session.sendNextQuestion();
-    }
-
-    private void joinGroupQuizFromDeepLink(long chatId, long userId, String text) {
-        String quizId = text.replace("/start join_", "");
-
-        GroupQuizSession groupQuiz = groupQuizSessions.values().stream().filter(g -> g.getQuizId().equals(quizId)).findFirst().orElse(null);
-
-        if (groupQuiz != null) {
-            if (groupQuiz.addParticipant(userId)) {
-                sendMessage(chatId, "Вы присоединились к групповому квизу\\! Ожидайте начала\\. ID квиза: *" + escapeMarkdownV2(quizId) + "*");
-            } else {
-                sendMessage(chatId, "Вы уже участвуете в этом квизе\\!");
-            }
-        } else {
-            sendMessage(chatId, "Ошибка: групповой квиз с ID *" + escapeMarkdownV2(quizId) + "* не найден или завершен\\.");
-        }
-    }
-
-    private void startGroupQuiz(long chatId, long creatorId, String theme) {
-        String quizId = UUID.randomUUID().toString();
-        GroupQuizSession groupQuiz = new GroupQuizSession(chatId, creatorId, quizId, theme, this);
-        groupQuizSessions.put(chatId, groupQuiz);
-
-        StringBuilder messageText = new StringBuilder();
-        messageText.append("*Групповой квиз создан\\!*\n");
-        messageText.append("Тема: *").append(theme != null ? escapeMarkdownV2(theme) : "без темы").append("*\n");
-        messageText.append("Нажмите кнопку ниже, чтобы участвовать в квизе\\!\n");
-        messageText.append("ID квиза: *").append(escapeMarkdownV2(quizId)).append("*");
-
-        InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-        keyboard.add(Collections.singletonList(InlineKeyboardButton.builder().text("Участвовать").url("https://t.me/SpeakUpEngBot?start=join_" + quizId).build()));
-        keyboardMarkup.setKeyboard(keyboard);
-
-        SendMessage message = new SendMessage();
-        message.setChatId(String.valueOf(chatId));
-        message.setText(messageText.toString());
-        message.setParseMode(ParseMode.MARKDOWNV2);
-        message.setReplyMarkup(keyboardMarkup);
-        try {
-            int messageId = execute(message).getMessageId();
-            groupQuiz.setMessageId(messageId);
-        } catch (TelegramApiException e) {
-            System.err.println("Failed to send group quiz message: " + e.getMessage());
-        }
-    }
-
-    private void joinGroupQuiz(long chatId, long userId, String quizId) {
-        GroupQuizSession groupQuiz = groupQuizSessions.get(chatId);
-        if (groupQuiz != null && groupQuiz.getQuizId().equals(quizId)) {
-            if (groupQuiz.addParticipant(userId)) {
-                sendMessage(userId, "Вы присоединились к групповому квизу\\! Ожидайте начала\\.");
-            } else {
-                sendMessage(userId, "Вы уже участвуете в этом квизе\\!");
-            }
-        } else {
-            sendMessage(userId, "Этот групповой квиз не найден или завершен\\.");
-        }
-    }
-
-    private void startGroupQuizForParticipants(long chatId, long creatorId) {
-        GroupQuizSession groupQuiz = groupQuizSessions.get(chatId);
-        if (groupQuiz == null || groupQuiz.getCreatorId() != creatorId) {
-            sendMessage(chatId, "Вы не создатель этого квиза или квиз не найден\\!");
-            return;
-        }
-        groupQuiz.startQuizForParticipants();
-    }
-
-    private void finishGroupQuiz(long chatId, long creatorId) {
-        GroupQuizSession groupQuiz = groupQuizSessions.get(chatId);
-        if (groupQuiz == null) {
-            sendMessage(chatId, "Квиз не найден\\!");
-            return;
-        }
-        if (groupQuiz.getCreatorId() != creatorId) {
-            sendMessage(chatId, "Вы не создатель этого квиза\\!");
-            return;
-        }
-        groupQuiz.finishQuiz();
-        groupQuizSessions.remove(chatId);
-        sendMessage(chatId, "Групповой квиз успешно завершен\\!");
     }
 
     private void editMessage(long chatId, int messageId, String text, InlineKeyboardMarkup keyboard) {
@@ -795,7 +642,7 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
                 return;
             }
 
-            currentWord = getNextWord(); // Сохраняем текущее слово
+            currentWord = getNextWord();
             if (currentWord == null) {
                 if (currentQuestion == 0) {
                     bot.sendMessage(chatId, "Недостаточно слов для викторины" + (theme != null ? " по теме: *" + escapeMarkdownV2(theme) + "*" : ""));
@@ -918,11 +765,6 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
             }
             quizSessions.remove(userId);
 
-            GroupQuizSession groupQuiz = groupQuizSessions.values().stream().filter(g -> g.participantSessions.containsKey(userId)).findFirst().orElse(null);
-            if (groupQuiz != null && groupQuiz.allParticipantsFinished()) {
-                groupQuiz.finishQuiz();
-                groupQuizSessions.remove(groupQuiz.chatId);
-            }
         }
 
         public long getChatId() {
@@ -975,153 +817,6 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
 
         public Word getCurrentWord() {
             return this.currentWord;
-        }
-    }
-
-    private class GroupQuizSession {
-        private final long chatId;
-        private final long creatorId;
-        private final String quizId;
-        private final String theme;
-        private final SpeakUpEngBot bot;
-        private int messageId;
-        private final Set<Long> participants;
-        private final Map<Long, QuizSession> participantSessions;
-        private boolean isStarted;
-        private final List<Word> groupQuestions;
-
-        public GroupQuizSession(long chatId, long creatorId, String quizId, String theme, SpeakUpEngBot bot) {
-            this.chatId = chatId;
-            this.creatorId = creatorId;
-            this.quizId = quizId;
-            this.theme = theme;
-            this.bot = bot;
-            this.participants = new HashSet<>();
-            this.participantSessions = new ConcurrentHashMap<>();
-            this.isStarted = false;
-            this.groupQuestions = generateGroupQuestions();
-        }
-
-        private List<Word> generateGroupQuestions() {
-            List<Word> questions = new ArrayList<>();
-            Set<String> usedWords = new HashSet<>();
-            int maxAttempts = 50;
-            int attempts = 0;
-
-            while (questions.size() < 10 && attempts < maxAttempts) {
-                Word word = theme != null ? wordService.getRandomWordByTheme(theme) : wordService.getRandomWord();
-                if (word != null && !usedWords.contains(word.getEnglish())) {
-                    questions.add(word);
-                    usedWords.add(word.getEnglish());
-                }
-                attempts++;
-            }
-            return questions.size() == 10 ? questions : Collections.emptyList();
-        }
-
-        public boolean addParticipant(long userId) {
-            if (isStarted) {
-                return false;
-            }
-            return participants.add(userId);
-        }
-
-        public void startQuizForParticipants() {
-            if (isStarted) {
-                bot.sendMessage(chatId, "Квиз уже начат\\!");
-                return;
-            }
-            if (participants.isEmpty()) {
-                bot.sendMessage(chatId, "Нет участников для квиза\\!");
-                return;
-            }
-            if (groupQuestions.isEmpty()) {
-                bot.sendMessage(chatId, "Недостаточно слов для группового квиза" + (theme != null ? " по теме: *" + escapeMarkdownV2(theme) + "*" : ""));
-                groupQuizSessions.remove(chatId);
-                return;
-            }
-            isStarted = true;
-            for (long userId : participants) {
-                QuizSession session = new QuizSession(userId, userId, bot, theme, groupQuestions, chatId, messageId);
-                participantSessions.put(userId, session);
-                quizSessions.put(userId, session);
-                session.sendNextQuestion();
-            }
-            bot.sendMessage(chatId, "Групповой квиз начался\\! Участники, проверьте личные сообщения\\.");
-        }
-
-        public void finishQuiz() {
-            StringBuilder result = new StringBuilder();
-            result.append("*Групповой квиз завершен\\!*\n");
-            result.append("Тема: *").append(theme != null ? escapeMarkdownV2(theme) : "без темы").append("*\n\n");
-            result.append("Результаты:\n");
-            int rating = 1;
-            for (Map.Entry<Long, QuizSession> entry : participantSessions.entrySet()) {
-
-                long userId = entry.getKey();
-                QuizSession session = entry.getValue();
-                int score = session.getCorrectAnswers();
-                int percentage = (score * 100) / 10;
-                String username = userService.getUsernameById(userId);
-                result.append(rating + "\\. ").append(escapeMarkdownV2(username != null ? username : "Unknown")).append(" — ").append(score).append("\\/10 \\(").append(percentage).append("%\\)\n");
-                quizSessions.remove(userId);
-                rating++;
-            }
-
-            try {
-                bot.sendMessage(chatId, result.toString());
-            } catch (Exception e) {
-                System.err.println("Failed to edit group quiz message: " + e.getMessage());
-                bot.sendMessage(chatId, result.toString());
-            }
-        }
-
-        public boolean allParticipantsFinished() {
-            return participantSessions.values().stream().allMatch(s -> s.currentQuestion >= 10);
-        }
-
-        public long getChatId() {
-            return this.chatId;
-        }
-
-        public long getCreatorId() {
-            return this.creatorId;
-        }
-
-        public String getQuizId() {
-            return this.quizId;
-        }
-
-        public String getTheme() {
-            return this.theme;
-        }
-
-        public SpeakUpEngBot getBot() {
-            return this.bot;
-        }
-
-        public int getMessageId() {
-            return this.messageId;
-        }
-
-        public Set<Long> getParticipants() {
-            return this.participants;
-        }
-
-        public Map<Long, QuizSession> getParticipantSessions() {
-            return this.participantSessions;
-        }
-
-        public boolean isStarted() {
-            return this.isStarted;
-        }
-
-        public List<Word> getGroupQuestions() {
-            return this.groupQuestions;
-        }
-
-        public void setMessageId(int messageId) {
-            this.messageId = messageId;
         }
     }
 }

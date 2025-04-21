@@ -23,7 +23,6 @@ public class SpeakUpEngBotApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         botsApi.registerBot(telegramBot);
-        //wordService.loadWordsFromFile();
     }
 
     public static void main(String[] args) {
