@@ -23,3 +23,9 @@ databaseChangeLog:
       changes:
         - sqlFile:
             path: classpath:db/changelog/v0_0_1/2025-04-09--04-init_lesson_and_tests_data.sql
+  - changeSet:
+      id: 5
+      author: inarkozuev
+      changes:
+        - sqlFile:
+            path: classpath:db/changelog/v0_0_1/2025-04-21--05-iadd_AI_chat.sql

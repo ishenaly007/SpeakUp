@@ -37,6 +37,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public Optional<User> getUserById(Long userId) {
+        return Optional.of(userRepository.getById(userId));
+    }
+
     public List<User> findTopUsersByXp(int limit) {
         return userRepository.findAll(Sort.by(Sort.Direction.DESC, "xp")).stream()
                 .limit(limit)

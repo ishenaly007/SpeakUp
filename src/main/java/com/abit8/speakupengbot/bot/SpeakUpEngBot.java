@@ -1,14 +1,20 @@
 package com.abit8.speakupengbot.bot;
 
+import com.abit8.speakupengbot.db.entity.ChatHistory;
+import com.abit8.speakupengbot.db.entity.LanguageLevel;
 import com.abit8.speakupengbot.db.entity.User;
 import com.abit8.speakupengbot.db.entity.Word;
 import com.abit8.speakupengbot.db.entity.lesson.Lesson;
 import com.abit8.speakupengbot.db.entity.lesson.Test;
 import com.abit8.speakupengbot.db.entity.lesson.UserLesson;
+import com.abit8.speakupengbot.db.entity.nonusesnow.Subscription;
 import com.abit8.speakupengbot.db.service.*;
 import com.abit8.speakupengbot.service.TranslationService;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -21,9 +27,13 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import reactor.core.publisher.Mono;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
@@ -46,12 +56,22 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
     private final TestService testService;
     private final UserLessonService userLessonService;
 
+    private final ChatHistoryService chatHistoryService;
+    private final WebClient webClient;
+
+    @Value("${openrouter.api.key}")
+    private String openRouterApiKey;
+    @Value("${openrouter.api.key.deepseek}")
+    private String openRouterApiKeyDeepSeek;
+
     private static final Pattern CYRILLIC_PATTERN = Pattern.compile("\\p{IsCyrillic}");
+    private static final int MAX_TOKENS = 1000; // Примерно 4000 символов
 
     private static class State {
         private String word;
         private Boolean supportMode;
         private Boolean lessonSelectionMode;
+        private Boolean chatMode;
 
         public String getWord() {
             return word;
@@ -76,9 +96,18 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         public void setLessonSelectionMode(Boolean lessonSelectionMode) {
             this.lessonSelectionMode = lessonSelectionMode;
         }
+
+        public Boolean getChatMode() {
+            return chatMode;
+        }
+
+        public void setChatMode(Boolean chatMode) {
+            this.chatMode = chatMode;
+        }
     }
 
-    public SpeakUpEngBot(WordService wordService, QuizService quizService, TranslationService translationService, UserService userService, SupportRequestService supportRequestService, LessonService lessonService, TestService testService, UserLessonService userLessonService) {
+    public SpeakUpEngBot(WordService wordService, QuizService quizService, TranslationService translationService, UserService userService, SupportRequestService supportRequestService, LessonService lessonService, TestService testService, UserLessonService userLessonService, ChatHistoryService chatHistoryService,
+                         WebClient.Builder webClientBuilder) {
         List<String> loadedQuotes = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("quote_finish_text.txt"))))) {
             String line;
@@ -98,6 +127,8 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         this.lessonService = lessonService;
         this.testService = testService;
         this.userLessonService = userLessonService;
+        this.chatHistoryService = chatHistoryService;
+        this.webClient = webClientBuilder.baseUrl("https://openrouter.ai/api/v1").build();
     }
 
     @Override
@@ -131,7 +162,14 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
                     State state = userStates.get(userId);
                     String word = messageText;
                     Optional<Word> foundWord = wordService.findWordByEnglish(word);
-                    if (state.getSupportMode() != null && state.getSupportMode()) {
+                    if (state.getChatMode() != null && state.getChatMode()) {
+                        if (messageText.equals("/exit")) {
+                            sendMessage(chatId, "Чат завершён\\. Напиши /chat, чтобы начать снова\\!");
+                            userStates.remove(userId);
+                            return;
+                        }
+                        handleChatMessage(chatId, user.getId(), messageText, user);
+                    } else if (state.getSupportMode() != null && state.getSupportMode()) {
                         supportRequestService.saveSupportRequest(user, telegramUsername, messageText);
                         sendMessage(chatId, "Ваше сообщение отправлено в поддержку\\! Мы скоро ответим\\.");
                         userStates.remove(userId);
@@ -192,6 +230,13 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
                                 }
                                 sendLessonsList(chatId, userId);
                                 break;
+                            case "/chat":
+                            case "/chat@SpeakUpEngBot":
+                                State chatState = new State();
+                                chatState.setChatMode(true);
+                                userStates.put(userId, chatState);
+                                sendMessage(chatId, escapeMarkdownV2("Задай вопрос или попроси объяснить что-то на английском! Напиши /exit, чтобы выйти.(бот отвечает в течении 10-20секунд, это задержка API)"));
+                                break;
                             case "/allcommands":
                             case "/allcommands@SpeakUpEngBot":
                                 sendAllCommands(chatId);
@@ -242,6 +287,11 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
             String callbackData = update.getCallbackQuery().getData();
             long userId = update.getCallbackQuery().getFrom().getId();
 
+            QuizSession session = quizSessions.get(userId);
+            if (session != null) {
+                session.handleAnswer(callbackData, chatId, messageId);
+            }
+
             if (callbackData.startsWith("test_")) {
                 String[] data = callbackData.split("_");
                 long lessonId = Long.parseLong(data[1]);
@@ -260,6 +310,104 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
     }
 
     //---------------------------------------------------------------------------------------------
+
+    private void handleChatMessage(long chatId, long userId, String userMessage, User user) {
+        LanguageLevel userLevel = user.getLevel();
+        String aiModel = "microsoft/mai-ds-r1:free";
+        chatHistoryService.saveChatMessage(userId, userMessage, true, aiModel);
+
+        List<ChatHistory> history = chatHistoryService.getRecentChatHistory(userId, 15);
+
+        StringBuilder historyBlock = new StringBuilder();
+        int totalChars = 0;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+        for (int i = history.size() - 1; i >= 0; i--) { // от старого к новому
+            ChatHistory entry = history.get(i);
+            String time = entry.getCreatedAt().format(formatter);
+            String prefix = entry.isUserMessage() ? "Пользователь" : "Бот";
+            String line = String.format("[%s, %s]: %s", prefix, time, entry.getMessage());
+            historyBlock.append(line).append("\n");
+            totalChars += entry.getMessage().length();
+            if (totalChars > MAX_TOKENS * 4) break;
+        }
+
+        String nowTime = LocalDateTime.now().format(formatter);
+        String systemPrompt = String.format(
+                "Ты — дружелюбный собеседник и учитель английского языка уровня %s. Сейчас %s.\n\n" +
+                "Твои задачи:\n" +
+                "- Помогать учить язык: объясняй грамматику и лексику на русском, адаптируясь под уровень пользователя.\n" +
+                "- Если пользователь говорит не по теме — просто поддерживай беседу без давления и навязывания.\n" +
+                "- Если последнее сообщение было недавно (менее часа назад), не начинай с 'Привет' — воспринимай это как продолжение живого диалога.\n" +
+                "- Отвечай по ситуации коротко, дружелюбно, как обычный человек. Диалоги — до 30–40 слов, объяснения — до 150 слов.\n\n" +
+                "Особенности в режиме 'Живой диалог (сценарий)':\n" +
+                "- Пиши только свою реплику — без пометок вроде 'Me:', без пояснений.\n" +
+                "- Не объясняй правила во время диалога.\n" +
+                "- В конце, когда пользователь сам даст понять, что диалог завершён (например, напишет 'Конец' или 'Завершить'), дай краткий анализ: что получилось хорошо, где были ошибки.\n\n" +
+                "История чата:\n%s---------\n\n" +
+                "Текущий запрос пользователя: %s\n\n" +
+                "Помни: отвечай по ситуации, дружелюбно, живо. Если уместно — мягко вовлекай в обучение, но без навязывания.",
+                userLevel != null ? userLevel : "A1-A2",
+                nowTime,
+                historyBlock.length() > 0 ? historyBlock.toString() : "Нет предыдущей истории.\n",
+                userMessage
+        );
+
+        List<Map<String, String>> messages = new ArrayList<>();
+        messages.add(Map.of("role", "system", "content", systemPrompt));
+
+        System.out.println("Sending to OpenRouter: " + systemPrompt);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("model", aiModel);
+        body.put("messages", messages);
+
+        int maxRetries = 2;
+        int retryCount = 0;
+        boolean success = false;
+        String aiResponse = "Извини, что-то пошло не так.";
+
+        while (retryCount <= maxRetries && !success) {
+            try {
+                Mono<Map> responseMono = webClient.post()
+                        .uri("/chat/completions")
+                        .header("Authorization", "Bearer " + openRouterApiKeyDeepSeek)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(body)
+                        .retrieve()
+                        .bodyToMono(Map.class)
+                        .timeout(Duration.ofSeconds(60));
+
+                Map responseBody = responseMono.block();
+                if (responseBody != null && responseBody.containsKey("choices")) {
+                    List<Map> choices = (List<Map>) responseBody.get("choices");
+                    if (!choices.isEmpty()) {
+                        Map choice = choices.get(0);
+                        Map message = (Map) choice.get("message");
+                        aiResponse = (String) message.get("content");
+                        success = true;
+                    }
+                }
+                System.out.println("OpenRouter response: " + aiResponse);
+                System.out.println("Raw OpenRouter response: " + responseBody);
+            } catch (Exception e) {
+                retryCount++;
+                if (retryCount > maxRetries) {
+                    aiResponse = retryCount == 1 ? "API перегружен, попробуй через минуту!" : "Ошибка связи с ИИ. Попробуй позже!";
+                    System.err.println("Failed to call OpenRouter API after " + maxRetries + " retries: " + e.getMessage());
+                } else {
+                    try {
+                        Thread.sleep(1000 * retryCount);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+        }
+
+        chatHistoryService.saveChatMessage(userId, aiResponse, false, aiModel);
+        sendMessage(chatId, escapeMarkdownV2(aiResponse));
+    }
 
     private void sendAllCommands(long chatId) {
         StringBuilder commandsText = new StringBuilder();
@@ -618,16 +766,6 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
             this.groupQuestions = null;
             this.groupChatId = null;
             this.groupMessageId = null;
-        }
-
-        public QuizSession(long chatId, long userId, SpeakUpEngBot bot, String theme, List<Word> groupQuestions, long groupChatId, int groupMessageId) {
-            this.chatId = chatId;
-            this.userId = userId;
-            this.bot = bot;
-            this.theme = theme;
-            this.groupQuestions = groupQuestions;
-            this.groupChatId = groupChatId;
-            this.groupMessageId = groupMessageId;
         }
 
         public void sendNextQuestion() {

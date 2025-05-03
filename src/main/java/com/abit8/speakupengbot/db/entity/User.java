@@ -1,6 +1,5 @@
 package com.abit8.speakupengbot.db.entity;
 
-import com.abit8.speakupengbot.db.entity.nonusesnow.LanguageLevel;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
