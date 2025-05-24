@@ -7,7 +7,6 @@ import com.abit8.speakupengbot.db.entity.Word;
 import com.abit8.speakupengbot.db.entity.lesson.Lesson;
 import com.abit8.speakupengbot.db.entity.lesson.Test;
 import com.abit8.speakupengbot.db.entity.lesson.UserLesson;
-import com.abit8.speakupengbot.db.entity.nonusesnow.Subscription;
 import com.abit8.speakupengbot.db.service.*;
 import com.abit8.speakupengbot.service.TranslationService;
 import lombok.Getter;
@@ -305,7 +304,12 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
                 int testIndex = Integer.parseInt(data[2]);
                 String answer = data[3];
                 checkLessonTest(chatId, messageId, userId, lesson, testIndex, answer);
-            }
+            }else if (callbackData.startsWith("complete_")) {
+                    String[] data = callbackData.split("_");
+                    long lessonId = Long.parseLong(data[1]);
+                    Lesson lesson = lessonService.findById(lessonId).get();
+                    startLessonTest(chatId, messageId, userId, lesson, 0);
+                }
         }
     }
 
@@ -488,7 +492,10 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
 
         InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
-        buttons.add(Collections.singletonList(InlineKeyboardButton.builder().text("Пройти тест").callbackData("test_" + lesson.getId() + "_0").build()));
+        buttons.add(Arrays.asList(
+                InlineKeyboardButton.builder().text("Пройти урок").url(lesson.getTelegraphUrl()).build(),
+                InlineKeyboardButton.builder().text("Завершить").callbackData("complete_" + lesson.getId()).build()
+        ));
         keyboard.setKeyboard(buttons);
 
         SendMessage message = new SendMessage();

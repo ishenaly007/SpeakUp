@@ -11,6 +11,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 @SpringBootApplication
 public class SpeakUpEngBotApplication implements CommandLineRunner {
 
@@ -28,5 +31,9 @@ public class SpeakUpEngBotApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(SpeakUpEngBotApplication.class, args);
+        HashSet<Integer> df= new HashSet<>();
+        ArrayList<Integer> sd = new ArrayList<>();
+        int[] ints = new int[20];
+        df.stream().sorted();
     }
 }

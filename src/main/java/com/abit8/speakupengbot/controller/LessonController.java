@@ -44,14 +44,13 @@ public class LessonController {
             lessonData.put("id", lesson.getId());
             lessonData.put("title", lesson.getTitle());
             lessonData.put("level", lesson.getLevel());
-            lessonData.put("description", lesson.getDescription()); // MarkdownV2
+            lessonData.put("description", lesson.getDescription());
             lessonData.put("completed", userLessonService.existsByUserIdAndLessonId(userId, lesson.getId()));
             return lessonData;
         }).collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }
 
-    // Получение урока
     @GetMapping("/{lessonId}")
     public ResponseEntity<Map<String, Object>> getLesson(@PathVariable Long lessonId, @RequestParam Long userId) {
         Optional<Lesson> lessonOpt = lessonService.findById(lessonId);
@@ -63,21 +62,22 @@ public class LessonController {
         response.put("id", lesson.getId());
         response.put("title", lesson.getTitle());
         response.put("level", lesson.getLevel());
-        response.put("description", lesson.getDescription()); // MarkdownV2
+        response.put("description", lesson.getDescription());
         response.put("note", lesson.getNote());
+        response.put("htmlContent", lesson.getHtmlContent());
+        response.put("cssContent", lesson.getCssContent());
         response.put("completed", userLessonService.existsByUserIdAndLessonId(userId, lesson.getId()));
         List<Test> tests = testService.findByLessonId(lessonId);
         response.put("tests", tests.stream().map(test -> {
             Map<String, Object> testData = new HashMap<>();
             testData.put("id", test.getId());
-            testData.put("question", test.getQuestion()); // MarkdownV2
-            testData.put("options", test.getOptions()); // MarkdownV2
+            testData.put("question", test.getQuestion());
+            testData.put("options", test.getOptions());
             return testData;
         }).collect(Collectors.toList()));
         return ResponseEntity.ok(response);
     }
 
-    // Проверка ответа на тест
     @PostMapping("/{lessonId}/tests/{testIndex}")
     public ResponseEntity<Map<String, Object>> checkTest(
             @PathVariable Long lessonId,
@@ -119,7 +119,6 @@ public class LessonController {
                 response.put("lessonCompleted", true);
             }
         }
-
         return ResponseEntity.ok(response);
     }
 }

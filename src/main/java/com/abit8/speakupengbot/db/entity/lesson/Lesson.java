@@ -22,18 +22,31 @@ public class Lesson {
     @Column(name = "note")
     private String note;
 
+    @Column(name = "telegraph_url")
+    private String telegraphUrl; // Ссылка на Telegraph
+
+    @Column(name = "html_content", columnDefinition = "TEXT")
+    private String htmlContent; // HTML для сайта
+
+    @Column(name = "css_content", columnDefinition = "TEXT")
+    private String cssContent; // CSS для сайта
+
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Test> tests;
 
     public Lesson() {}
 
-    public Lesson(String title, String level, String description, String note) {
+    public Lesson(String title, String level, String description, String note, String telegraphUrl, String htmlContent, String cssContent) {
         this.title = title;
         this.level = level;
         this.description = description;
         this.note = note;
+        this.telegraphUrl = telegraphUrl;
+        this.htmlContent = htmlContent;
+        this.cssContent = cssContent;
     }
 
+    // Геттеры и сеттеры
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getTitle() { return title; }
@@ -44,6 +57,12 @@ public class Lesson {
     public void setDescription(String description) { this.description = description; }
     public String getNote() { return note; }
     public void setNote(String note) { this.note = note; }
+    public String getTelegraphUrl() { return telegraphUrl; }
+    public void setTelegraphUrl(String telegraphUrl) { this.telegraphUrl = telegraphUrl; }
+    public String getHtmlContent() { return htmlContent; }
+    public void setHtmlContent(String htmlContent) { this.htmlContent = htmlContent; }
+    public String getCssContent() { return cssContent; }
+    public void setCssContent(String cssContent) { this.cssContent = cssContent; }
     public List<Test> getTests() { return tests; }
     public void setTests(List<Test> tests) { this.tests = tests; }
 }
