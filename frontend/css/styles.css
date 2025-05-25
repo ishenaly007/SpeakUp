@@ -50,7 +50,7 @@ nav a:hover {
 }
 
 .container {
-    max-width: 900px;
+    width: 95%; /* Changed from max-width: 900px */
     margin: 30px auto;
     padding: 20px;
     background: rgba(255, 255, 255, 0.9);

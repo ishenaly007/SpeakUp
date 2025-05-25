@@ -52,6 +52,10 @@ public class QuizService {
         return String.format("%d/%d (%d%%)", totalScore, totalQuestions, percentage);
     }
 
+    public List<QuizResult> getQuizResults(User user) {
+        return quizResultRepository.findByUser(user);
+    }
+
     public long getLearnedWordsCount(User user) {
         return userWordRepository.countByUser(user);
     }

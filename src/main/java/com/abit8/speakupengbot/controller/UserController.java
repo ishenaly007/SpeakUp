@@ -18,16 +18,52 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Регистрация/логин пользователя
+    // Регистрация нового пользователя
+    @PostMapping("/register")
+    public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String username = request.get("username");
+        String password = request.get("password");
+
+        if (email == null || username == null || password == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Email, username, and password are required"));
+        }
+
+        try {
+            User user = userService.registerUser(email, username, password);
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", user.getId());
+            response.put("username", user.getUsername());
+            response.put("email", user.getEmail());
+            response.put("level", user.getLevel() != null ? user.getLevel().toString() : "A1_A2");
+            response.put("xp", user.getXp());
+            response.put("calculatedLevel", user.calculateLevel());
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    // Вход пользователя
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> request) {
-        Long telegramChatId = Long.parseLong(request.get("telegramChatId"));
-        String telegramUsername = request.get("telegramUsername");
+        String email = request.get("email");
+        String password = request.get("password");
 
-        User user = userService.registerTelegramUser(telegramChatId, telegramUsername);
+        if (email == null || password == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Email and password are required"));
+        }
+
+        Optional<User> userOpt = userService.loginUser(email, password);
+        if (!userOpt.isPresent()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Invalid email or password"));
+        }
+
+        User user = userOpt.get();
         Map<String, Object> response = new HashMap<>();
         response.put("id", user.getId());
         response.put("username", user.getUsername());
+        response.put("email", user.getEmail());
         response.put("level", user.getLevel() != null ? user.getLevel().toString() : "A1_A2");
         response.put("xp", user.getXp());
         response.put("calculatedLevel", user.calculateLevel());
@@ -45,8 +81,9 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         response.put("id", user.getId());
         response.put("username", user.getUsername());
-        response.put("level", user.getLevel() != null ? user.getLevel().toString() : "A1_A2");
-        response.put("xp", user.getXp());
+        response.put("email", user.getEmail());
+        response.put("level", user.getLevel() != null ? user.getLevel().toString() : "A1");
+                response.put("xp", user.getXp());
         response.put("calculatedLevel", user.calculateLevel());
         response.put("remainingXp", user.getRemainingXpForNextLevel());
         response.put("createdAt", user.getCreatedAt().toString());
@@ -56,7 +93,7 @@ public class UserController {
     // Обновление уровня
     @PutMapping("/{userId}/level")
     public ResponseEntity<Map<String, Object>> updateLevel(@PathVariable Long userId, @RequestBody Map<String, String> request) {
-        Optional<User> userOpt = userService.loginTelegramUser(userId);
+        Optional<User> userOpt = userService.getUserById(userId);
         if (!userOpt.isPresent()) {
             return ResponseEntity.badRequest().body(Map.of("error", "User not found"));
         }

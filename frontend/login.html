@@ -7,31 +7,30 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
-        <h1>SpeakUpEngBot</h1>
-    </header>
-    <div class="container">
-        <h2>Login</h2>
-        <form id="login-form">
-            <input type="text" id="telegram-id" placeholder="Enter your Telegram ID" required>
-            <input type="text" id="username" placeholder="Enter your username" required>
-            <button type="submit">Login</button>
-        </form>
-    </div>
-    <script src="js/main.js"></script>
-    <script>
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const telegramId = document.getElementById('telegram-id').value.trim();
-            const username = document.getElementById('username').value.trim();
-            if (telegramId && username) {
-                try {
-                    await login(telegramId, username);
-                    window.location.href = 'index.html';
-                } catch (err) {
-                    // Ошибка уже обработана в login()
-                    console.log(err)
-                }
+<header>
+    <h1>SpeakUpEngBot</h1>
+</header>
+<div class="container">
+    <h2>Login</h2>
+    <form id="login-form">
+        <input type="text" id="telegram-id" placeholder="Enter your Telegram ID" required>
+        <input type="text" id="username" placeholder="Enter your username" required>
+        <button type="submit">Login</button>
+    </form>
+</div>
+<script src="js/main.js"></script>
+<script>
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const telegramId = document.getElementById('telegram-id').value.trim();
+        const username = document.getElementById('username').value.trim();
+        if (telegramId && username) {
+            try {
+                await login(telegramId, username);
+                window.location.href = 'index.html';
+            } catch (error) {
+                // Ошибка уже обработана в login()
             }
-        });
-    </script>
+        }
+    });
+</script>
