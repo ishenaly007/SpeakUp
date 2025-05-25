@@ -8,14 +8,14 @@ import com.abit8.speakupengbot.db.service.LessonService;
 import com.abit8.speakupengbot.db.service.TestService;
 import com.abit8.speakupengbot.db.service.UserLessonService;
 import com.abit8.speakupengbot.db.service.UserService;
+import com.abit8.speakupengbot.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -37,69 +37,77 @@ public class LessonController {
 
     // Получение списка уроков
     @GetMapping
-    public ResponseEntity<List<Map<String, Object>>> getLessons(@RequestParam Long userId) {
+    public ResponseEntity<List<LessonResponse>> getLessons(@RequestParam Long userId) {
         List<Lesson> lessons = lessonService.findAll();
-        List<Map<String, Object>> response = lessons.stream().map(lesson -> {
-            Map<String, Object> lessonData = new HashMap<>();
-            lessonData.put("id", lesson.getId());
-            lessonData.put("title", lesson.getTitle());
-            lessonData.put("level", lesson.getLevel());
-            lessonData.put("description", lesson.getDescription());
-            lessonData.put("completed", userLessonService.existsByUserIdAndLessonId(userId, lesson.getId()));
+        List<LessonResponse> response = lessons.stream().map(lesson -> {
+            LessonResponse lessonData = new LessonResponse();
+            lessonData.setId(lesson.getId());
+            lessonData.setTitle(lesson.getTitle());
+            lessonData.setLevel(lesson.getLevel());
+            lessonData.setDescription(lesson.getDescription());
+            lessonData.setCompleted(userLessonService.existsByUserIdAndLessonId(userId, lesson.getId()));
             return lessonData;
         }).collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }
 
+    // Получение деталей урока
     @GetMapping("/{lessonId}")
-    public ResponseEntity<Map<String, Object>> getLesson(@PathVariable Long lessonId, @RequestParam Long userId) {
+    public ResponseEntity<?> getLesson(@PathVariable Long lessonId, @RequestParam Long userId) {
         Optional<Lesson> lessonOpt = lessonService.findById(lessonId);
         if (!lessonOpt.isPresent()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Lesson not found"));
+            ErrorResponse error = new ErrorResponse();
+            error.setError("Lesson not found");
+            return ResponseEntity.badRequest().body(error);
         }
         Lesson lesson = lessonOpt.get();
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", lesson.getId());
-        response.put("title", lesson.getTitle());
-        response.put("level", lesson.getLevel());
-        response.put("description", lesson.getDescription());
-        response.put("note", lesson.getNote());
-        response.put("htmlContent", lesson.getHtmlContent());
-        response.put("cssContent", lesson.getCssContent());
-        response.put("completed", userLessonService.existsByUserIdAndLessonId(userId, lesson.getId()));
+        LessonDetailsResponse response = new LessonDetailsResponse();
+        response.setId(lesson.getId());
+        response.setTitle(lesson.getTitle());
+        response.setLevel(lesson.getLevel());
+        response.setDescription(lesson.getDescription());
+        response.setNote(lesson.getNote());
+        response.setHtmlContent(lesson.getHtmlContent());
+        response.setCssContent(lesson.getCssContent());
+        response.setCompleted(userLessonService.existsByUserIdAndLessonId(userId, lesson.getId()));
         List<Test> tests = testService.findByLessonId(lessonId);
-        response.put("tests", tests.stream().map(test -> {
-            Map<String, Object> testData = new HashMap<>();
-            testData.put("id", test.getId());
-            testData.put("question", test.getQuestion());
-            testData.put("options", test.getOptions());
+        response.setTests(tests.stream().map(test -> {
+            TestData testData = new TestData();
+            testData.setId(test.getId());
+            testData.setQuestion(test.getQuestion());
+            testData.setOptions(test.getOptions());
             return testData;
         }).collect(Collectors.toList()));
         return ResponseEntity.ok(response);
     }
 
+    // Проверка ответа на тест
     @PostMapping("/{lessonId}/tests/{testIndex}")
-    public ResponseEntity<Map<String, Object>> checkTest(
+    public ResponseEntity<?> checkTest(
             @PathVariable Long lessonId,
             @PathVariable int testIndex,
-            @RequestBody Map<String, Object> request) {
-        Long userId = Long.parseLong(request.get("userId").toString());
-        String answer = request.get("answer").toString();
+            @Valid @RequestBody CheckTestRequest request) {
+        Long userId = request.getUserId();
+        String answer = request.getAnswer();
 
         Optional<Lesson> lessonOpt = lessonService.findById(lessonId);
         if (!lessonOpt.isPresent()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Lesson not found"));
+            ErrorResponse error = new ErrorResponse();
+            error.setError("Lesson not found");
+            return ResponseEntity.badRequest().body(error);
         }
         List<Test> tests = testService.findByLessonId(lessonId);
         if (testIndex >= tests.size()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Test index out of bounds"));
+            ErrorResponse error = new ErrorResponse();
+            error.setError("Test index out of bounds");
+            return ResponseEntity.badRequest().body(error);
         }
         Test test = tests.get(testIndex);
         boolean isCorrect = answer.equals(test.getCorrectOption());
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("isCorrect", isCorrect);
-        response.put("correctOption", test.getCorrectOption());
+        CheckTestResponse response = new CheckTestResponse();
+        response.setIsCorrect(isCorrect);
+        response.setCorrectOption(test.getCorrectOption());
 
         Optional<User> userOpt = userService.loginTelegramUser(userId);
         if (userOpt.isPresent() && !userLessonService.existsByUserIdAndLessonId(userId, lessonId)) {
@@ -107,7 +115,7 @@ public class LessonController {
             int xpChange = isCorrect ? 5 : -2;
             user.setXp(user.getXp() + xpChange);
             userService.saveUser(user);
-            response.put("xpChange", xpChange);
+            response.setXpChange(xpChange);
         }
 
         if (testIndex == tests.size() - 1 && isCorrect && userOpt.isPresent()) {
@@ -116,7 +124,7 @@ public class LessonController {
                 UserLesson userLesson = new UserLesson(user, lessonOpt.get());
                 userLesson.setCompletedAt(LocalDateTime.now());
                 userLessonService.save(userLesson);
-                response.put("lessonCompleted", true);
+                response.setLessonCompleted(true);
             }
         }
         return ResponseEntity.ok(response);

@@ -1,14 +1,14 @@
 package com.abit8.speakupengbot.controller;
 
-import com.abit8.speakupengbot.db.entity.LanguageLevel;
 import com.abit8.speakupengbot.db.entity.User;
+import com.abit8.speakupengbot.db.entity.LanguageLevel;
 import com.abit8.speakupengbot.db.service.UserService;
+import com.abit8.speakupengbot.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import jakarta.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -18,93 +18,86 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Регистрация нового пользователя
     @PostMapping("/register")
-    public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> request) {
-        String email = request.get("email");
-        String username = request.get("username");
-        String password = request.get("password");
-
-        if (email == null || username == null || password == null) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Email, username, and password are required"));
-        }
-
+    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterRequest request) {
         try {
-            User user = userService.registerUser(email, username, password);
-            Map<String, Object> response = new HashMap<>();
-            response.put("id", user.getId());
-            response.put("username", user.getUsername());
-            response.put("email", user.getEmail());
-            response.put("level", user.getLevel() != null ? user.getLevel().toString() : "A1_A2");
-            response.put("xp", user.getXp());
-            response.put("calculatedLevel", user.calculateLevel());
+            User user = userService.registerUser(request.getEmail(), request.getUsername(), request.getPassword());
+            UserResponse response = new UserResponse();
+            response.setId(user.getId());
+            response.setUsername(user.getUsername());
+            response.setEmail(user.getEmail());
+            response.setLevel(user.getLevel() != null ? user.getLevel().toString() : "A1_A2");
+            response.setXp(user.getXp());
+            response.setCalculatedLevel(String.valueOf(user.calculateLevel()));
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+            ErrorResponse error = new ErrorResponse();
+            error.setError(e.getMessage());
+            return ResponseEntity.badRequest().body(error);
         }
     }
 
-    // Вход пользователя
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> request) {
-        String email = request.get("email");
-        String password = request.get("password");
-
-        if (email == null || password == null) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Email and password are required"));
-        }
-
-        Optional<User> userOpt = userService.loginUser(email, password);
+    public ResponseEntity<?> login(@Valid @RequestBody UserLoginRequest request) {
+        Optional<User> userOpt = userService.loginUser(request.getEmail(), request.getPassword());
         if (!userOpt.isPresent()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Invalid email or password"));
+            ErrorResponse error = new ErrorResponse();
+            error.setError("Invalid email or password");
+            return ResponseEntity.badRequest().body(error);
         }
 
         User user = userOpt.get();
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", user.getId());
-        response.put("username", user.getUsername());
-        response.put("email", user.getEmail());
-        response.put("level", user.getLevel() != null ? user.getLevel().toString() : "A1_A2");
-        response.put("xp", user.getXp());
-        response.put("calculatedLevel", user.calculateLevel());
+        UserResponse response = new UserResponse();
+        response.setId(user.getId());
+        response.setUsername(user.getUsername());
+        response.setEmail(user.getEmail());
+        response.setLevel(user.getLevel() != null ? user.getLevel().toString() : "A1_A2");
+        response.setXp(user.getXp());
+        response.setCalculatedLevel(String.valueOf(user.calculateLevel()));
         return ResponseEntity.ok(response);
     }
 
-    // Получение профиля
     @GetMapping("/{userId}/profile")
-    public ResponseEntity<Map<String, Object>> getProfile(@PathVariable Long userId) {
+    public ResponseEntity<?> getProfile(@PathVariable Long userId) {
         Optional<User> userOpt = userService.getUserById(userId);
         if (!userOpt.isPresent()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "User not found"));
+            ErrorResponse error = new ErrorResponse();
+            error.setError("User not found");
+            return ResponseEntity.badRequest().body(error);
         }
         User user = userOpt.get();
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", user.getId());
-        response.put("username", user.getUsername());
-        response.put("email", user.getEmail());
-        response.put("level", user.getLevel() != null ? user.getLevel().toString() : "A1");
-                response.put("xp", user.getXp());
-        response.put("calculatedLevel", user.calculateLevel());
-        response.put("remainingXp", user.getRemainingXpForNextLevel());
-        response.put("createdAt", user.getCreatedAt().toString());
+        UserResponse response = new UserResponse();
+        response.setId(user.getId());
+        response.setUsername(user.getUsername());
+        response.setEmail(user.getEmail());
+        response.setLevel(user.getLevel() != null ? user.getLevel().toString() : "A1");
+        response.setXp(user.getXp());
+        response.setCalculatedLevel(String.valueOf(user.calculateLevel()));
+        response.setRemainingXp(user.getRemainingXpForNextLevel());
+        response.setCreatedAt(user.getCreatedAt().toString());
         return ResponseEntity.ok(response);
     }
 
-    // Обновление уровня
     @PutMapping("/{userId}/level")
-    public ResponseEntity<Map<String, Object>> updateLevel(@PathVariable Long userId, @RequestBody Map<String, String> request) {
+    public ResponseEntity<?> updateLevel(@PathVariable Long userId, @Valid @RequestBody UpdateLevelRequest request) {
         Optional<User> userOpt = userService.getUserById(userId);
         if (!userOpt.isPresent()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "User not found"));
+            ErrorResponse error = new ErrorResponse();
+            error.setError("User not found");
+            return ResponseEntity.badRequest().body(error);
         }
         User user = userOpt.get();
-        String level = request.get("level");
         try {
-            user.setLevel(LanguageLevel.valueOf(level));
+            user.setLevel(LanguageLevel.valueOf(request.getLevel()));
             userService.saveUser(user);
-            return ResponseEntity.ok(Map.of("message", "Level updated", "level", level));
+            UpdateLevelResponse response = new UpdateLevelResponse();
+            response.setMessage("Level updated");
+            response.setLevel(request.getLevel());
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Invalid level"));
+            ErrorResponse error = new ErrorResponse();
+            error.setError("Invalid level");
+            return ResponseEntity.badRequest().body(error);
         }
     }
 }

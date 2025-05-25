@@ -5,6 +5,7 @@ import com.abit8.speakupengbot.db.entity.LanguageLevel;
 import com.abit8.speakupengbot.db.entity.User;
 import com.abit8.speakupengbot.db.service.ChatHistoryService;
 import com.abit8.speakupengbot.db.service.UserService;
+import com.abit8.speakupengbot.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import jakarta.validation.Valid;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,9 +44,9 @@ public class ChatController {
 
     // Отправка сообщения в чат
     @PostMapping
-    public ResponseEntity<Map<String, Object>> sendMessage(@RequestBody Map<String, String> request) {
-        Long userId = Long.parseLong(request.get("userId"));
-        String userMessage = request.get("message");
+    public ResponseEntity<?> sendMessage(@Valid @RequestBody SendMessageRequest request) {
+        Long userId = request.getUserId();
+        String userMessage = request.getMessage();
         String aiModel = "microsoft/mai-ds-r1:free";
 
         chatHistoryService.saveChatMessage(userId, userMessage, true, aiModel);
@@ -59,7 +61,6 @@ public class ChatController {
         StringBuilder historyBlock = new StringBuilder();
         int totalChars = 0;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-        // Переворачиваем историю, чтобы старые сообщения шли первыми
         for (int i = history.size() - 1; i >= 0; i--) {
             ChatHistory entry = history.get(i);
             String time = entry.getCreatedAt().format(formatter);
@@ -138,23 +139,23 @@ public class ChatController {
 
         chatHistoryService.saveChatMessage(userId, aiResponse, false, aiModel);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", aiResponse);
+        SendMessageResponse response = new SendMessageResponse();
+        response.setMessage(aiResponse);
         return ResponseEntity.ok(response);
     }
 
     // Получение истории чата
     @GetMapping("/{userId}/history")
-    public ResponseEntity<List<Map<String, Object>>> getChatHistory(@PathVariable Long userId) {
+    public ResponseEntity<List<ChatHistoryResponse>> getChatHistory(@PathVariable Long userId) {
         List<ChatHistory> history = chatHistoryService.getRecentChatHistory(userId, 15);
-        // Переворачиваем историю, чтобы старые сообщения шли первыми
-        List<Map<String, Object>> response = new ArrayList<>();
+        List<ChatHistoryResponse> response = new ArrayList<>();
+
         for (int i = history.size() - 1; i >= 0; i--) {
             ChatHistory entry = history.get(i);
-            Map<String, Object> message = new HashMap<>();
-            message.put("isUserMessage", entry.isUserMessage());
-            message.put("message", entry.getMessage());
-            message.put("createdAt", entry.getCreatedAt().toString());
+            ChatHistoryResponse message = new ChatHistoryResponse();
+            message.setIsUserMessage(entry.isUserMessage());
+            message.setMessage(entry.getMessage());
+            message.setCreatedAt(entry.getCreatedAt().toString());
             response.add(message);
         }
         return ResponseEntity.ok(response);
