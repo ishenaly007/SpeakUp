@@ -6,11 +6,14 @@ import com.abit8.speakupengbot.db.entity.Word;
 import com.abit8.speakupengbot.db.service.QuizService;
 import com.abit8.speakupengbot.db.service.UserService;
 import com.abit8.speakupengbot.db.service.WordService;
+import com.abit8.speakupengbot.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/quizzes")
@@ -27,39 +30,43 @@ public class QuizController {
 
     // Получение всех результатов квизов пользователя
     @GetMapping("/{userId}/results")
-    public ResponseEntity<Map<String, Object>> getQuizResults(@PathVariable Long userId) {
+    public ResponseEntity<?> getQuizResults(@PathVariable Long userId) {
         Optional<User> userOpt = userService.getUserById(userId);
         if (!userOpt.isPresent()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "User not found"));
+            ErrorResponse error = new ErrorResponse();
+            error.setError("User not found");
+            return ResponseEntity.badRequest().body(error);
         }
         User user = userOpt.get();
         List<QuizResult> results = quizService.getQuizResults(user);
-        List<Map<String, Object>> resultList = new ArrayList<>();
-        for (QuizResult result : results) {
-            Map<String, Object> resultMap = new HashMap<>();
-            resultMap.put("id", result.getId());
-            resultMap.put("score", result.getScore());
-            resultMap.put("totalQuestions", result.getTotalQuestions());
-            resultMap.put("completedAt", result.getCompletedAt().toString());
-            resultMap.put("winrate", String.format("%d%%", (result.getScore() * 100 / result.getTotalQuestions())));
-            resultList.add(resultMap);
-        }
-        Map<String, Object> response = new HashMap<>();
-        response.put("results", resultList);
-        response.put("totalQuizzes", quizService.getTotalQuizzes(user));
-        response.put("totalWinrate", quizService.getTotalWinrate(user));
+        List<QuizResultItem> resultList = results.stream().map(result -> {
+            QuizResultItem item = new QuizResultItem();
+            item.setId(result.getId());
+            item.setScore(result.getScore());
+            item.setTotalQuestions(result.getTotalQuestions());
+            item.setCompletedAt(result.getCompletedAt().toString());
+            item.setWinrate(String.format("%d%%", (result.getScore() * 100 / result.getTotalQuestions())));
+            return item;
+        }).collect(Collectors.toList());
+
+        QuizResultResponse response = new QuizResultResponse();
+        response.setResults(resultList);
+        response.setTotalQuizzes(quizService.getTotalQuizzes(user));
+        response.setTotalWinrate(quizService.getTotalWinrate(user));
         return ResponseEntity.ok(response);
     }
 
     // Запуск новой викторины
     @PostMapping("/{userId}/start")
-    public ResponseEntity<Map<String, Object>> startQuiz(@PathVariable Long userId, @RequestBody Map<String, String> request) {
+    public ResponseEntity<?> startQuiz(@PathVariable Long userId, @Valid @RequestBody StartQuizRequest request) {
         Optional<User> userOpt = userService.getUserById(userId);
         if (!userOpt.isPresent()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "User not found"));
+            ErrorResponse error = new ErrorResponse();
+            error.setError("User not found");
+            return ResponseEntity.badRequest().body(error);
         }
         User user = userOpt.get();
-        String theme = request.get("theme"); // Тема необязательна
+        String theme = request.getTheme();
         List<Word> quizWords = new ArrayList<>();
         Set<String> usedWords = new HashSet<>();
         int totalQuestions = 10;
@@ -68,23 +75,25 @@ public class QuizController {
         for (int i = 0; i < totalQuestions; i++) {
             Word word = theme != null ? wordService.getRandomWordByTheme(theme) : wordService.getRandomWord();
             if (word == null || usedWords.contains(word.getEnglish())) {
-                return ResponseEntity.badRequest().body(Map.of("error", "Not enough unique words" + (theme != null ? " for theme: " + theme : "")));
+                ErrorResponse error = new ErrorResponse();
+                error.setError("Not enough unique words" + (theme != null ? " for theme: " + theme : ""));
+                return ResponseEntity.badRequest().body(error);
             }
             quizWords.add(word);
             usedWords.add(word.getEnglish());
         }
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("quizId", UUID.randomUUID().toString()); // Уникальный идентификатор викторины
-        response.put("userId", userId);
-        response.put("totalQuestions", totalQuestions);
-        response.put("theme", theme != null ? theme : "general");
-        List<Map<String, Object>> questions = new ArrayList<>();
+        StartQuizResponse response = new StartQuizResponse();
+        response.setQuizId(UUID.randomUUID().toString());
+        response.setUserId(userId);
+        response.setTotalQuestions(totalQuestions);
+        response.setTheme(theme != null ? theme : "general");
+        List<QuizQuestion> questions = new ArrayList<>();
         for (int i = 0; i < quizWords.size(); i++) {
             Word word = quizWords.get(i);
-            Map<String, Object> question = new HashMap<>();
-            question.put("questionNumber", i + 1);
-            question.put("englishWord", word.getEnglish());
+            QuizQuestion question = new QuizQuestion();
+            question.setQuestionNumber(i + 1);
+            question.setEnglishWord(word.getEnglish());
             List<String> options = new ArrayList<>();
             options.add(word.getRussian());
             int maxAttempts = 10;
@@ -97,35 +106,40 @@ public class QuizController {
                 attempts++;
             }
             if (options.size() < 3) {
-                return ResponseEntity.badRequest().body(Map.of("error", "Not enough unique answer options" + (theme != null ? " for theme: " + theme : "")));
+                ErrorResponse error = new ErrorResponse();
+                error.setError("Not enough unique answer options" + (theme != null ? " for theme: " + theme : ""));
+                return ResponseEntity.badRequest().body(error);
             }
             Collections.shuffle(options);
-            question.put("options", options);
-            question.put("correctAnswer", word.getRussian());
+            question.setOptions(options);
+            question.setCorrectAnswer(word.getRussian());
             questions.add(question);
         }
-        response.put("questions", questions);
+        response.setQuestions(questions);
         return ResponseEntity.ok(response);
     }
 
-    // Сохранение результата викторины
     @PostMapping("/{userId}/submit")
-    public ResponseEntity<Map<String, Object>> submitQuiz(@PathVariable Long userId, @RequestBody Map<String, Object> request) {
+    public ResponseEntity<?> submitQuiz(@PathVariable Long userId, @Valid @RequestBody SubmitQuizRequest request) {
         Optional<User> userOpt = userService.getUserById(userId);
         if (!userOpt.isPresent()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "User not found"));
+            ErrorResponse error = new ErrorResponse();
+            error.setError("User not found");
+            return ResponseEntity.badRequest().body(error);
         }
         User user = userOpt.get();
-        Integer score = (Integer) request.get("score");
-        Integer totalQuestions = (Integer) request.get("totalQuestions");
-        List<Map<String, String>> correctWordsData = (List<Map<String, String>>) request.get("correctWords");
+        Integer score = request.getScore();
+        Integer totalQuestions = request.getTotalQuestions();
+        List<WordData> correctWordsData = request.getCorrectWords();
         if (score == null || totalQuestions == null || correctWordsData == null) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Invalid request data"));
+            ErrorResponse error = new ErrorResponse();
+            error.setError("Invalid request data");
+            return ResponseEntity.badRequest().body(error);
         }
 
         List<Word> correctWords = new ArrayList<>();
-        for (Map<String, String> wordData : correctWordsData) {
-            String english = wordData.get("english");
+        for (WordData wordData : correctWordsData) {
+            String english = wordData.getEnglish();
             Optional<Word> wordOpt = wordService.findWordByEnglish(english);
             if (wordOpt.isPresent()) {
                 correctWords.add(wordOpt.get());
@@ -134,12 +148,12 @@ public class QuizController {
 
         quizService.saveQuizResult(user, score, totalQuestions, correctWords);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "Quiz result saved");
-        response.put("score", score);
-        response.put("totalQuestions", totalQuestions);
-        response.put("xpEarned", score + (score == totalQuestions ? 5 : 0));
-        response.put("winrate", String.format("%d%%", (score * 100 / totalQuestions)));
+        SubmitQuizResponse response = new SubmitQuizResponse();
+        response.setMessage("Quiz result saved");
+        response.setScore(score);
+        response.setTotalQuestions(totalQuestions);
+        response.setXpEarned(score + (score == totalQuestions ? 5 : 0));
+        response.setWinrate(String.format("%d%%", (score * 100 / totalQuestions)));
         return ResponseEntity.ok(response);
     }
 }
