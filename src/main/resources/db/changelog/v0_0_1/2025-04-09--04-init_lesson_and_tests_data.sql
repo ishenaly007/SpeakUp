@@ -1,638 +1,375 @@
-insert into public.lessons (id, title, level, description, note)
-values  (4, 'Daily Activities', 'A2', 'Научимся говорить о том, что ты делаешь каждый день. Это глаголы в настоящем времени (Present Simple).
-
-*Основные глаголы:*
-`- Wake up` — Просыпаться
-`- Eat` — Есть
-`- Go` — Идти/Ехать
-`- Work` — Работать
-`- Sleep` — Спать`
-
-*Объяснение:*
-В Present Simple для `I/You/We/They` глагол не меняется, а для `He/She/It` добавляется `-s`. Например: `I eat`, но `She eats`.
-
-*Примеры:*
-> I wake up at 7:00. — *Я просыпаюсь в 7:00.*
-> He goes to school every day. — *Он ходит в школу каждый день.*
-> We eat breakfast together. — *Мы едим завтрак вместе.*
-
-*Полезно знать:* Чтобы сказать "каждый день", используй `every day`.', 'Не забудь -s для He/She/It!'),
-        (5, 'Colors', 'A1', 'Цвета важны для описания вещей вокруг нас. Давай выучим основные!
-
-*Список цветов:*
-`- Red` — Красный
-`- Blue` — Синий
-`- Green` — Зелёный
-`- Yellow` — Жёлтый
-`- Black` — Чёрный
-`- White` — Белый`
-
-*Объяснение:*
-Цвета можно использовать с существительными: `a red car` (красная машина). Слово `a` — это артикль, он нужен перед предметом.
-
-*Примеры:*
-> The sky is blue. — *Небо синее.*
-> I like yellow flowers. — *Мне нравятся жёлтые цветы.*
-> Her dress is black. — *Её платье чёрное.*
-
-*Интересно:* В английском нет разницы между "синий" и "голубой" — оба `blue`!', 'Ставь a перед цветом и предметом: a green apple.'),
-        (6, 'Asking Questions', 'A2', 'Научимся задавать вопросы с помощью слов `What`, `Where`, `When`.
-
-*Вопросительные слова:*
-`- What` — Что/Какой
-`- Where` — Где
-`- When` — Когда
-
-*Объяснение:*
-Вопрос начинается с вопросительного слова, затем идет глагол `to be` или вспомогательный `do`, а потом подлежащее. Например: `Where are you?` или `What do you like?`.
-
-*Примеры:*
-> What is your name? — *Как тебя зовут?*
-> Where do you live? — *Где ты живёшь?*
-> When do you sleep? — *Когда ты спишь?*
-
-*Полезно:* Если ответ — да/нет, используй `Do you…?` (Например: `Do you like tea?`).', 'Ставь do перед подлежащим в вопросах с глаголами действия.'),
-        (7, 'Family', 'A1', 'Слова о семье помогут рассказать о близких людях.
-
-*Слова:*
-`- Mother` — Мама
-`- Father` — Папа
-`- Brother` — Брат
-`- Sister` — Сестра
-`- Parents` — Родители
-
-*Объяснение:*
-Чтобы сказать, что кто-то твой родственник, используй `My`: `My mother is…`. Для вопросов используй `Do you have…?` — *У тебя есть…?*
-
-*Примеры:*
-> My father is tall. — *Мой папа высокий.*
-> Do you have a sister? — *У тебя есть сестра?*
-> I have two brothers. — *У меня два брата.*
-
-*Интересно:* `Parents` — это всегда во множественном числе!', 'Используй My перед членами семьи.'),
-        (8, 'Food and Drinks', 'A2', 'Научимся говорить о том, что мы едим и пьём.
-
-*Слова:*
-`- Water` — Вода
-`- Tea` — Чай
-`- Bread` — Хлеб
-`- Apple` — Яблоко
-`- Milk` — Молоко
-
-*Объяснение:*
-Для предпочтений используй `I like…` или `I don’t like…`. Чтобы спросить, используй `Do you like…?`.
-
-*Примеры:*
-> I like tea. — *Мне нравится чай.*
-> Do you like apples? — *Тебе нравятся яблоки?*
-> She doesn’t like milk. — *Ей не нравится молоко.*
-
-*Полезно:* Если еда во множественном числе, добавляй `-s`: `apples`, но `bread` всегда без -s.', 'Не ставь -s к uncountable nouns вроде water!'),
-        (1, 'Basic Greetings', 'A1', 'Давай учить простые приветствия и прощания на английском!
-Эти фразы пригодятся в повседневных разговорах.
-
-*Ключевые фразы:*
-`- Hello` — Привет
-`- Hi there` — Приветик
-`- Goodbye` — Пока
-`- See you later` — Увидимся позже
-
-*Примеры:*
-> Hello, how are you? — *Привет, как дела?*
-> See you later, have a great day! — *Увидимся позже, хорошего дня!*', 'Use Hi there for a friendly tone.'),
-        (2, 'Introductions', 'A1', 'Этот урок поможет тебе научиться представляться и спрашивать имена других людей. Знакомство — это первый шаг к общению!
-
-*Основные фразы:*
-`- My name is…` — Меня зовут…
-`- I’m…` — Я…
-`- What’s your name?` — Как тебя зовут?
-`- Nice to meet you!` — Приятно познакомиться!
-
-*Объяснение:*
-Представляться можно двумя способами: формально (`My name is…`) или неформально (`I’m…`). После того как кто-то назвал своё имя, принято говорить `Nice to meet you!` для вежливости.
-
-*Примеры:*
-> My name is Anna. What’s your name? — *Меня зовут Анна. Как тебя зовут?*
-> I’m Peter. Nice to meet you! — *Я Питер. Приятно познакомиться!*
-> What’s your name? — I’m Kate. — *Как тебя зовут? — Я Кейт.*
-
-*Полезный совет:* Если ты не расслышал имя, скажи: `Sorry, what’s your name again?` — *Простите, как вас зовут ещё раз?*', 'Используй I’m для неформального общения.'),
-        (3, 'Numbers 1-10', 'A1', 'Давай выучим числа от 1 до 10 на английском! Они пригодятся для счета, времени и многого другого.
-
-*Список чисел:*
-`- 1 — One`
-`- 2 — Two`
-`- 3 — Three`
-`- 4 — Four`
-`- 5 — Five`
-`- 6 — Six`
-`- 7 — Seven`
-`- 8 — Eight`
-`- 9 — Nine`
-`- 10 — Ten`
-
-*Объяснение:*
-Числа в английском произносятся по-разному, и важно запомнить их написание и звучание. Например, `three` (3) и `tree` (дерево) звучат похоже, но пишутся по-разному — это называется омофоны.
-
-*Примеры:*
-> I have two cats. — *У меня две кошки.*
-> She is seven years old. — *Ей семь лет.*
-> There are ten books on the table. — *На столе десять книг.*
-
-*Упражнение:* Попробуй посчитать от 1 до 10 вслух!', 'Запомни, что 3 — это three, а не tree!'),
-        (9, 'Time', 'A2', 'Научимся спрашивать и говорить, который час.
-
-*Основные фразы:*
-`- What time is it?` — Который час?
-`- It’s one o’clock.` — Час дня.
-`- It’s half past two.` — Половина третьего.
-`- It’s quarter to three.` — Без четверти три.
-
-*Объяснение:*
-`O’clock` — это ровно час. `Half past` — половина после часа. `Quarter to` — 15 минут до следующего часа.
-
-*Примеры:*
-> What time is it? — It’s five o’clock. — *Который час? — Пять часов.*
-> It’s half past seven. — *Половина восьмого.*
-> It’s quarter to ten. — *Без четверти десять.*
-
-*Совет:* Используй `at` для указания времени: `I wake up at six o’clock.`', 'Half past = 30 минут после часа.'),
-        (10, 'Weather', 'A2', 'Поговорим о погоде — это популярная тема для разговоров!
-
-*Слова и фразы:*
-`- Sunny` — Солнечно
-`- Rainy` — Дождливо
-`- Cold` — Холодно
-`- Hot` — Жарко
-`- It’s … today.` — Сегодня …
-
-*Объяснение:*
-Чтобы описать погоду, используй `It’s` + прилагательное. Для вопроса: `What’s the weather like?` — *Какая сегодня погода?*
-
-*Примеры:*
-> It’s sunny today. — *Сегодня солнечно.*
-> What’s the weather like? — It’s cold. — *Какая погода? — Холодно.*
-> It’s rainy and windy. — *Дождливо и ветрено.*
-
-*Интересно:* Можно комбинировать: `It’s cold and rainy.`', 'Добавляй and для нескольких описаний.'),
-        (18, 'Reported Speech', 'C2', 'Как пересказывать чужие слова.
-
-- *Прямая речь → Косвенная:*
-  *He said, "I’m tired."* — *He said that he was tired.* — *Он сказал, что устал.*
-  *She asked, "Are you coming?"* — *She asked if I was coming.* — *Она спросила, приду ли я.*
-
-*Правила:*
-- Времена сдвигаются назад: *am → was*, *will → would*.
-- Вопросы: `if/whether` + обычный порядок слов.
-
-*Практика с переводом:*
-> *"I’ll call you," he said.* — *He said that he would call me.* — *Он сказал, что позвонит мне.*
-> *"Where are you?" she asked.* — *She asked where I was.* — *Она спросила, где я.*', 'Следи за временами и убирай кавычки.'),
-        (19, 'Inversion for Emphasis', 'C2', 'Инверсия — для усиления смысла в речи.
-
-- *Обычно:* *I have never seen such a view.* — *Я никогда не видел такого вида.*
-- *С инверсией:* *Never have I seen such a view.* — *Никогда я не видел такого вида.*
-
-*Правила:*
-- После *never, rarely, hardly*: `вспомогательный глагол + подлежащее + основной глагол`.
-- Пример: *Rarely does she miss a class.* — *Редко она пропускает занятия.*
-
-*Практика с переводом:*
-> *Hardly had I arrived when it started raining.* — *Едва я приехал, как начался дождь.*
-> *Not only did he win, but he also set a record.* — *Он не только победил, но и установил рекорд.*', 'Инверсия — для эмоций и драматизма.'),
-        (20, 'Idioms About Time', 'C2', 'Идиомы о времени для продвинутой речи.
-
-- *In the nick of time* — В последний момент: *He arrived in the nick of time.* — *Он приехал в последний момент.*
-- *Time flies* — Время летит: *Time flies when you’re having fun.* — *Время летит, когда тебе весело.*
-- *Beat the clock* — Успеть вовремя: *We beat the clock to finish.* — *Мы успели закончить вовремя.*
-- *Once in a blue moon* — Очень редко: *I see her once in a blue moon.* — *Я вижу её очень редко.*
-
-*Практика с переводом:*
-> *We finished just in the nick of time.* — *Мы закончили прямо в последний момент.*
-> *Time flies when I study English.* — *Время летит, когда я учу английский.*', 'Идиомы добавляют колорит, используй их уместно!'),
-        (11, 'Past Simple vs Present Perfect', 'B1', 'Разберём, чем отличается *Past Simple* (прошедшее завершённое) от *Present Perfect* (опыт или результат сейчас).
-
-- *Past Simple*: Про действия, законченные в прошлом с точным временем.
-  Формула: `I/You/He + прошедшая форма глагола` (worked, ate).
-  Пример: *I visited London in 2019.* — *Я посетил Лондон в 2019.*
-
-- *Present Perfect*: Про опыт или связь с настоящим.
-  Формула: `I/You/He + have/has + причастие прошедшего времени` (have worked, has eaten).
-  Пример: *I have just finished this lesson.* — *Я только что закончил этот урок.*
-
-*Ключевые слова:*
-- Past Simple: yesterday, last week, in 2020.
-- Present Perfect: ever, never, just, already, yet.
-
-*Практика с переводом:*
-> *She worked there last year.* — *Она работала там в прошлом году.* (Past Simple)
-> *She has worked here for 3 years.* — *Она работает здесь уже 3 года.* (Present Perfect)', 'Если есть "когда" — Past Simple, если "уже" или "ещё" — Present Perfect.'),
-        (12, 'Phrasal Verbs for Everyday Life', 'B1', 'Фразовые глаголы — это глагол + предлог, меняющий смысл. Учим те, что пригодятся каждый день!
-
-- *Turn off* — Выключать: *Turn off the lights.* — *Выключи свет.*
-- *Pick up* — Забирать/Поднимать: *I’ll pick up the kids.* — *Я заберу детей.*
-- *Run out* — Закончиться: *We’ve run out of milk.* — *У нас закончилось молоко.*
-- *Look after* — Присматривать: *She looks after my dog.* — *Она присматривает за моей собакой.*
-
-*Практика с переводом:*
-> *Can you turn off the TV?* — *Можешь выключить телевизор?*
-> *He picked up a new skill.* — *Он освоил новый навык.*', 'Запоминай фразовые глаголы с ситуациями, так проще!'),
-        (13, 'Conditionals (Zero and First)', 'B2', 'Условные предложения — это "если". Изучим Zero и First Conditional.
-
-- *Zero Conditional*: Факты, которые всегда верны.
-  Формула: `If + настоящее время, настоящее время`.
-  Пример: *If it rains, I stay home.* — *Если идёт дождь, я остаюсь дома.*
-
-- *First Conditional*: Возможное будущее.
-  Формула: `If + настоящее время, will + глагол`.
-  Пример: *If you study, you’ll pass.* — *Если будешь учиться, сдашь.*
-
-*Практика с переводом:*
-> *If I heat water, it boils.* — *Если я нагреваю воду, она закипает.* (Zero)
-> *If she calls, I’ll answer.* — *Если она позвонит, я отвечу.* (First)', 'Zero — это правда, First — это планы или условия.'),
-        (14, 'Modal Verbs of Obligation', 'B2', 'Модальные глаголы показывают обязанность, необходимость или совет.
-
-- *Must* — Должен (строгое правило): *You must wear a seatbelt.* — *Ты должен пристегнуть ремень.*
-- *Have to* — Надо (внешняя необходимость): *I have to finish this.* — *Мне надо это закончить.*
-- *Should* — Следует (совет): *You should rest.* — *Тебе следует отдохнуть.*
-
-*Практика с переводом:*
-> *She must study for the exam.* — *Она должна учиться к экзамену.*
-> *We have to be on time.* — *Нам надо быть вовремя.*', 'Must — личное, have to — вынужденное, should — мягче.'),
-        (15, 'Talking About Plans', 'B2', 'Как говорить о планах на будущее?
-
-- *Going to* — Намерения: *I’m going to visit my friend.* — *Я собираюсь навестить друга.*
-- *Present Continuous* — Точные планы: *We’re meeting at 6.* — *Мы встречаемся в 6.*
-- *Will* — Решение в момент речи: *I’ll call you later.* — *Я позвоню тебе позже.*
-
-*Практика с переводом:*
-> *She’s going to travel next month.* — *Она собирается путешествовать в следующем месяце.*
-> *We’re having dinner tonight.* — *Мы ужинаем сегодня вечером.*', 'Going to — задумка, Present Continuous — уже решено.'),
-        (16, 'Second and Third Conditionals', 'C1', 'Условные предложения для нереального.
-
-- *Second Conditional*: Нереальное сейчас или в будущем.
-  Формула: `If + прошедшее время, would + глагол`.
-  Пример: *If I were rich, I would travel.* — *Если бы я был богат, я бы путешествовал.*
-
-- *Third Conditional*: Нереальное прошлое.
-  Формула: `If + had + причастие, would have + причастие`.
-  Пример: *If she had studied, she would have passed.* — *Если бы она училась, она бы сдала.*
-
-*Практика с переводом:*
-> *If I knew her number, I’d call her.* — *Если бы я знал её номер, я бы позвонил.* (Second)
-> *If we had left earlier, we wouldn’t have missed it.* — *Если бы мы вышли раньше, мы бы не опоздали.* (Third)', 'Second — фантазии, Third — о прошлом с сожалением.'),
-        (17, 'Advanced Phrasal Verbs', 'C1', 'Сложные фразовые глаголы для беглой речи.
-
-- *Put up with* — Терпеть: *I can’t put up with this noise.* — *Я не могу терпеть этот шум.*
-- *Come across* — Наткнуться: *I came across an old book.* — *Я наткнулся на старую книгу.*
-- *Back up* — Поддерживать: *She backed me up in the meeting.* — *Она поддержала меня на встрече.*
-- *Run into* — Столкнуться: *I ran into an old friend.* — *Я столкнулся со старым другом.*
-
-*Практика с переводом:*
-> *He came across a rare coin.* — *Он наткнулся на редкую монету.*
-> *We’ll back you up.* — *Мы тебя поддержим.*', 'Слушай носителей, чтобы уловить их в речи!');
-
-insert into public.tests (id, lesson_id, question, correct_option)
-values  (2, 2, 'Что нужно сказать, чтобы представиться неформально?', 'I’m John.'),
-        (5, 3, 'Какое число переводится как "Five"?', '5'),
-        (6, 3, 'Найди правильное написание числа 8:', 'Eight'),
-        (7, 3, 'Как сказать "У меня три друга" на английском?', 'I have three friends.'),
-        (8, 4, 'Что нужно сказать, если ты просыпаешься в 8 утра?', 'I wake up at 8:00.'),
-        (9, 4, 'Какой глагол пропущен? > *"She … to work every day."*', 'goes'),
-        (10, 4, 'Как переводится "We sleep at night"?', 'Мы спим ночью.'),
-        (11, 5, 'Какой цвет переводится как "Зелёный"?', 'Green'),
-        (12, 5, 'Что должно быть вместо точек? > *"The cat is …"* (чёрный)', 'black'),
-        (13, 5, 'Найди правильное предложение:', 'I have a red ball.'),
-        (14, 6, 'Как спросить "Где ты работаешь?"', 'Where do you work?'),
-        (15, 6, 'Какое слово пропущено? > *"… is your favorite color?"*', 'What'),
-        (16, 6, 'Как переводится "When do you eat?"', 'Когда ты ешь?'),
-        (17, 7, 'Как сказать "У меня есть брат"?', 'I have a brother.'),
-        (18, 7, 'Кто такие "parents"?', 'Мама и папа'),
-        (19, 7, 'Найди правильное написание:', 'Sister'),
-        (20, 8, 'Как сказать "Мне нравится вода"?', 'I like water.'),
-        (21, 8, 'Что должно быть вместо точек? > *"Do you like …?"* (хлеб)', 'bread'),
-        (22, 8, 'Как переводится "He likes milk"?', 'Ему нравится молоко.'),
-        (23, 9, 'Как спросить "Который час"?', 'What time is it?'),
-        (24, 9, 'Как сказать "Половина пятого"?', 'It’s half past four.'),
-        (25, 9, 'Что значит "It’s quarter to six"?', 'Без четверти шесть.'),
-        (26, 10, 'Как сказать "Сегодня жарко"?', 'It’s hot today.'),
-        (27, 10, 'Что спросить, чтобы узнать о погоде?', 'What’s the weather like?'),
-        (28, 10, 'Как переводится "It’s sunny"?', 'Солнечно.'),
-        (1, 1, 'Как переводится фраза
-> *See you later*', 'Увидимся позже'),
-        (3, 2, 'Как переводится фраза
-> *"Nice to meet you!"*?', 'Приятно познакомиться!'),
-        (4, 2, 'Что должно быть вместо точек?
-> *"… your name?"*', 'What’s'),
-        (29, 11, 'Что правильно?
-> *"I ___ to Paris last summer."*', 'went'),
-        (30, 11, 'Что выбрать?
-> *"Have you ever ___ sushi?"*', 'eaten'),
-        (31, 11, 'Как переводится: *"She has just left."*', 'Она только что ушла.'),
-        (32, 11, 'Что подходит?
-> *"He ___ here since 2015."*', 'has lived'),
-        (33, 11, 'Когда используется Past Simple?', 'Для действий с точным временем в прошлом.'),
-        (34, 12, 'Что значит "turn off"?', 'Выключать'),
-        (35, 12, 'Как сказать: "Я заберу посылку"?', 'I’ll pick up the package.'),
-        (36, 12, 'Что пропущено?
-> *"We’ve ___ out of coffee."*', 'run'),
-        (37, 12, 'Перевод: *"She looks after her sister."*', 'Она присматривает за своей сестрой.'),
-        (38, 12, 'Какой фразовый глагол для "закончиться"?', 'Run out'),
-        (39, 13, 'Что правильно?
-> *"If it ___ cold, I wear a jacket."*', 'is'),
-        (40, 13, 'Что выбрать?
-> *"If you ___ hard, you’ll succeed."*', 'work'),
-        (41, 13, 'Перевод: *"If I miss the bus, I’ll be late."*', 'Если я опоздаю на автобус, я опоздаю.'),
-        (42, 13, 'Какой тип?
-> *"If the sun shines, we go out."*', 'Zero Conditional'),
-        (43, 13, 'Что ставим после "if" в First Conditional?', 'Настоящее время'),
-        (44, 14, 'Что значит "must"?', 'Должен (строго)'),
-        (45, 14, 'Что пропущено?
-> *"You ___ to wear a helmet here."*', 'have'),
-        (46, 14, 'Перевод: *"He should call her."*', 'Ему следует позвонить ей.'),
-        (47, 14, 'Какой глагол для совета?', 'Should'),
-        (48, 14, 'Что выбрать?
-> *"I ___ finish this today."*', 'have to'),
-        (49, 15, 'Что правильно?
-> *"I ___ to study tonight."*', 'am going'),
-        (50, 15, 'Перевод: *"We’re watching a movie later."*', 'Мы смотрим фильм позже.'),
-        (51, 15, 'Что выбрать?
-> *"He ___ you tomorrow."*', 'will call'),
-        (52, 15, 'Когда используется Present Continuous?', 'Для точных планов.'),
-        (53, 15, 'Что подходит?
-> *"I ___ help you now."*', 'will'),
-        (54, 16, 'Что правильно?
-> *"If I ___ taller, I’d play basketball."*', 'were'),
-        (55, 16, 'Что выбрать?
-> *"If he ___ harder, he would have won."*', 'had worked'),
-        (56, 16, 'Перевод: *"If I had known, I’d have told you."*', 'Если бы я знал, я бы сказал тебе.'),
-        (57, 16, 'Какой тип?
-> *"If she were here, she’d help."*', 'Second Conditional'),
-        (58, 16, 'Что ставим после "if" в Third Conditional?', 'had + причастие'),
-        (59, 17, 'Что значит "put up with"?', 'Терпеть'),
-        (60, 17, 'Что пропущено?
-> *"I ___ across this photo yesterday."*', 'came'),
-        (61, 17, 'Перевод: *"She ran into her boss."*', 'Она столкнулась со своим начальником.'),
-        (62, 17, 'Какой глагол для "поддерживать"?', 'Back up'),
-        (63, 17, 'Что выбрать?
-> *"I can’t ___ up with the heat."*', 'put'),
-        (64, 18, 'Что правильно?
-> *"She said, ''I’m happy.''"*', 'She said that she was happy.'),
-        (65, 18, 'Перевод в косвенную: *"He asked, ''Do you know her?''"*', 'He asked if I knew her.'),
-        (66, 18, 'Что пропущено?
-> *"I told her that I ___ late."*', 'would be'),
-        (67, 18, 'Что меняется?
-> *"I will go" → Reported Speech"*', 'He said that he would go.'),
-        (68, 18, 'Что добавляем для вопросов?', 'if или whether'),
-        (69, 19, 'Что правильно?
-> *"___ have I been so tired."*', 'Never'),
-        (70, 19, 'Перевод в инверсию: *"She rarely speaks loudly."*', 'Rarely does she speak loudly.'),
-        (71, 19, 'Что пропущено?
-> *"Hardly ___ I finished when he called."*', 'had'),
-        (72, 19, 'Зачем нужна инверсия?', 'Для усиления смысла.'),
-        (73, 19, 'Что выбрать?
-> *"Not only ___ she sing, but she dances too."*', 'does'),
-        (74, 20, 'Что значит "time flies"?', 'Время летит.'),
-        (75, 20, 'Что пропущено?
-> *"She arrived ___ the nick of time."*', 'in'),
-        (76, 20, 'Перевод: *"I beat the clock to submit it."*', 'Я успел сдать это вовремя.'),
-        (77, 20, 'Какая идиома для "очень редко"?', 'Once in a blue moon'),
-        (78, 20, 'Что выбрать?
-> *"___ flies when you’re busy."*', 'Time');
-
-insert into public.test_options (test_id, option)
-values  (1, 'Пока'),
-        (1, 'Привет!'),
-        (1, 'Как дела?'),
-        (2, 'My name is John.'),
-        (2, 'I’m John.'),
-        (2, 'What’s your name?'),
-        (3, 'До свидания!'),
-        (3, 'Привет!'),
-        (3, 'Приятно познакомиться!'),
-        (4, 'How’s'),
-        (4, 'What’s'),
-        (4, 'I’m'),
-        (5, '4'),
-        (5, '5'),
-        (5, '6'),
-        (6, 'Eigth'),
-        (6, 'Eight'),
-        (6, 'Aight'),
-        (7, 'I have three friends.'),
-        (7, 'I have tree friends.'),
-        (7, 'I have four friends.'),
-        (8, 'I wake up at 8:00.'),
-        (8, 'I wakes up at 8:00.'),
-        (8, 'I go at 8:00.'),
-        (9, 'go'),
-        (9, 'goes'),
-        (9, 'going'),
-        (10, 'Мы спим ночью.'),
-        (10, 'Мы идем ночью.'),
-        (10, 'Мы едим ночью.'),
-        (11, 'Red'),
-        (11, 'Green'),
-        (11, 'Yellow'),
-        (12, 'blue'),
-        (12, 'black'),
-        (12, 'white'),
-        (13, 'I have a red ball.'),
-        (13, 'I have red ball.'),
-        (13, 'I have a ball red.'),
-        (14, 'Where you work?'),
-        (14, 'Where do you work?'),
-        (14, 'What do you work?'),
-        (15, 'Where'),
-        (15, 'What'),
-        (15, 'When'),
-        (16, 'Где ты ешь?'),
-        (16, 'Когда ты ешь?'),
-        (16, 'Что ты ешь?'),
-        (17, 'I have a brother.'),
-        (17, 'I has a brother.'),
-        (17, 'My brother have.'),
-        (18, 'Брат и сестра'),
-        (18, 'Мама и папа'),
-        (18, 'Дети'),
-        (19, 'Syster'),
-        (19, 'Sister'),
-        (19, 'Sistar'),
-        (20, 'I like water.'),
-        (20, 'I like waters.'),
-        (20, 'I likes water.'),
-        (21, 'breads'),
-        (21, 'bread'),
-        (21, 'apple'),
-        (22, 'Ему нравится чай.'),
-        (22, 'Ему нравится молоко.'),
-        (22, 'Он не любит молоко.'),
-        (23, 'What time is it?'),
-        (23, 'What is the time?'),
-        (23, 'When is it?'),
-        (24, 'It’s half past four.'),
-        (24, 'It’s four half.'),
-        (24, 'It’s quarter to five.'),
-        (25, 'Половина шестого.'),
-        (25, 'Без четверти шесть.'),
-        (25, 'Шесть часов.'),
-        (26, 'It’s hot today.'),
-        (26, 'It’s hotly today.'),
-        (26, 'Today is hot.'),
-        (27, 'What’s the weather like?'),
-        (27, 'How is the weather?'),
-        (27, 'What time is it?'),
-        (28, 'Дождливо.'),
-        (28, 'Солнечно.'),
-        (28, 'Холодно.'),
-        (1, 'Увидимся позже'),
-        (41, 'Если я пропущу автобус, я опоздаю.'),
-        (41, 'Если я пропустил, я опоздаю.'),
-        (29, 'went'),
-        (29, 'have gone'),
-        (29, 'go'),
-        (30, 'eat'),
-        (30, 'eaten'),
-        (30, 'ate'),
-        (31, 'Она только что ушла.'),
-        (31, 'Она ушла вчера.'),
-        (31, 'Она уходит.'),
-        (32, 'lived'),
-        (32, 'has lived'),
-        (32, 'lives'),
-        (33, 'Для действий с точным временем в прошлом.'),
-        (33, 'Для опыта без времени.'),
-        (33, 'Для текущих действий.'),
-        (34, 'Выключать'),
-        (34, 'Включать'),
-        (34, 'Поднимать'),
-        (35, 'I’ll pick up the package.'),
-        (35, 'I’ll turn off the package.'),
-        (35, 'I’ll run out the package.'),
-        (36, 'run'),
-        (36, 'pick'),
-        (36, 'look'),
-        (37, 'Она присматривает за своей сестрой.'),
-        (37, 'Она выключает свою сестру.'),
-        (37, 'Она забирает свою сестру.'),
-        (38, 'Run out'),
-        (38, 'Turn off'),
-        (38, 'Pick up'),
-        (39, 'is'),
-        (39, 'will be'),
-        (39, 'be'),
-        (40, 'work'),
-        (40, 'will work'),
-        (40, 'worked'),
-        (41, 'Я опоздаю на автобус.'),
-        (42, 'Zero Conditional'),
-        (42, 'First Conditional'),
-        (42, 'Past Conditional'),
-        (43, 'Настоящее время'),
-        (43, 'Будущее время'),
-        (43, 'Прошедшее время'),
-        (44, 'Должен (строго)'),
-        (44, 'Надо'),
-        (44, 'Следует'),
-        (45, 'must'),
-        (45, 'have'),
-        (45, 'should'),
-        (46, 'Ему следует позвонить ей.'),
-        (46, 'Он должен ей позвонить.'),
-        (46, 'Ему надо ей позвонить.'),
-        (47, 'Should'),
-        (47, 'Must'),
-        (47, 'Have to'),
-        (48, 'must'),
-        (48, 'have to'),
-        (48, 'should'),
-        (49, 'am going'),
-        (49, 'will'),
-        (49, 'go'),
-        (50, 'Мы смотрим фильм позже.'),
-        (50, 'Мы собираемся смотреть фильм.'),
-        (50, 'Мы посмотрим фильм.'),
-        (51, 'will call'),
-        (51, 'is going to call'),
-        (51, 'calls'),
-        (52, 'Для точных планов.'),
-        (52, 'Для намерений.'),
-        (52, 'Для спонтанных решений.'),
-        (53, 'will'),
-        (53, 'am going to'),
-        (53, 'am helping'),
-        (54, 'were'),
-        (54, 'am'),
-        (54, 'would be'),
-        (55, 'worked'),
-        (55, 'had worked'),
-        (55, 'works'),
-        (56, 'Если бы я знал, я бы сказал тебе.'),
-        (56, 'Я знал и сказал тебе.'),
-        (56, 'Если я знаю, я скажу.'),
-        (57, 'Second Conditional'),
-        (57, 'Third Conditional'),
-        (57, 'First Conditional'),
-        (58, 'had + причастие'),
-        (58, 'прошедшее время'),
-        (58, 'будущее время'),
-        (59, 'Терпеть'),
-        (59, 'Наткнуться'),
-        (59, 'Поддерживать'),
-        (60, 'came'),
-        (60, 'put'),
-        (60, 'ran'),
-        (61, 'Она столкнулась со своим начальником.'),
-        (61, 'Она терпела своего начальника.'),
-        (61, 'Она поддержала своего начальника.'),
-        (62, 'Back up'),
-        (62, 'Run into'),
-        (62, 'Come across'),
-        (63, 'put'),
-        (63, 'come'),
-        (63, 'back'),
-        (64, 'She said that she was happy.'),
-        (64, 'She said that she is happy.'),
-        (64, 'She says she was happy.'),
-        (65, 'He asked if I knew her.'),
-        (65, 'He asked do I know her.'),
-        (65, 'He said I knew her.'),
-        (66, 'would be'),
-        (66, 'am'),
-        (66, 'was'),
-        (67, 'He said that he would go.'),
-        (67, 'He said that he will go.'),
-        (67, 'He says he went.'),
-        (68, 'if или whether'),
-        (68, 'that'),
-        (68, 'when'),
-        (69, 'Never'),
-        (69, 'Always'),
-        (69, 'Sometimes'),
-        (70, 'Rarely does she speak loudly.'),
-        (70, 'She rarely does speak loudly.'),
-        (70, 'Rarely she speaks loudly.'),
-        (71, 'had'),
-        (71, 'did'),
-        (71, 'have'),
-        (72, 'Для усиления смысла.'),
-        (72, 'Для вопросов.'),
-        (72, 'Для простоты.'),
-        (73, 'does'),
-        (73, 'is'),
-        (73, 'has'),
-        (74, 'Время летит.'),
-        (74, 'Время заканчивается.'),
-        (74, 'Время тянется.'),
-        (75, 'in'),
-        (75, 'at'),
-        (75, 'on'),
-        (76, 'Я успел сдать это вовремя.'),
-        (76, 'Я победил часы.'),
-        (76, 'Я сдал это редко.'),
-        (77, 'Once in a blue moon'),
-        (77, 'Time flies'),
-        (77, 'Beat the clock'),
-        (78, 'Time'),
-        (78, 'Clock'),
-        (78, 'Moment');
+INSERT INTO lessons (title, level, description, note, html_content, css_content)
+VALUES ('Colors in English',
+        'Beginner',
+        'Урок по изучению названий цветов на английском языке, включая основные и дополнительные цвета.',
+        'Обратите внимание на правильное произношение и написание. Используйте визуальные подсказки.',
+        '<section id="introduction" class="section-intro">
+          <h2>Введение</h2>
+          <p>
+            В этом уроке вы узнаете, как правильно называть основные и дополнительные цвета на английском языке. Мы начнем с <strong>primary colors</strong>, затем перейдем к <strong>secondary colors</strong>.
+          </p>
+          <img src="https://images.unsplash.com/photo-1504198458649-3128b932f49b?auto=format&fit=crop&w=800&q=60" alt="Color Palette" class="intro-image" />
+        </section>
+
+        <section id="primary-colors" class="section-colors">
+          <h2>Primary Colors (Основные цвета)</h2>
+          <p>Основные цвета в английском языке:</p>
+          <ul class="color-list">
+            <li>
+              <div class="color-swatch" style="background-color: #ff0000;"></div>
+              <span class="color-name">Red</span> — красный
+            </li>
+            <li>
+              <div class="color-swatch" style="background-color: #0000ff;"></div>
+              <span class="color-name">Blue</span> — синий
+            </li>
+            <li>
+              <div class="color-swatch" style="background-color: #ffff00;"></div>
+              <span class="color-name">Yellow</span> — жёлтый
+            </li>
+          </ul>
+          <p>
+            <strong>Произношение:</strong> /rɛd/, /bluː/, /ˈjɛloʊ/. Повторяйте за видео:
+          </p>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/3Q5jXgdKQZk" title="Pronunciation of Colors" frameborder="0" allowfullscreen></iframe>
+        </section>
+
+        <section id="secondary-colors" class="section-colors">
+          <h2>Secondary Colors (Дополнительные цвета)</h2>
+          <p>Они образуются при смешивании основных цветов:</p>
+          <ul class="color-list">
+            <li>
+              <div class="color-swatch" style="background-color: #00ff00;"></div>
+              <span class="color-name">Green</span> — зелёный (<em>blue + yellow</em>)
+            </li>
+            <li>
+              <div class="color-swatch" style="background-color: #ff00ff;"></div>
+              <span class="color-name">Magenta</span> — маджента (<em>red + blue</em>)
+            </li>
+            <li>
+              <div class="color-swatch" style="background-color: #ff7f00;"></div>
+              <span class="color-name">Orange</span> — оранжевый (<em>red + yellow</em>)
+            </li>
+          </ul>
+          <p>
+            <strong>Произношение:</strong> /griːn/, /məˈdʒentə/, /ˈɔrɪndʒ/. Посмотрите пример в этом видео:
+          </p>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/IC7-sjFZEmw" title="Secondary Colors Explanation" frameborder="0" allowfullscreen></iframe>
+        </section>',
+        '/* colors.css */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #fafafa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .section-intro {
+        background-color: #fff;
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      .intro-image {
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-colors {
+        padding: 30px 20px;
+        background-color: #fdfdfd;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .section-colors h2 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: #ff7e5f;
+      }
+
+      .color-list {
+        list-style: none;
+      }
+
+      .color-list li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .color-swatch {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .color-name {
+        font-weight: bold;
+      }'),
+       ('Greetings in English',
+        'Elementary',
+        'Урок о формальных и неформальных приветствиях, фразах для начала беседы и прощания.',
+        'Практикуйте интонацию и используйте реальные сценарии общения.',
+        '<section id="introduction" class="section-intro">
+          <h2>Введение</h2>
+          <p>
+            На этом уроке мы разберем различные способы приветствия на английском языке: от формального «Good morning» до дружеского «Hey!». Вы научитесь правильно использовать фразы в зависимости от ситуации.
+          </p>
+          <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=800&q=60" alt="Handshake" class="intro-image" />
+        </section>
+
+        <section id="formal-greetings" class="section-greetings">
+          <h2>Formal Greetings (Формальные приветствия)</h2>
+          <ul class="greet-list">
+            <li><strong>Good morning</strong> — Доброе утро (используется до полудня)</li>
+            <li><strong>Good afternoon</strong> — Добрый день (от полудня до 6 вечера)</li>
+            <li><strong>Good evening</strong> — Добрый вечер (после 6 вечера)</li>
+            <li><strong>Hello</strong> — Здравствуйте (универсальное формальное приветствие)</li>
+          </ul>
+          <p>
+            <strong>Пример диалога:</strong>
+          </p>
+          <div class="dialogue-box">
+            <p><em>John:</em> Good morning, Ms. Smith. How are you today?</p>
+            <p><em>Ms. Smith:</em> Good morning, John. I&apos;m doing well, thank you. And you?</p>
+          </div>
+          <p>
+            <strong>Видео-пример:</strong>
+          </p>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/1Owj0dQ_0yY" title="Formal Greetings" frameborder="0" allowfullscreen></iframe>
+        </section>
+
+        <section id="informal-greetings" class="section-greetings">
+          <h2>Informal Greetings (Неформальные приветствия)</h2>
+          <ul class="greet-list">
+            <li><strong>Hi</strong> — Привет</li>
+            <li><strong>Hey / Hey there</strong> — Эй / Приветик</li>
+            <li><strong>What’s up?</strong> — Как дела? (букв. «Что нового?»)</li>
+            <li><strong>How’s it going?</strong> — Как идут дела?</li>
+          </ul>
+          <p>
+            <strong>Пример диалога:</strong>
+          </p>
+          <div class="dialogue-box">
+            <p><em>Anna:</em> Hey, Mike! What’s up?</p>
+            <p><em>Mike:</em> Hi, Anna! Not much, just heading to the park. How about you?</p>
+          </div>
+          <p>
+            <strong>Видео-пример:</strong>
+          </p>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/LfH1_3k3EyA" title="Informal Greetings" frameborder="0" allowfullscreen></iframe>
+        </section>',
+        '/* greetings.css */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Verdana", sans-serif;
+        background-color: #f3f4f6;
+        color: #2c2c2c;
+        line-height: 1.6;
+      }
+
+      .section-intro {
+        background-color: #fff;
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      .intro-image {
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-greetings {
+        padding: 30px 20px;
+        background-color: #ffffff;
+        margin-bottom: 20px;
+      }
+
+      .section-greetings h2 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: #6a11cb;
+      }
+
+      .greet-list {
+        list-style: none;
+        margin-bottom: 20px;
+      }
+
+      .greet-list li {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+      }
+
+      .dialogue-box {
+        background-color: #f9fafb;
+        border-left: 4px solid #6a11cb;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+      }'),
+       ('Advanced English Idiomatic Expressions',
+        'C1-C2',
+        'Урок по продвинутым идиоматическим выражениям, их значению и использованию в речи.',
+        'Изучайте контекст и обращайте внимание на регистр. Старайтесь употреблять идиомы в устной речи.',
+        '<section id="introduction" class="section-intro">
+          <h2>Введение</h2>
+          <p>
+            Идиомы играют ключевую роль в носительном английском языке, особенно на продвинутых уровнях C1–C2. В этом уроке вы познакомитесь с выразительными фразами, которые сделают вашу речь более живой и естественной.
+          </p>
+          <p>
+            Мы рассмотрим пять распространенных идиом, их происхождение, значение и примеры употребления.
+          </p>
+          <img src="https://images.unsplash.com/photo-1519074002996-a69e7ac46a42?auto=format&fit=crop&w=800&q=60" alt="Idioms Concept" class="intro-image" />
+        </section>
+
+        <section id="common-idioms" class="section-idioms">
+          <h2>Five Common Idioms (Пять распространенных идиом)</h2>
+          <ul class="idiom-list">
+            <li>
+              <h3>1. <em>Break the ice</em></h3>
+              <p><strong>Значение:</strong> Начать разговор в непринужденной обстановке, чтобы снять напряжение.</p>
+              <p><strong>Пример:</strong> At the party, John told a funny story to <strong>break the ice</strong> and everyone started laughing.</p>
+              <img src="https://via.placeholder.com/400x200.png?text=Icebreaker" alt="Break the Ice" class="idiom-image" />
+            </li>
+            <li>
+              <h3>2. <em>Once in a blue moon</em></h3>
+              <p><strong>Значение:</strong> Очень редко.</p>
+              <p><strong>Пример:</strong> I go to the cinema <strong>once in a blue moon</strong>, because I usually watch films at home.</p>
+              <img src="https://via.placeholder.com/400x200.png?text=Blue+Moon" alt="Blue Moon" class="idiom-image" />
+            </li>
+            <li>
+              <h3>3. <em>Hit the nail on the head</em></h3>
+              <p><strong>Значение:</strong> Попасть в точку, точно описать ситуацию.</p>
+              <p><strong>Пример:</strong> When Sarah said that the company needs more innovation, she really <strong>hit the nail on the head</strong>.</p>
+              <img src="https://via.placeholder.com/400x200.png?text=Nail+on+Head" alt="Hit the Nail on the Head" class="idiom-image" />
+            </li>
+            <li>
+              <h3>4. <em>Cost an arm and a leg</em></h3>
+              <p><strong>Значение:</strong> Стоить очень дорого.</p>
+              <p><strong>Пример:</strong> That designer dress <strong>cost an arm and a leg</strong>, but she bought it anyway.</p>
+              <img src="https://via.placeholder.com/400x200.png?text=Expensive" alt="Cost an Arm and a Leg" class="idiom-image" />
+            </li>
+            <li>
+              <h3>5. <em>Under the weather</em></h3>
+              <p><strong>Значение:</strong> Плохо себя чувствовать.</p>
+              <p><strong>Пример:</strong> I decided to stay home today because I am feeling <strong>under the weather</strong>.</p>
+              <img src="https://via.placeholder.com/400x200.png?text=Under+Weather" alt="Under the Weather" class="idiom-image" />
+            </li>
+          </ul>
+        </section>
+
+        <section id="usage-examples" class="section-usage">
+          <h2>Usage &amp; Examples (Употребление и примеры)</h2>
+          <p>Чтобы лучше понять, как и когда использовать идиомы, рассмотрим примеры диалогов:</p>
+          <div class="dialogue-box">
+            <p><em>Emily:</em> I have to speak in front of 200 people tomorrow. I&apos;m so nervous.</p>
+            <p><em>Mark:</em> Don&apos;t worry, just <strong>break the ice</strong> with a joke at the beginning, and they will relax.</p>
+          </div>
+          <div class="dialogue-box">
+            <p><em>Paul:</em> Did you apply for that job?</p>
+            <p><em>Lisa:</em> Yes, but who knows. <strong>Once in a blue moon</strong> do I get so many qualifications on my CV.</p>
+          </div>
+          <div class="dialogue-box">
+            <p><em>Boss:</em> Why haven&apos;t you updated the report yet?</p>
+            <p><em>Anna:</em> Because last night my computer crashed, and replacing it <strong>cost an arm and a leg</strong>.</p>
+          </div>
+          <p>Помимо разговорной речи, идиомы часто встречаются в СМИ и литературе. Посмотрите видео-обзор, где носители объясняют эти фразы:</p>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Idioms Explained" frameborder="0" allowfullscreen></iframe>
+        </section>',
+        '/* idioms.css */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #eef2f5;
+        color: #2b2b2b;
+        line-height: 1.6;
+      }
+
+      .section-intro {
+        background-color: #fff;
+        padding: 30px 20px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .intro-image {
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-idioms {
+        padding: 30px 20px;
+        background-color: #ffffff;
+        margin-bottom: 20px;
+      }
+
+      .section-idioms h2 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: #11998e;
+      }
+
+      .idiom-list {
+        list-style: none;
+      }
+
+      .idiom-list li {
+        margin-bottom: 25px;
+      }
+
+      .idiom-list h3 {
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+        color: #333;
+      }
+
+      .idiom-image {
+        width: 100%;
+        max-width: 500px;
+        margin-top: 10px;
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-usage {
+        padding: 30px 20px;
+        background-color: #ffffff;
+        margin-bottom: 20px;
+      }
+
+      .dialogue-box {
+        background-color: #f8fafb;
+        border-left: 4px solid #11998e;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+      }');

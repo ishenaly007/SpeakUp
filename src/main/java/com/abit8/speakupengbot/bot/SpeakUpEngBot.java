@@ -13,6 +13,7 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
@@ -172,22 +173,22 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
                         supportRequestService.saveSupportRequest(user, telegramUsername, messageText);
                         sendMessage(chatId, "Ваше сообщение отправлено в поддержку\\! Мы скоро ответим\\.");
                         userStates.remove(userId);
-                    } else if (state.getLessonSelectionMode() != null && state.getLessonSelectionMode()) {
-                        if (messageText.matches("\\d+")) {
-                            long lessonId = Long.parseLong(messageText);
-                            List<Lesson> lessons = lessonService.findAll();
-                            if (lessonId > 0 && lessonId <= lessons.size()) {
-                                Lesson selectedLesson = lessons.get((int) (lessonId - 1));
-                                sendLesson(chatId, userId, selectedLesson);
-                            } else {
-                                sendMessage(chatId, "Неверный номер урока\\! Выбери из списка\\.");
-                                return;
-                            }
-                            userStates.remove(userId);
-                        } else {
-                            userStates.remove(userId);
-                            onUpdateReceived(update);
-                        }
+                        // } else if (state.getLessonSelectionMode() != null && state.getLessonSelectionMode()) {
+                        //     if (messageText.matches("\\d+")) {
+                        //         long lessonId = Long.parseLong(messageText);
+                        //         List<Lesson> lessons = lessonService.findAll();
+                        //         if (lessonId > 0 && lessonId <= lessons.size()) {
+                        //             Lesson selectedLesson = lessons.get((int) (lessonId - 1));
+                        //             sendLesson(chatId, userId, selectedLesson);
+                        //         } else {
+                        //             sendMessage(chatId, "Неверный номер урока\\! Выбери из списка\\.");
+                        //             return;
+                        //         }
+                        //         userStates.remove(userId);
+                        //     } else {
+                        //         userStates.remove(userId);
+                        //         onUpdateReceived(update);
+                        //     }
                     } else if (foundWord.isPresent()) {
                         Word w = foundWord.get();
                         StringBuilder wordResponse = new StringBuilder();
@@ -220,15 +221,15 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
                                 String welcomeText = "Привет\\! Я *SpeakUpEngBot* — твой учитель английского\\! 📚 Пройди уроки *`/lessons`* или сыграй в *`/quiz`*\\. А ещё могу перевести любой английский текст прямо в чате\\. *Начинаем\\?*";
                                 sendMessageWithKeyboard(chatId, welcomeText, createMainKeyboard());
                                 break;
-                            case "/lessons":
-                            case "Уроки":
-                            case "/lessons@SpeakUpEngBot":
-                                if (update.getMessage().isGroupMessage()) {
-                                    sendMessage(chatId, "Уроки можно проходить только в боте\\!");
-                                    return;
-                                }
-                                sendLessonsList(chatId, userId);
-                                break;
+                            // case "/lessons":
+                            // case "Уроки":
+                            // case "/lessons@SpeakUpEngBot":
+                            //     if (update.getMessage().isGroupMessage()) {
+                            //         sendMessage(chatId, "Уроки можно проходить только в боте\\!");
+                            //         return;
+                            //     }
+                            //     sendLessonsList(chatId, userId);
+                            //     break;
                             case "/chat":
                             case "/chat@SpeakUpEngBot":
                                 State chatState = new State();
@@ -305,11 +306,11 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
                 String answer = data[3];
                 checkLessonTest(chatId, messageId, userId, lesson, testIndex, answer);
             }else if (callbackData.startsWith("complete_")) {
-                    String[] data = callbackData.split("_");
-                    long lessonId = Long.parseLong(data[1]);
-                    Lesson lesson = lessonService.findById(lessonId).get();
-                    startLessonTest(chatId, messageId, userId, lesson, 0);
-                }
+                String[] data = callbackData.split("_");
+                long lessonId = Long.parseLong(data[1]);
+                Lesson lesson = lessonService.findById(lessonId).get();
+                startLessonTest(chatId, messageId, userId, lesson, 0);
+            }
         }
     }
 
@@ -446,69 +447,70 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         }
     }
 
-    private void sendLessonsList(long chatId, long userId) {
-        if (quizSessions.containsKey(userId)) {
-            quizSessions.remove(userId);
-        }
-        if (chatId < 0) {
-            sendMessage(chatId, "Уроки можно проходить только в личных сообщениях с ботом\\!");
-            return;
-        }
-        List<Lesson> lessons = lessonService.findAll();
-        User user = userService.loginTelegramUser(userId).get();
-        if (lessons.isEmpty()) {
-            sendMessage(chatId, "Уроки пока не добавлены\\!");
-            return;
-        }
+    // private void sendLessonsList(long chatId, long userId) {
+    //     if (quizSessions.containsKey(userId)) {
+    //         quizSessions.remove(userId);
+    //     }
+    //     if (chatId < 0) {
+    //         sendMessage(chatId, "Уроки можно проходить только в личных сообщениях с ботом\\!");
+    //         return;
+    //     }
+    //     List<Lesson> lessons = lessonService.findAll();
+    //     User user = userService.loginTelegramUser(userId).get();
+    //     if (lessons.isEmpty()) {
+    //         sendMessage(chatId, "Уроки пока не добавлены\\!");
+    //         return;
+    //     }
 
-        StringBuilder lessonsText = new StringBuilder("*Список уроков:*\n");
-        int index = 1;
-        for (Lesson lesson : lessons) {
-            boolean isCompleted = userLessonService.existsByUserIdAndLessonId(user.getId(), lesson.getId());
-            lessonsText.append("*" + index).append(")* ").append(lesson.getTitle())
-                    .append(" (").append(lesson.getLevel()).append(")");
-            if (isCompleted) {
-                lessonsText.append(" - `пройден`");
-            }
-            lessonsText.append("\n");
-            index++;
-        }
-        lessonsText.append("\nВыбери урок, отправив его номер.");
+    //     StringBuilder lessonsText = new StringBuilder("*Список уроков:*\n");
+    //     int index = 1;
+    //     for (Lesson lesson : lessons) {
+    //         boolean isCompleted = userLessonService.existsByUserIdAndLessonId(user.getId(), lesson.getId());
+    //         lessonsText.append("*" + index).append(")* ").append(lesson.getTitle())
+    //                 .append(" (").append(lesson.getLevel()).append(")");
+    //         if (isCompleted) {
+    //             lessonsText.append(" - `пройден`");
+    //         }
+    //         lessonsText.append("\n");
+    //         index++;
+    //     }
+    //     lessonsText.append("\nВыбери урок, отправив его номер.");
 
-        sendMessage(chatId, lessonsText.toString(), ParseMode.MARKDOWN);
-        State state = new State();
-        state.setLessonSelectionMode(true);
-        userStates.put(userId, state);
-    }
+    //     sendMessage(chatId, lessonsText.toString(), ParseMode.MARKDOWN);
+    //     State state = new State();
+    //     state.setLessonSelectionMode(true);
+    //     userStates.put(userId, state);
+    // }
 
-    private void sendLesson(long chatId, long userId, Lesson lesson) {
-        if (chatId < 0) {
-            sendMessage(chatId, "Уроки можно проходить только в личных сообщениях с ботом\\!");
-            return;
-        }
-        StringBuilder lessonText = new StringBuilder();
-        lessonText.append("*Урок ").append(lesson.getId()).append(": ").append(lesson.getTitle()).append(" (").append(lesson.getLevel()).append(")*\n");
-        lessonText.append(lesson.getDescription()).append("\n");
+    // private void sendLesson(long chatId, long userId, Lesson lesson) {
+    //     if (chatId < 0) {
+    //         sendMessage(chatId, "Уроки можно проходить только в личных сообщениях с ботом\\!");
+    //         return;
+    //     }
+    //     StringBuilder lessonText = new StringBuilder();
+    //     lessonText.append("*Урок ").append(lesson.getId()).append(": ").append(lesson.getTitle()).append(" (").append(lesson.getLevel()).append(")*\n");
+    //     lessonText.append(lesson.getDescription()).append("\n");
 
-        InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
-        buttons.add(Arrays.asList(
-                InlineKeyboardButton.builder().text("Пройти урок").url(lesson.getTelegraphUrl()).build(),
-                InlineKeyboardButton.builder().text("Завершить").callbackData("complete_" + lesson.getId()).build()
-        ));
-        keyboard.setKeyboard(buttons);
+    //     String webLessonUrl = appBaseUrl + "/frontend/lesson.html?lessonId=" + lesson.getId() + "&userId=" + userId;
+    //     InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
+    //     List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
+    //     buttons.add(Arrays.asList(
+    //             InlineKeyboardButton.builder().text("Пройти урок").url(webLessonUrl).build(),
+    //             InlineKeyboardButton.builder().text("Завершить").callbackData("complete_" + lesson.getId()).build()
+    //     ));
+    //     keyboard.setKeyboard(buttons);
 
-        SendMessage message = new SendMessage();
-        message.setChatId(String.valueOf(chatId));
-        message.setText(escapeMarkdownV2(lessonText.toString()));
-        message.setParseMode(ParseMode.MARKDOWNV2);
-        message.setReplyMarkup(keyboard);
-        try {
-            execute(message);
-        } catch (TelegramApiException e) {
-            System.err.println("Failed to send lesson: " + e.getMessage());
-        }
-    }
+    //     SendMessage message = new SendMessage();
+    //     message.setChatId(String.valueOf(chatId));
+    //     message.setText(escapeMarkdownV2(lessonText.toString()));
+    //     message.setParseMode(ParseMode.MARKDOWNV2);
+    //     message.setReplyMarkup(keyboard);
+    //     try {
+    //         execute(message);
+    //     } catch (TelegramApiException e) {
+    //         System.err.println("Failed to send lesson: " + e.getMessage());
+    //     }
+    // }
 
     private void startLessonTest(long chatId, int messageId, long userId, Lesson lesson, int testIndex) {
         long lessonId = lesson.getId();
@@ -701,7 +703,7 @@ public class SpeakUpEngBot extends TelegramLongPollingBot {
         KeyboardRow row = new KeyboardRow();
         KeyboardRow row2 = new KeyboardRow();
         row.add("Викторина");
-        row.add("Уроки");
+        // row.add("Уроки"); // Lessons functionality disabled
         row2.add("Профиль");
         row2.add("Поддержка");
         keyboard.add(row);

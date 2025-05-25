@@ -29,9 +29,3 @@ databaseChangeLog:
       changes:
         - sqlFile:
             path: classpath:db/changelog/v0_0_1/2025-04-21--05-iadd_AI_chat.sql
-  - changeSet:
-      id: 6
-      author: inarkozuev
-      changes:
-        - sqlFile:
-            path: classpath:db/changelog/v0_0_1/2025-05-24--06-add-telegraphUrl-html-css-to-lesson.sql
