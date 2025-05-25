@@ -28,8 +28,9 @@
                 try {
                     await login(telegramId, username);
                     window.location.href = 'index.html';
-                } catch (error) {
+                } catch (err) {
                     // Ошибка уже обработана в login()
+                    console.log(err)
                 }
             }
         });
