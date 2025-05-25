@@ -2,7 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import PrivateRoute from './components/PrivateRoute'
 import { AuthProvider } from './context/AuthContext'
 import Chat from './pages/Chat'
-// import Home from './pages/Home'
+import Home from './pages/Home'
 import LessonDetail from './pages/LessonsDetail'
 import Lessons from './pages/Lessons'
 import Login from './pages/Login'
@@ -16,6 +16,7 @@ function App() {
 		<AuthProvider>
 			<Router>
 				<Routes>
+          <Route path='/' element={<Home />} />
 					<Route
 						path='/profile'
 						element={

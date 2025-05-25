@@ -1,26 +1,32 @@
-import { useEffect, useState } from 'react';
-import { getAllLessons } from '../api/lessons';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { getAllLessons } from '../api/lessons'
+import { useAuth } from '../context/AuthContext'
+import styles from './Lessons.module.scss'
 
 const Lessons = () => {
-  const [lessons, setLessons] = useState([]);
+  const [lessons, setLessons] = useState([])
+  const { user } = useAuth()
 
   useEffect(() => {
-    getAllLessons().then((res) => setLessons(res.data)).catch(() => alert('Ошибка загрузки уроков'));
-  }, []);
+    if (!user) return
+    getAllLessons(user.id, user.token)
+      .then(res => setLessons(res.data))
+      .catch(() => alert('Ошибка загрузки уроков'))
+  }, [user])
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h2>Уроки</h2>
       <ul>
-        {lessons.map((lesson) => (
-          <li key={lesson._id || lesson.id}>
-            <Link to={`/lessons/${lesson._id || lesson.id}`}>{lesson.title}</Link>
+        {lessons.map(lesson => (
+          <li key={lesson.id}>
+            <Link to={`/lessons/${lesson.id}`}>{lesson.title}</Link>
           </li>
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Lessons;
+export default Lessons

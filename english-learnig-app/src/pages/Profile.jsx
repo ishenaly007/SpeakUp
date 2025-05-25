@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getProfile } from '../api/auth';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import styles from './Profile.module.scss';
 
 const Profile = () => {
   const { user, logoutUser } = useAuth();
@@ -16,10 +17,10 @@ const Profile = () => {
 
     const fetchProfile = async () => {
       try {
-        const data = await getProfile(user.userId, user.token);
+        const data = await getProfile(user.id, user.token);
         setProfile(data.data || data);
       } catch (err) {
-        alert('Ошибка при загрузке профиля', err);
+        alert('Ошибка при загрузке профиля: ' + err.message);
       }
     };
 
@@ -29,11 +30,19 @@ const Profile = () => {
   if (!profile) return <div>Загрузка...</div>;
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h2>Профиль</h2>
       <p><strong>Имя пользователя:</strong> {profile.username}</p>
-      <p><strong>Уровень:</strong> {profile.level}</p>
-      <button onClick={logoutUser}>Выйти</button>
+      <p><strong>Уровень:</strong> {profile.level || 'Не указан'}</p>
+
+      <nav className={styles.nav}>
+        <Link to="/quiz/start" className={styles.link}>Начать Квиз</Link>
+        <Link to="/quiz/results" className={styles.link}>Результаты Квиза</Link>
+        <Link to="/lessons" className={styles.link}>Уроки</Link>
+        <Link to="/chat" className={styles.link}>Чаты</Link>
+      </nav>
+
+      <button className={styles.logoutBtn} onClick={logoutUser}>Выйти</button>
     </div>
   );
 };

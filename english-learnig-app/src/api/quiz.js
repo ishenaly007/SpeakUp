@@ -1,14 +1,21 @@
 import api from './axios';
 
-export const startQuiz = (userId, token) =>
-  api.post(`/quizzes/${userId}/start`, {}, {
-    headers: { Authorization: `Bearer ${token}` },
+export const startQuiz = (userId, data, token) =>
+  api.post(`/quizzes/${userId}/start`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
   });
 
-export const submitQuiz = (userId, answers, token) =>
-  api.post(`/quizzes/${userId}/submit`, { answers }, {
-    headers: { Authorization: `Bearer ${token}` },
+export const submitQuiz = (userId, resultData, token) =>
+  api.post(`/quizzes/${userId}/submit`, resultData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
   });
+
 
 export const getQuizResults = (userId, token) =>
   api.get(`/quizzes/${userId}/results`, {

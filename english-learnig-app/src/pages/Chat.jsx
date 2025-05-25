@@ -8,7 +8,7 @@ const Chat = () => {
   const [message, setMessage] = useState('');
 
   const fetchHistory = () => {
-    getChatHistory(user.userId, user.token)
+    getChatHistory(user.id, user.token)
       .then((res) => setHistory(res.data))
       .catch(() => alert('Ошибка загрузки истории чата'));
   };
@@ -21,7 +21,7 @@ const Chat = () => {
     e.preventDefault();
     if (!message.trim()) return;
 
-    const newMessage = { userId: user.userId, message };
+    const newMessage = { id: user.id, message };
 
     try {
       const res = await sendMessage(newMessage, user.token);
