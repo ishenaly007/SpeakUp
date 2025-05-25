@@ -16,6 +16,12 @@ public class User {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "level")
     // Уровень пользователя (A1-C2)
@@ -33,9 +39,18 @@ public class User {
 
     public User() {}
 
-    public User(Long telegramChatId, String username, LocalDateTime createdAt) {
-        this.telegramChatId = telegramChatId;
+    public User(String email, String username, String password, LocalDateTime createdAt) {
+        this.email = email;
         this.username = username;
+        this.password = password;
+        this.createdAt = createdAt;
+    }
+
+    public User(Long telegramChatId, String email, String username, String password, LocalDateTime createdAt) {
+        this.telegramChatId = telegramChatId;
+        this.email = email;
+        this.username = username;
+        this.password = password;
         this.createdAt = createdAt;
     }
 
@@ -62,10 +77,15 @@ public class User {
     }
 
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public Long getTelegramChatId() { return telegramChatId; }
     public void setTelegramChatId(Long telegramChatId) { this.telegramChatId = telegramChatId; }
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
     public LanguageLevel getLevel() { return level; }
     public void setLevel(LanguageLevel level) { this.level = level; }
     public int getXp() { return xp; }
