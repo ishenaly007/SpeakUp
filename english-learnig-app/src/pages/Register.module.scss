@@ -1,52 +1,7 @@
-@import '../styles/variables';
-
-.wrapper {
-  max-width: 400px;
-  margin: 60px auto;
-  padding: 24px 32px;
-  background: white;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-h2 {
-  color: var(--primary-color);
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-form {
+// Basic styles for Register page - will be populated later
+.registerContainer {
   display: flex;
   flex-direction: column;
-  
-  label {
-    margin-bottom: 6px;
-    font-weight: 600;
-    color: var(--primary-color);
-  }
-
-  input {
-    padding: 10px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: var(--border-radius);
-    font-size: 1rem;
-    &:focus {
-      outline: none;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 6px var(--primary-light);
-    }
-  }
-
-  button {
-    padding: 12px;
-    background-color: var(--primary-color);
-    border: none;
-    border-radius: var(--border-radius);
-    color: white;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+  align-items: center;
+  padding: 20px;
 }

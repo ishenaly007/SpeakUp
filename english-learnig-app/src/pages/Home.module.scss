@@ -1,35 +1,107 @@
-@import '../styles/variables';
+@import '../styles/variables.scss'; // Or global.scss if variables are there
 
-.homeWrapper {
-  max-width: 400px;
-  margin: 100px auto;
-  padding: 32px;
-  background-color: white;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.homeContainer {
   text-align: center;
+}
 
-  h1 {
-    color: var(--primary-color);
-    margin-bottom: 16px;
+.heroSection {
+  position: relative; 
+  width: 100%;
+  overflow: hidden; 
+
+  .heroImage {
+    width: 100%;
+    height: auto; 
+    max-height: 400px; // Max height for the image
+    object-fit: cover; // Ensure image covers the area without distortion
+    display: block;
   }
 
-  p {
-    margin-bottom: 24px;
+  .heroTextContainer {
+    padding: 1.5rem; // Adjusted padding
+    background-color: rgba(244, 244, 244, 0.9); // Slightly transparent background for better blending if over image
+    // For text below image, remove background or set to solid color e.g. $background-color
+
+    // If you want text overlaid on image:
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+    // color: white; 
+    // background-color: rgba(0, 0, 0, 0.6); 
+    // padding: 2rem;
+    // border-radius: 8px;
+    // width: 80%; // Ensure text container doesn't span full image width
   }
 
-  .buttonGroup {
-    display: flex;
-    justify-content: space-around;
+  .heroTitle {
+    font-size: 2.2rem; // Adjusted size
+    margin-bottom: 0.75rem; // Adjusted margin
+    color: $text-color; // Use global text color
+    font-weight: 600; // Make title a bit bolder
   }
 
-  .btn {
-    padding: 12px 24px;
-    background-color: var(--primary-color);
+  .heroSubtitle {
+    font-size: 1.1rem; // Adjusted size
+    margin-bottom: 1.5rem;
+    color: darken($text-color, 10%); // Slightly darker text for subtitle
+  }
+
+  .ctaButton {
+    padding: 0.75rem 1.8rem; // Adjusted padding
+    font-size: 1rem;      // Adjusted font size
     color: white;
-    text-decoration: none;
-    border-radius: var(--border-radius);
-    font-weight: 600;
+    background-color: $primary-color; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
+    text-transform: uppercase; // Uppercase text for CTA
+    letter-spacing: 0.5px;   // Add some letter spacing
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
   }
 }
+
+// Responsive adjustments for Home Page
+@media (max-width: 768px) {
+  .heroSection {
+    .heroImage {
+      max-height: 300px; // Reduce image height on smaller screens
+    }
+    .heroTextContainer {
+      padding: 1rem;
+    }
+    .heroTitle {
+      font-size: 1.8rem; // Reduce title font size
+    }
+    .heroSubtitle {
+      font-size: 1rem; // Reduce subtitle font size
+    }
+    .ctaButton {
+      padding: 0.6rem 1.5rem;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media (max-width: 480px) { // For very small screens
+  .heroSection {
+    .heroImage {
+      max-height: 200px; // Further reduce image height
+    }
+    .heroTitle {
+      font-size: 1.5rem;
+    }
+    .heroSubtitle {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// Fallback for variables if not imported
+$primary-color: #007bff !default;
+$text-color: #333 !default;
+$background-color: #f8f9fa !default;

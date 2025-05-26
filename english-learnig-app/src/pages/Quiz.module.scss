@@ -1,0 +1,218 @@
+.quizContainer {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.headerImage {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0.5rem;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.secondaryButton {
+  background-color: #6c757d;
+  &:hover {
+    background-color: #545b62;
+  }
+}
+
+.errorText {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+.errorTextSmall {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+
+/* Initial View Specifics */
+.initialView {
+  h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Active Quiz View Specifics */
+.activeQuizView {
+  .questionCounter {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+
+  .timerBarContainer {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+  }
+
+  .timerBar {
+    height: 100%;
+    background-color: #28a745; // Green for timer
+    border-radius: 5px;
+    transition: width 0.1s linear; // Smooth transition for timer
+  }
+  
+  .timerText {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+  }
+
+  .questionWord {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+
+  .optionsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); // Slightly smaller min for options
+    gap: 0.75rem; // Slightly reduced gap
+    margin-top: 1rem;
+  }
+
+  .optionButton {
+    padding: 0.8rem; // Adjusted padding
+    font-size: 1rem; // Adjusted font size
+    background-color: #fff;
+    border: 1px solid #007bff;
+    color: #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background-color: #007bff;
+      color: white;
+    }
+    &:disabled {
+      background-color: #e9ecef;
+      color: #6c757d;
+      border-color: #ced4da;
+      cursor: not-allowed;
+    }
+  }
+}
+
+/* Results View Specifics */
+.resultsView {
+  h2 {
+    font-size: 1.8rem;
+    color: #28a745; // Green for success
+    margin-bottom: 1rem;
+  }
+  p {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 0.75rem;
+  }
+  .resultsActions {
+    margin-top: 1.5rem;
+  }
+}
+
+// Media Queries for Quiz Page
+@media (max-width: 768px) {
+  .quizContainer {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+
+  .activeQuizView {
+    .questionWord {
+      font-size: 1.5rem; // Smaller font for question word
+    }
+    .optionButton {
+      font-size: 0.9rem; // Smaller font for options
+      padding: 0.7rem;
+    }
+  }
+
+  .resultsView {
+    h2 {
+      font-size: 1.5rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .quizContainer {
+    padding: 1rem;
+  }
+  .activeQuizView {
+    .questionWord {
+      font-size: 1.3rem;
+    }
+    .timerText, .questionCounter {
+      font-size: 0.8rem;
+    }
+     .optionsContainer {
+       // For very small screens, ensure options stack nicely if still too wide
+       grid-template-columns: 1fr; // Stack options vertically
+     }
+    .optionButton {
+      font-size: 0.85rem;
+    }
+  }
+  .initialView {
+    h2 {
+      font-size: 1.5rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
+}

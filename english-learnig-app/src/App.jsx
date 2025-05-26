@@ -1,76 +1,49 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import PrivateRoute from './components/PrivateRoute'
-import { AuthProvider } from './context/AuthContext'
-import Chat from './pages/Chat'
-import Home from './pages/Home'
-import LessonDetail from './pages/LessonsDetail'
-import Lessons from './pages/Lessons'
-import Login from './pages/Login'
-import Profile from './pages/Profile'
-import QuizResults from './pages/QuizResults'
-import QuizStart from './pages/QuizStart'
-import Register from './pages/Register'
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './contexts/AuthContext';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import PrivateRoute from './components/PrivateRoute';
+import Header from './components/Header';
+// Placeholders for pages to be created - create these files with basic content
+// e.g., const HomePage = () => <h2>Home Page</h2>; export default HomePage;
+import HomePage from './pages/HomePage'; // To be created
+import LessonsPage from './pages/LessonsPage'; // To be created
+import ChatPage from './pages/ChatPage'; // To be created
+import QuizPage from './pages/QuizPage'; // To be created
+import ProfilePage from './pages/ProfilePage'; // To be created
+
+import './styles/global.scss'; // Assuming global styles
 
 function App() {
-	return (
-		<AuthProvider>
-			<Router>
-				<Routes>
-          <Route path='/' element={<Home />} />
-					<Route
-						path='/profile'
-						element={
-							<PrivateRoute>
-								<Profile />
-							</PrivateRoute>
-						}
-					/>
-					<Route
-						path='/lessons'
-						element={
-							<PrivateRoute>
-								<Lessons />
-							</PrivateRoute>
-						}
-					/>
-					<Route
-						path='/lessons/:lessonId'
-						element={
-							<PrivateRoute>
-								<LessonDetail />
-							</PrivateRoute>
-						}
-					/>
-					<Route path='/register' element={<Register />} />
-					<Route path='/login' element={<Login />} />
-					<Route
-						path='/quiz/start'
-						element={
-							<PrivateRoute>
-								<QuizStart />
-							</PrivateRoute>
-						}
-					/>
-					<Route
-						path='/quiz/results'
-						element={
-							<PrivateRoute>
-								<QuizResults />
-							</PrivateRoute>
-						}
-					/>
-					<Route
-						path='/chat'
-						element={
-							<PrivateRoute>
-								<Chat />
-							</PrivateRoute>
-						}
-					/>
-				</Routes>
-			</Router>
-		</AuthProvider>
-	)
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div>Loading application...</div>; // Global loading state
+  }
+
+  return (
+    <div className="App">
+      {user && <Header />} {/* Display header only if user is logged in */}
+      <main> {/* Add a main tag for content */}
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          
+          <Route path="/" element={<PrivateRoute />}>
+            <Route index element={<HomePage />} />
+            <Route path="lessons" element={<LessonsPage />} />
+            <Route path="chat" element={<ChatPage />} />
+            <Route path="quizzes" element={<QuizPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+          </Route>
+          
+          {/* Redirect to login if no other route matches and not logged in */}
+          <Route path="*" element={user ? <Navigate to="/" /> : <Navigate to="/login" />} />
+        </Routes>
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
