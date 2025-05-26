@@ -6,19 +6,20 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: 'localhost', 
-    port: 5500,       
+    host: 'localhost',
+    port: 5500,
     proxy: {
-      '/api': { 
-        target: 'http://localhost:8080', 
+      '/api': {
+        target: 'http://localhost:8084',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''), 
+        secure: false,
+        ws: false,
       },
     },
   },
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setupTests.js', // Optional setup file
+    setupFiles: './src/setupTests.js',
   },
-})
+});

@@ -22,7 +22,7 @@ The frontend application uses Vite. To start the development server:
 ```bash
 npm run dev
 ```
-This will typically start the server on `http://localhost:5500` (as configured in `vite.config.js`). The application expects the backend API to be running on `http://localhost:8080` and will proxy requests from `/api` to it.
+This will typically start the server on `http://localhost:5500` (as configured in `vite.config.js`). The application expects the backend API to be running on `http://localhost:8084` and will proxy requests from `/api` to it.
 
 ## Building for Production
 
