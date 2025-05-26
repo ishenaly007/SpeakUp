@@ -157,7 +157,7 @@ const QuizPage = () => {
       <div className={styles.quizContainer}>
         <div className={styles.initialView}>
           <img 
-            src="https://via.placeholder.com/1200x200.png?text=Quiz+Time!" 
+            src="https://i.pinimg.com/564x/e3/be/6a/e3be6a8d8e062911789d03981774e65c.jpg" 
             alt="Quiz Time" 
             className={styles.headerImage}
           />

@@ -17,7 +17,7 @@ const HomePage = () => {
       <section className={styles.heroSection}>
         {/* Option 1: Placeholder image */}
         <img 
-          src="https://via.placeholder.com/1200x400.png?text=Learn+English+Effectively" 
+          src="https://i.imgflip.com/2ir5rr.jpg"
           alt="Learning English" 
           className={styles.heroImage} 
         />

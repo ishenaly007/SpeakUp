@@ -42,7 +42,7 @@ const LessonsPage = () => {
   return (
     <div className={styles.lessonsContainer}>
       <div className={styles.lessonsHeader}>
-        <img src="https://via.placeholder.com/1200x200.png?text=Our+Lessons" alt="Lessons banner" />
+        <img src="https://media.makeameme.org/created/no-nooo-5c950d.jpg" alt="Lessons banner" />
         <h2>Доступные уроки</h2>
         <p>Здесь вы найдете все доступные уроки. Выбирайте и начинайте учиться!</p>
       </div>
