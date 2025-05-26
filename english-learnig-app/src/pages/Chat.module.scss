@@ -1,10 +1,13 @@
+@import '../styles/global.scss';
+
 .chatContainer {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 100px); // Adjust based on header height
+  height: calc(100vh - #{$header-height} - 2rem); // Adjust based on header height and padding
   max-width: 800px;
-  margin: auto;
-  border: 1px solid #ccc;
+  margin: $header-height auto 0 auto; // Added margin-top for header clearance
+  padding: 1rem; // Added padding
+  border: 1px solid $border-color;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 0 10px rgba(0,0,0,0.1); // Added subtle shadow
@@ -74,6 +77,62 @@
     color: #333;
     align-self: flex-start;
     border-bottom-left-radius: 6px; // Tail for AI bubble
+
+    // Styles for Markdown content
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 0.6em;
+      margin-bottom: 0.3em;
+      font-weight: 600;
+    }
+    p {
+      margin-top: 0;
+      margin-bottom: 0.5em;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    ul, ol {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      padding-left: 1.5em; // Indentation for lists
+    }
+    li {
+      margin-bottom: 0.25em;
+    }
+    a {
+      color: $primary-color; // Use a variable or a specific color
+      text-decoration: underline;
+      &:hover {
+        color: darken($primary-color, 15%);
+      }
+    }
+    code { // Inline code
+      background-color: rgba(0, 0, 0, 0.06);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-family: $font-family-monospace; // Used global variable
+      font-size: 0.9em;
+    }
+    pre { // Code blocks
+      background-color: rgba(0, 0, 0, 0.06);
+      padding: 0.8em;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin-bottom: 0.5em;
+      code {
+        background-color: transparent;
+        padding: 0;
+        font-size: 0.9em; // Ensure consistent font size
+      }
+    }
+    blockquote {
+      border-left: 4px solid $border-color; // Used global variable
+      margin-left: 0;
+      padding-left: 1em;
+      color: #555;
+      font-style: italic;
+      margin-bottom: 0.5em;
+    }
   }
 
   .timestamp {
@@ -96,27 +155,27 @@
 .inputArea {
   display: flex;
   padding: 1rem;
-  border-top: 1px solid #ddd; // Slightly darker border
+  border-top: 1px solid $border-color; // Used global variable, assuming #ddd is a darker shade of #ccc
   background-color: #ffffff; // White background for input area
 
   input {
     flex-grow: 1;
     padding: 0.75rem; // Increased padding
-    border: 1px solid #ccc;
+    border: 1px solid $border-color;
     border-radius: 20px; // Rounded input field
     margin-right: 0.75rem; // Increased margin
     font-size: 0.95rem;
 
     &:focus {
       outline: none;
-      border-color: #007bff;
-      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+      border-color: $primary-color; // Used global variable
+      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); // Consider making this a mixin or variable too
     }
   }
 
   button {
     padding: 0.75rem 1.2rem; // Increased padding
-    background-color: #007bff;
+    background-color: $primary-color; // Used global variable
     color: white;
     border: none;
     border-radius: 20px; // Rounded button

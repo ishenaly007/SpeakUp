@@ -145,114 +145,126 @@ const QuizPage = () => {
   // --- Render logic based on quizState ---
   if (error && quizState !== 'active') { // Show prominent error unless in active quiz (where error might be temporary)
     return (
-      <div className={styles.quizContainer}>
-        <p className={styles.errorText}>Error: {error}</p>
-        <button onClick={handlePlayAgain} className={styles.button}>Try Again</button>
+      <div className={styles.pageContentWrapper}>
+        <div className={styles.quizContainer}>
+          <p className={styles.errorText}>Error: {error}</p>
+          <button onClick={handlePlayAgain} className={styles.button}>Try Again</button>
+        </div>
       </div>
     );
   }
 
   if (quizState === 'initial') {
     return (
-      <div className={styles.quizContainer}>
-        <div className={styles.initialView}>
-          <img 
-            src="https://i.pinimg.com/564x/e3/be/6a/e3be6a8d8e062911789d03981774e65c.jpg" 
-            alt="Quiz Time" 
-            className={styles.headerImage}
-          />
-          <h2>Проверьте свои знания!</h2>
-          <p>Нажмите кнопку ниже, чтобы начать.</p>
-          {loading ? (
-            <p>Loading quiz...</p>
-          ) : (
-            <button onClick={() => handleStartQuiz()} className={styles.button} disabled={loading}>
-              Начать квиз
-            </button>
-          )}
-          {/* Optional: Theme selection could be added here */}
+      <div className={styles.pageContentWrapper}>
+        <div className={styles.quizContainer}>
+          <div className={styles.initialView}>
+            <img 
+              src="https://i.pinimg.com/564x/e3/be/6a/e3be6a8d8e062911789d03981774e65c.jpg" 
+              alt="Quiz Time" 
+              className={styles.headerImage}
+            />
+            <h2>Проверьте свои знания!</h2>
+            <p>Нажмите кнопку ниже, чтобы начать.</p>
+            {loading ? (
+              <p>Loading quiz...</p>
+            ) : (
+              <button onClick={() => handleStartQuiz()} className={styles.button} disabled={loading}>
+                Начать квиз
+              </button>
+            )}
+            {/* Optional: Theme selection could be added here */}
+          </div>
         </div>
       </div>
     );
   }
   
   if (quizState === 'active') {
-    if (loading) return <div className={styles.quizContainer}><p>Loading question...</p></div>;
+    if (loading) return <div className={styles.pageContentWrapper}><div className={styles.quizContainer}><p>Loading question...</p></div></div>;
     if (!currentQuestions || currentQuestions.length === 0 || currentQuestionIndex >= currentQuestions.length) {
       return (
-        <div className={styles.quizContainer}>
-          <p className={styles.errorText}>Error: No questions available or index out of bounds.</p>
-          <button onClick={handlePlayAgain} className={styles.button}>Start Over</button>
+        <div className={styles.pageContentWrapper}>
+          <div className={styles.quizContainer}>
+            <p className={styles.errorText}>Error: No questions available or index out of bounds.</p>
+            <button onClick={handlePlayAgain} className={styles.button}>Start Over</button>
+          </div>
         </div>
       );
     }
 
     const question = currentQuestions[currentQuestionIndex];
     if(!question) { 
-      return <div className={styles.quizContainer}><p>Loading question data...</p></div>;
+      return <div className={styles.pageContentWrapper}><div className={styles.quizContainer}><p>Loading question data...</p></div></div>;
     }
 
     return (
-      <div className={styles.quizContainer}>
-        <div className={styles.activeQuizView}>
-          <p className={styles.questionCounter}>Вопрос {currentQuestionIndex + 1} / {currentQuestions.length}</p>
-          <div className={styles.timerBarContainer}>
-            <div 
-              className={styles.timerBar} 
-              style={{ width: `${(timer / 5) * 100}%` }} 
-            />
+      <div className={styles.pageContentWrapper}>
+        <div className={styles.quizContainer}>
+          <div className={styles.activeQuizView}>
+            <p className={styles.questionCounter}>Вопрос {currentQuestionIndex + 1} / {currentQuestions.length}</p>
+            <div className={styles.timerBarContainer}>
+              <div 
+                className={styles.timerBar} 
+                style={{ width: `${(timer / 5) * 100}%` }} 
+              />
+            </div>
+            <p className={styles.timerText}>Осталось времени: {timer}с</p>
+            
+            <h3 className={styles.questionWord}>{question.englishWord}</h3>
+            
+            <div className={styles.optionsContainer}>
+              {question.options.map((opt, index) => (
+                <button 
+                  key={index} 
+                  onClick={() => handleAnswer(opt)} 
+                  className={styles.optionButton}
+                  disabled={timer === 0} // Disable if timer ran out
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+            {error && <p className={styles.errorTextSmall}>{error}</p>}
           </div>
-          <p className={styles.timerText}>Осталось времени: {timer}с</p>
-          
-          <h3 className={styles.questionWord}>{question.englishWord}</h3>
-          
-          <div className={styles.optionsContainer}>
-            {question.options.map((opt, index) => (
-              <button 
-                key={index} 
-                onClick={() => handleAnswer(opt)} 
-                className={styles.optionButton}
-                disabled={timer === 0} // Disable if timer ran out
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-          {error && <p className={styles.errorTextSmall}>{error}</p>}
         </div>
       </div>
     );
   }
   
   if (quizState === 'results') {
-    if (loading) return <div className={styles.quizContainer}><p>Submitting results...</p></div>;
+    if (loading) return <div className={styles.pageContentWrapper}><div className={styles.quizContainer}><p>Submitting results...</p></div></div>;
     if (!quizResults) {
       return (
-         <div className={styles.quizContainer}>
-            <p className={styles.errorText}>Could not load quiz results.</p>
-            <button onClick={handlePlayAgain} className={styles.button}>Play Again</button>
-         </div>
+        <div className={styles.pageContentWrapper}>
+          <div className={styles.quizContainer}>
+              <p className={styles.errorText}>Could not load quiz results.</p>
+              <button onClick={handlePlayAgain} className={styles.button}>Play Again</button>
+          </div>
+        </div>
       );
     }
     return (
-      <div className={styles.quizContainer}>
-        <div className={styles.resultsView}>
-          <h2>Квиз завершен!</h2>
-          <p>Ваш результат: {quizResults.score} из {quizResults.totalQuestions}</p>
-          <p>Заработано XP: {quizResults.xpEarned}</p>
-          <p>Общий винрейт: {quizResults.winrate ? `${(quizResults.winrate * 100).toFixed(1)}%` : 'N/A'}</p>
-          {/* Display correct words if needed */}
-          {/* quizResults.correctWords might contain the list if backend sends it back */}
-          <div className={styles.resultsActions}>
-            <button onClick={handlePlayAgain} className={styles.button}>Play Again</button>
-            <button onClick={navigateToHome} className={`${styles.button} ${styles.secondaryButton}`}>Home</button>
+      <div className={styles.pageContentWrapper}>
+        <div className={styles.quizContainer}>
+          <div className={styles.resultsView}>
+            <h2>Квиз завершен!</h2>
+            <p>Ваш результат: {quizResults.score} из {quizResults.totalQuestions}</p>
+            <p>Заработано XP: {quizResults.xpEarned}</p>
+            <p>Общий винрейт: {quizResults.winrate ? `${(quizResults.winrate * 100).toFixed(1)}%` : 'N/A'}</p>
+            {/* Display correct words if needed */}
+            {/* quizResults.correctWords might contain the list if backend sends it back */}
+            <div className={styles.resultsActions}>
+              <button onClick={handlePlayAgain} className={styles.button}>Play Again</button>
+              <button onClick={navigateToHome} className={`${styles.button} ${styles.secondaryButton}`}>Home</button>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
-  return <div className={styles.quizContainer}><p>Something went wrong. Please try refreshing.</p></div>; // Default fallback
+  return <div className={styles.pageContentWrapper}><div className={styles.quizContainer}><p>Something went wrong. Please try refreshing.</p></div></div>; // Default fallback
 };
 
 export default QuizPage;

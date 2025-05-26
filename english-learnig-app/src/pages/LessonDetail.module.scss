@@ -1,0 +1,33 @@
+@import '../styles/global.scss';
+
+.pageContentWrapper {
+  padding: 1rem;
+  margin-top: $header-height;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lessonDetailContainer {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
+  h1 {
+    font-size: 2rem;
+    color: $primary-color;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: $text-color;
+  }
+
+  .errorText {
+    color: #dc3545; // Bootstrap's danger color
+    font-weight: bold;
+  }
+}

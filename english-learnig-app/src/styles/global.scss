@@ -8,18 +8,25 @@
 // Variables
 $primary-color: #007bff;
 $secondary-color: #6c757d;
-$background-color: #f8f9fa;
+$background-color: #f8f9fa; // Main page background
 $text-color: #333;
 $font-family-sans-serif: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-$header-height: 70px; // Example header height
+$font-family-monospace: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+$header-height: 70px;
+$border-color: #ccc; // Added border-color
 
 body {
   font-family: $font-family-sans-serif;
   line-height: 1.6;
   background-color: $background-color;
   color: $text-color;
+  margin: 0; // Ensure no default margin
   // Padding top is removed here, as it will be handled by the <main> element or specific page containers
   // to avoid global padding affecting pages like Login/Register if they don't have the fixed Header.
+}
+
+* { // Ensure box-sizing is applied globally
+  box-sizing: border-box;
 }
 
 a {

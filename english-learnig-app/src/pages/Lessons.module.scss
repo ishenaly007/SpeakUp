@@ -1,5 +1,11 @@
+@import '../styles/global.scss';
+
 .lessonsContainer {
-  padding: 1rem;
+  padding: 1rem; // 20px is roughly 1.25rem, using 1rem for consistency
+  margin-top: $header-height;
+  max-width: 1200px; // Added max-width
+  margin-left: auto; // Added for centering
+  margin-right: auto; // Added for centering
 }
 
 .lessonsHeader {

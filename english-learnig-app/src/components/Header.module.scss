@@ -1,10 +1,10 @@
 // Using global variables
-@import '../styles/variables.scss'; // Assuming variables.scss for global vars or import global.scss
+@import '../styles/global.scss'; // Changed to global.scss
 
 .header {
   background-color: #f0f0f0; // Could be a global variable e.g., $header-bg-color
   padding: 1rem 1.5rem;       // Adjusted padding
-  border-bottom: 1px solid #ccc; // Could be $border-color
+  border-bottom: 1px solid $border-color; // Used $border-color
   position: fixed; // Make header fixed
   top: 0;
   left: 0;
@@ -19,6 +19,13 @@
     gap: 1.5rem; // Increased gap
     align-items: center;
     width: 100%; // Ensure nav takes full width for button positioning
+  }
+
+  .logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: $primary-color;
+    text-decoration: none;
   }
 
   .navLink {
@@ -102,7 +109,4 @@
   }
 }
 
-// Fallback for variables if not imported via a central variables file
-$primary-color: #007bff !default;
-$text-color: #333 !default;
-$header-height: 70px !default;
+// Fallback variables removed as they are now in global.scss

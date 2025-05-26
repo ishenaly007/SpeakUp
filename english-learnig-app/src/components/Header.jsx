@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-// import styles from './Header.module.scss'; // To be created
+import styles from './Header.module.scss'; // To be created
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -13,11 +13,12 @@ const Header = () => {
   };
 
   return (
-    // <header className={styles.header}>
-    <header>
+    <header className={styles.header}>
+    {/* <header> */}
       <nav>
         {user ? (
           <>
+            <NavLink to="/" className={styles.logo}>EnglishLearningApp</NavLink>
             {/* Add a logo or app name if desired */}
             {/* <NavLink to="/" className={styles.navLink} activeClassName={styles.activeLink}>Главная</NavLink> */}
             <NavLink to="/lessons">Уроки</NavLink>

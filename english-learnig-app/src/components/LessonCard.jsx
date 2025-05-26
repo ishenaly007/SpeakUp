@@ -1,26 +1,24 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Optional: for navigation
-import styles from './LessonCard.module.scss'; // To be created
+import { Link } from 'react-router-dom';
+import styles from './LessonCard.module.scss';
 
 const LessonCard = ({ lesson }) => {
-  const navigate = useNavigate(); // Optional
+  if (!lesson || !lesson.title) {
+    // Handle cases where lesson or lesson.title is undefined
+    // This could be logging an error, rendering a placeholder, or returning null
+    console.error("LessonCard: Lesson or lesson title is undefined", lesson);
+    return <div className={styles.lessonCard}>Lesson data is missing.</div>;
+  }
 
-  const handleClick = () => {
-    console.log(`Card clicked for lesson: ${lesson.id} - ${lesson.title}`);
-    // If you want to navigate to a lesson detail page:
-    // navigate(`/lessons/${lesson.id}`); 
-  };
+  const lessonTitleSlug = encodeURIComponent(lesson.title.toLowerCase().replace(/\s+/g, '-'));
 
   return (
-    <div 
-      className={`${styles.lessonCard} ${lesson.completed ? styles.completed : ''}`} 
-      onClick={handleClick}
-    >
+    <Link to={`/lessons/${lessonTitleSlug}`} className={`${styles.lessonCard} ${lesson.completed ? styles.completed : ''}`}>
       <h3>{lesson.title}</h3>
       <p><strong>Level:</strong> {lesson.level}</p>
       <p className={styles.description}>{lesson.description}</p>
       {lesson.completed && <p className={styles.completedText}>✔ Completed</p>}
-    </div>
+    </Link>
   );
 };
 

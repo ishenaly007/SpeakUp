@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { sendMessageToAI, fetchChatHistory } from '../services/chatService';
+import ReactMarkdown from 'react-markdown'; // Import ReactMarkdown
 import styles from './Chat.module.scss';
 
 const ChatPage = () => {
@@ -96,9 +97,15 @@ const ChatPage = () => {
               <p className={styles.noMessages}>No messages yet. Start the conversation!</p>
           )}
           {messages.map(msg => (
-              <div key={msg.id} className={`${styles.message} ${styles[msg.sender]}`}>
-                <p>{msg.text}</p>
-              </div>
+            <div key={msg.id} className={`${styles.message} ${styles[msg.sender]}`}>
+              {msg.sender === 'ai' ? (
+                <ReactMarkdown>{msg.text}</ReactMarkdown>
+              ) : (
+                <p>{msg.text}</p> 
+              )}
+              {/* Consider adding timestamp here if needed, styled appropriately */}
+              {/* <span className={styles.timestamp}>{new Date(msg.timestamp).toLocaleTimeString()}</span> */}
+            </div>
           ))}
           <div ref={messagesEndRef} />
         </div>
