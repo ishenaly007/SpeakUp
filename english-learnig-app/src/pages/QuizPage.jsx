@@ -237,15 +237,20 @@ const QuizPage = () => {
     return (
       <div className={styles.quizContainer}>
         <div className={styles.resultsView}>
+          <img
+              src="https://us-tuna-sounds-images.voicemod.net/f2133a6d-e729-444c-ad25-85f0964b4d43-1658826052776.jpg"
+              alt="Quiz Time"
+              className={styles.headerImage}
+          />
           <h2>Квиз завершен!</h2>
+          <p>____________________</p>
           <p>Ваш результат: {quizResults.score} из {quizResults.totalQuestions}</p>
           <p>Заработано XP: {quizResults.xpEarned}</p>
-          <p>Общий винрейт: {quizResults.winrate ? `${(quizResults.winrate * 100).toFixed(1)}%` : 'N/A'}</p>
           {/* Display correct words if needed */}
           {/* quizResults.correctWords might contain the list if backend sends it back */}
           <div className={styles.resultsActions}>
-            <button onClick={handlePlayAgain} className={styles.button}>Play Again</button>
-            <button onClick={navigateToHome} className={`${styles.button} ${styles.secondaryButton}`}>Home</button>
+            <button onClick={handlePlayAgain} className={styles.button}>Пройти снова</button>
+            <button onClick={navigateToHome} className={`${styles.button} ${styles.secondaryButton}`}>Главная</button>
           </div>
         </div>
       </div>

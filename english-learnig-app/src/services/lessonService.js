@@ -14,7 +14,7 @@ export const fetchLessons = async (userId) => {
 };
 
 // Optional: Add fetchLessonDetails if planning ahead for lesson detail view
-export const fetchLessonDetails = async (lessonId, userId) => {
+export const fetchLesson = async (lessonId, userId) => {
   try {
     const response = await apiClient.get(`/lessons/${lessonId}`, {
       params: { userId }

@@ -9,6 +9,7 @@ import Header from './components/Header';
 // e.g., const HomePage = () => <h2>Home Page</h2>; export default HomePage;
 import HomePage from './pages/HomePage'; // To be created
 import LessonsPage from './pages/LessonsPage'; // To be created
+import LessonDetailPage from './pages/LessonDetailPage';
 import ChatPage from './pages/ChatPage'; // To be created
 import QuizPage from './pages/QuizPage'; // To be created
 import ProfilePage from './pages/ProfilePage'; // To be created
@@ -33,6 +34,7 @@ function App() {
           <Route path="/" element={<PrivateRoute />}>
             <Route index element={<HomePage />} />
             <Route path="lessons" element={<LessonsPage />} />
+            <Route path="lessons/:title" element={<LessonDetailPage />} />
             <Route path="chat" element={<ChatPage />} />
             <Route path="quizzes" element={<QuizPage />} />
             <Route path="profile" element={<ProfilePage />} />

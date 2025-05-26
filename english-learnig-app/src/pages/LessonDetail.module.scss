@@ -1,0 +1,132 @@
+@import '../styles/global.scss';
+
+.lessonContainer {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.lessonHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #555;
+  }
+
+  .note {
+    font-style: italic;
+    color: #777;
+  }
+
+  .completed {
+    color: #28a745;
+    font-weight: bold;
+  }
+}
+
+.lessonContent {
+  border: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-bottom: 2rem;
+}
+
+.testsSection {
+  text-align: center;
+}
+
+.testButton {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  background-color: $primary-color;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.testCard {
+  border: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-top: 1rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+
+  h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .option {
+    margin-bottom: 0.5rem;
+    text-align: left;
+
+    input {
+      margin-right: 0.5rem;
+    }
+
+    label {
+      font-size: 1rem;
+    }
+  }
+
+  .submitButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    color: white;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+
+  .testResult {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+
+    p {
+      margin: 0.5rem 0;
+    }
+  }
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 1rem;
+}
+
+.error {
+  color: red;
+}
+
+// Fallback variables
+$primary-color: #007bff !default;
+$text-color: #333 !default;

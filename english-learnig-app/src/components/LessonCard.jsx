@@ -5,10 +5,17 @@ import styles from './LessonCard.module.scss'; // To be created
 const LessonCard = ({ lesson }) => {
   const navigate = useNavigate(); // Optional
 
+  // Преобразуем title в slug: нижний регистр, пробелы → дефисы, удаляем лишние символы
+  const slugify = (text) => {
+    return text
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-') // Заменяем не-буквы и не-цифры на дефис
+        .replace(/(^-|-$)/g, ''); // Удаляем дефисы в начале и конце
+  };
+
   const handleClick = () => {
     console.log(`Card clicked for lesson: ${lesson.id} - ${lesson.title}`);
-    // If you want to navigate to a lesson detail page:
-    // navigate(`/lessons/${lesson.id}`); 
+    navigate(`/lessons/${slugify(lesson.title)}`, { state: { lessonId: lesson.id } });
   };
 
   return (

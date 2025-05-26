@@ -1,5 +1,5 @@
 // Using global variables
-@import '../styles/variables.scss'; // Assuming variables.scss for global vars or import global.scss
+@import '../styles/global.scss'; // Assuming variables.scss for global vars or import global.scss
 
 .header {
   background-color: #f0f0f0; // Could be a global variable e.g., $header-bg-color
