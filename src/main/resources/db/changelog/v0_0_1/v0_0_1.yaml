@@ -41,3 +41,9 @@ databaseChangeLog:
       changes:
         - sqlFile:
             path: classpath:db/changelog/v0_0_1/2025-05-25--07-update-user-2.sql
+  - changeSet:
+      id: 8
+      author: inarkozuev
+      changes:
+        - sqlFile:
+            path: classpath:db/changelog/v0_0_1/2025-05-27--08-init_lesson_and_tests_data.sql

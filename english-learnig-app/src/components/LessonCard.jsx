@@ -26,7 +26,7 @@ const LessonCard = ({ lesson }) => {
       <h3>{lesson.title}</h3>
       <p><strong>Level:</strong> {lesson.level}</p>
       <p className={styles.description}>{lesson.description}</p>
-      {lesson.completed && <p className={styles.completedText}>✔ Completed</p>}
+      {lesson.completed && <p className={styles.completedText}>✔ Пройден</p>}
     </div>
   );
 };
