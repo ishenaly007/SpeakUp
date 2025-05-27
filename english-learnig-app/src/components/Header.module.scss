@@ -13,12 +13,24 @@
   height: $header-height; // Use variable from global.scss (assuming it's imported or defined)
   display: flex; // For alignment
   align-items: center; // Vertically center content
+  justify-content: space-between; // Space between title and nav
 
-  nav {
+  .siteTitle {
+    text-decoration: none;
+    color: $primary-color; // Use global primary color
+    font-size: 1.5rem; // Larger font for title
+    font-weight: 700; // Bold title
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: darken($primary-color, 10%); // Darken on hover
+    }
+  }
+
+  .nav {
     display: flex;
     gap: 1.5rem; // Increased gap
     align-items: center;
-    width: 100%; // Ensure nav takes full width for button positioning
   }
 
   .navLink {
@@ -50,10 +62,7 @@
     }
   }
 
-  // .activeLink is now combined with .navLink:hover and .navLink.activeLink
-
   button {
-    margin-left: auto; // Pushes logout button to the right
     padding: 0.6rem 1.2rem; // Adjusted padding
     background-color: $primary-color; // Use global primary color for consistency
     color: white;
@@ -73,19 +82,26 @@
   .header {
     height: auto; // Allow header to grow if content wraps
     padding: 0.75rem 1rem; // Reduce padding on smaller screens
+    flex-direction: column; // Stack title and nav
+    align-items: flex-start; // Align to start
 
-    nav {
+    .siteTitle {
+      margin-bottom: 0.5rem; // Space below title
+    }
+
+    .nav {
       flex-direction: column; // Stack nav items
       align-items: flex-start; // Align items to the start
       gap: 0.5rem; // Reduce gap for stacked items
+      width: 100%; // Full width for nav
     }
 
     .navLink {
       padding: 0.5rem; // Ensure full width clickable area
       width: 100%; // Make links take full width for easier tapping
       border-bottom: 1px solid #eee; // Separator for stacked links
-      
-      &::after { // Remove underline for stacked links if desired
+
+      &::after { // Remove underline for stacked links
         display: none;
       }
 
@@ -93,9 +109,8 @@
         border-bottom: none;
       }
     }
-    
+
     button {
-      margin-left: 0; // Remove auto margin
       margin-top: 0.5rem; // Add some space above button
       width: 100%; // Make button full width
     }

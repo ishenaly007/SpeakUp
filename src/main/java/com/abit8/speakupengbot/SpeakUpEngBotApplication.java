@@ -31,9 +31,5 @@ public class SpeakUpEngBotApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(SpeakUpEngBotApplication.class, args);
-        HashSet<Integer> df= new HashSet<>();
-        ArrayList<Integer> sd = new ArrayList<>();
-        int[] ints = new int[20];
-        df.stream().sorted();
     }
 }
