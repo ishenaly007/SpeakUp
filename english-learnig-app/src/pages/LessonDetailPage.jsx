@@ -19,6 +19,7 @@ const LessonDetailPage = () => {
     const [timer, setTimer] = useState(10);
     const [timerIntervalId, setTimerIntervalId] = useState(null);
     const testCardRef = useRef(null);
+    const lessonScriptId = 'lesson-dynamic-script'; // ID for the script tag
 
     useEffect(() => {
         if (!user?.id || !state?.lessonId) {
@@ -36,6 +37,8 @@ const LessonDetailPage = () => {
                 console.log('Number of tests:', data.tests?.length || 0);
                 setLesson(data);
                 setLoading(false);
+                // Log to confirm javascriptContent is available
+                console.log('Lesson data with JS content:', data.javascriptContent ? 'Available' : 'MISSING', data);
             })
             .catch(err => {
                 console.error('Failed to load lesson:', err);
@@ -43,6 +46,47 @@ const LessonDetailPage = () => {
                 setLoading(false);
             });
     }, [user?.id, state?.lessonId]);
+
+    // Effect to handle dynamic JavaScript execution
+    useEffect(() => {
+        // Remove any existing script first
+        const existingScript = document.getElementById(lessonScriptId);
+        if (existingScript) {
+            existingScript.remove();
+        }
+
+        if (lesson?.htmlContent && lesson.javascriptContent) {
+            console.log('Applying JavaScript for lesson:', lesson.title);
+            const script = document.createElement('script');
+            script.id = lessonScriptId;
+            script.type = 'text/javascript';
+            script.textContent = lesson.javascriptContent; // Using textContent is safer
+
+            // Append to the div where HTML content is rendered to keep it somewhat scoped
+            // Or document.body if it needs broader scope / DOM interaction outside the lesson content div
+            const lessonContentDiv = document.querySelector(`.${styles.lessonContent} > div`); // Assumes htmlContent is in a div
+            if (lessonContentDiv) {
+                 // The script might rely on the HTML being fully rendered.
+                 // A small delay or ensuring it's appended after HTML is set might be needed,
+                 // but dangerouslySetInnerHTML should be synchronous enough.
+                lessonContentDiv.appendChild(script);
+                console.log('Appended script to lesson content div');
+            } else {
+                // Fallback to body, though less ideal for scoping
+                document.body.appendChild(script);
+                console.warn('Lesson content div not found, appended script to document.body');
+            }
+        }
+
+        // Cleanup function to remove the script when the component unmounts or dependencies change
+        return () => {
+            const scriptToRemove = document.getElementById(lessonScriptId);
+            if (scriptToRemove) {
+                scriptToRemove.remove();
+                console.log('Cleaned up lesson script:', lesson?.title);
+            }
+        };
+    }, [lesson?.id, lesson?.htmlContent, lesson?.javascriptContent]); // Rerun if lesson ID or JS content changes
 
     useEffect(() => {
         if (showTests && testCardRef.current) {
@@ -147,7 +191,8 @@ const LessonDetailPage = () => {
 
             <div className={styles.lessonContent}>
                 <style>{lesson.cssContent}</style>
-                <div dangerouslySetInnerHTML={{ __html: lesson.htmlContent }} />
+                {/* This div will be targeted by the JS execution effect for script appending */}
+                <div dangerouslySetInnerHTML={{ __html: lesson.htmlContent }} id="lesson-html-render-area" />
             </div>
 
             {!showResults && (

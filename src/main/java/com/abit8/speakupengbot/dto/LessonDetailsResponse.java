@@ -10,6 +10,7 @@ public class LessonDetailsResponse {
     private String note;
     private String htmlContent;
     private String cssContent;
+    private String javascriptContent;
     private Boolean completed;
     private List<TestData> tests;
 
@@ -68,6 +69,14 @@ public class LessonDetailsResponse {
 
     public void setCssContent(String cssContent) {
         this.cssContent = cssContent;
+    }
+
+    public String getJavascriptContent() {
+        return javascriptContent;
+    }
+
+    public void setJavascriptContent(String javascriptContent) {
+        this.javascriptContent = javascriptContent;
     }
 
     public Boolean getCompleted() {

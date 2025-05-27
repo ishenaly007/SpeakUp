@@ -1,0 +1,156 @@
+Title: The Art of Storytelling
+
+HTML Content:
+<div id="lesson-art-of-storytelling" class="lesson-content">
+  <h1>The Timeless Art of Storytelling</h1>
+  <p class="intro">Since the dawn of humanity, stories have been the way we share our history, our dreams, and our very essence. Let's delve into the core elements that make a story resonate.</p>
+
+  <section id="story-plot">
+    <h2>The Plot: What Happens?</h2>
+    <p>The plot is the sequence of events in a story. A well-crafted plot keeps the reader engaged and eager to know what's next. Common plot structures include:</p>
+    <ul>
+      <li><strong>The Hero's Journey:</strong> A classic structure where the protagonist goes on an adventure, faces a crisis, and returns transformed.</li>
+      <li><strong>Freytag's Pyramid:</strong> Exposition, Rising Action, Climax, Falling Action, and Denouement.</li>
+    </ul>
+    <blockquote>
+      "The king died and then the queen died is a story. The king died and then the queen died of grief is a plot." - E.M. Forster
+    </blockquote>
+  </section>
+
+  <section id="story-characters">
+    <h2>Characters: Who Drives the Story?</h2>
+    <p>Characters are the heart of any story. Whether heroes, villains, or something in between, compelling characters are relatable and memorable.</p>
+    <ul>
+      <li><strong>Protagonist:</strong> The main character, often the one the audience roots for.</li>
+      <li><strong>Antagonist:</strong> The character or force that opposes the protagonist.</li>
+      <li><strong>Supporting Characters:</strong> Characters who add depth and help move the plot forward.</li>
+    </ul>
+    <div class="character-spotlight">
+      <img src="placeholder_wise_mentor.png" alt="Placeholder for a wise mentor character" />
+      <p>Think of iconic characters like Sherlock Holmes or Elizabeth Bennet. What makes them unforgettable?</p>
+    </div>
+  </section>
+
+  <section id="story-setting">
+    <h2>Setting: Where and When?</h2>
+    <p>The setting establishes the time and place of the story. It can be as crucial as a character, influencing mood and events.</p>
+    <p>Consider a futuristic city versus a medieval castle. How does the setting change the story's possibilities?</p>
+  </section>
+
+  <section id="story-theme">
+    <h2>Theme: The Underlying Message</h2>
+    <p>The theme is the central idea or insight the story explores. It's what the story is 'about' on a deeper level.</p>
+    <p>Themes can be universal, such as love, loss, courage, or the struggle between good and evil.</p>
+  </section>
+
+  <footer>
+    <p>Start weaving your own tales today!</p>
+  </footer>
+</div>
+
+CSS Content:
+#lesson-art-of-storytelling {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  padding: 25px;
+  background-color: #fdf5e6; /* OldLace, parchment-like */
+  border: 1px solid #d2b48c; /* Tan */
+  border-radius: 5px;
+  color: #5d4037; /* Brown */
+  line-height: 1.7;
+}
+
+#lesson-art-of-storytelling h1 {
+  font-size: 2.8em;
+  text-align: center;
+  color: #8b4513; /* SaddleBrown */
+  border-bottom: 2px dashed #d2b48c;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  font-variant: small-caps;
+}
+
+#lesson-art-of-storytelling h2 {
+  font-size: 2em;
+  color: #a0522d; /* Sienna */
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-left: 4px solid #d2b48c;
+  padding-left: 10px;
+}
+
+#lesson-art-of-storytelling .intro {
+  font-style: italic;
+  font-size: 1.1em;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #7a5230;
+}
+
+#lesson-art-of-storytelling ul {
+  list-style-type: disc; /* Changed from 'none' to 'disc' for better readability */
+  margin-left: 20px; /* Added margin for better indentation */
+  padding-left: 20px;
+}
+
+#lesson-art-of-storytelling li {
+  margin-bottom: 8px;
+}
+
+#lesson-art-of-storytelling blockquote {
+  font-style: italic;
+  margin: 20px 40px;
+  padding: 15px;
+  background-color: #faf0e6; /* Linen */
+  border-left: 5px solid #c19a6b; /* Darker tan */
+  color: #6b4f43;
+  quotes: "“" "”";
+}
+
+#lesson-art-of-storytelling blockquote::before {
+  content: open-quote;
+  font-size: 1.5em;
+  line-height: 0;
+  vertical-align: -0.2em;
+  margin-right: 5px;
+  color: #a0522d;
+}
+#lesson-art-of-storytelling blockquote::after {
+  content: close-quote;
+  font-size: 1.5em;
+  line-height: 0;
+  vertical-align: -0.2em;
+  margin-left: 5px;
+  color: #a0522d;
+}
+
+
+#lesson-art-of-storytelling .character-spotlight {
+  display: flex;
+  align-items: center;
+  background-color: #faf0e6;
+  border: 1px solid #e0c8a0;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 4px;
+}
+
+#lesson-art-of-storytelling .character-spotlight img {
+  width: 100px; /* Placeholder size */
+  height: 100px;
+  border: 1px solid #d2b48c;
+  margin-right: 15px;
+  background-color: #e0e0e0; /* Placeholder background */
+  object-fit: cover;
+}
+
+#lesson-art-of-storytelling footer {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #d2b48c;
+  font-style: italic;
+  color: #8b4513;
+}
+
+JavaScript Content:
+No JavaScript

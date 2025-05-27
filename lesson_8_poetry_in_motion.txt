@@ -1,0 +1,277 @@
+Title: Poetry in Motion
+
+HTML Content:
+<div id="lesson-poetry-in-motion" class="lesson-content">
+  <h1>Poetry in Motion: The Soul's Language</h1>
+  <p class="intro-poetry">Poetry is the art of painting with words, a dance of rhythm and rhyme that can capture the most profound emotions and fleeting moments. It's language distilled to its most evocative form.</p>
+
+  <section id="forms-of-poetry">
+    <h2>Forms That Shape Feeling</h2>
+    <p>Poetry takes many shapes, each offering a unique structure for expression:</p>
+    <div class="poetry-forms-grid">
+      <div class="form-card">
+        <h3>Sonnet</h3>
+        <p>A 14-line poem, often with a specific rhyme scheme and iambic pentameter. Shakespeare was a master of the sonnet.</p>
+        <img src="placeholder_quill_and_scroll.png" alt="Placeholder of a quill and scroll">
+      </div>
+      <div class="form-card">
+        <h3>Haiku</h3>
+        <p>A Japanese form of three phrases, composed of 17 syllables in a 5, 7, 5 pattern. Often focuses on nature.</p>
+        <img src="placeholder_cherry_blossom_branch.png" alt="Placeholder of a cherry blossom branch">
+      </div>
+      <div class="form-card">
+        <h3>Limerick</h3>
+        <p>A five-line humorous poem with an AABBA rhyme scheme. Known for its playful, often nonsensical content.</p>
+        <img src="placeholder_jesters_hat.png" alt="Placeholder of a jester's hat">
+      </div>
+      <div class="form-card">
+        <h3>Free Verse</h3>
+        <p>Poetry that does not rhyme or have a regular meter. It offers freedom to the poet to shape the poem as desired.</p>
+        <img src="placeholder_abstract_lines.png" alt="Placeholder of abstract flowing lines">
+      </div>
+    </div>
+  </section>
+
+  <section id="elements-of-poetry">
+    <h2>The Poet's Toolkit</h2>
+    <p>Poets use various literary devices to enhance their work:</p>
+    <ul>
+      <li><strong>Metaphor:</strong> Comparing two unlike things without using "like" or "as". <em>(e.g., "The world is a stage.")</em></li>
+      <li><strong>Simile:</strong> Comparing two unlike things using "like" or "as". <em>(e.g., "She floated in like a cloud.")</em></li>
+      <li><strong>Imagery:</strong> Language that appeals to the senses.</li>
+      <li><strong>Alliteration:</strong> Repetition of initial consonant sounds. <em>(e.g., "Peter Piper picked...")</em></li>
+      <li><strong>Rhyme & Rhythm:</strong> The musical qualities of language.</li>
+    </ul>
+  </section>
+
+  <section id="interactive-haiku">
+    <h2>Try Your Hand at Haiku</h2>
+    <p>A haiku has three lines with a 5, 7, 5 syllable structure. Give it a try!</p>
+    <div class="haiku-writer">
+      <div>
+        <label for="haiku-line1">Line 1 (5 syllables):</label>
+        <input type="text" id="haiku-line1" data-syllables="5" placeholder="e.g., Green grass whispers soft">
+        <span class="syllable-count">0/5</span>
+      </div>
+      <div>
+        <label for="haiku-line2">Line 2 (7 syllables):</label>
+        <input type="text" id="haiku-line2" data-syllables="7" placeholder="e.g., Sun warms the gentle cool breeze">
+        <span class="syllable-count">0/7</span>
+      </div>
+      <div>
+        <label for="haiku-line3">Line 3 (5 syllables):</label>
+        <input type="text" id="haiku-line3" data-syllables="5" placeholder="e.g., Summer day unfolds">
+        <span class="syllable-count">0/5</span>
+      </div>
+    </div>
+    <p class="haiku-note">Note: Syllable counting here is a simple character-based approximation.</p>
+  </section>
+
+  <p class="outro-poetry">Read poetry, write poetry, and let its beauty enrich your life.</p>
+</div>
+
+CSS Content:
+#lesson-poetry-in-motion {
+  font-family: 'Garamond', 'Baskerville', 'Times New Roman', serif;
+  padding: 30px;
+  background-color: #f8f4f0; /* Very light, slightly warm off-white */
+  color: #4a4a4a; /* Soft dark grey for text */
+  border: 1px solid #e0dcd7;
+  border-radius: 6px;
+  line-height: 1.75;
+}
+
+#lesson-poetry-in-motion h1 {
+  font-family: 'Lucida Handwriting', 'Brush Script MT', cursive;
+  font-size: 3em;
+  text-align: center;
+  color: #5a3e2b; /* Muted brown */
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c9b8a8;
+}
+
+#lesson-poetry-in-motion h2 {
+  font-family: 'Georgia', serif;
+  font-size: 2.2em;
+  color: #7a5c43; /* Warmer brown */
+  margin-top: 35px;
+  margin-bottom: 15px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+#lesson-poetry-in-motion .intro-poetry,
+#lesson-poetry-in-motion .outro-poetry {
+  font-style: italic;
+  font-size: 1.15em;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #6b5b4c;
+}
+
+#lesson-poetry-in-motion .poetry-forms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+#lesson-poetry-in-motion .form-card {
+  background-color: #ffffff;
+  border: 1px solid #e0dcd7;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#lesson-poetry-in-motion .form-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+#lesson-poetry-in-motion .form-card h3 {
+  font-family: 'Georgia', serif;
+  font-size: 1.6em;
+  color: #5a3e2b;
+  margin-bottom: 10px;
+}
+
+#lesson-poetry-in-motion .form-card img {
+  width: 60px;
+  height: 60px;
+  float: right;
+  opacity: 0.6;
+  margin-left: 10px;
+  background-color: #eee; /* Placeholder background */
+  border-radius: 4px;
+}
+
+#lesson-poetry-in-motion #elements-of-poetry ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#lesson-poetry-in-motion #elements-of-poetry li {
+  margin-bottom: 10px;
+  padding-left: 25px;
+  position: relative;
+}
+
+#lesson-poetry-in-motion #elements-of-poetry li::before {
+  content: "❧"; /* Floral heart, a poetic symbol */
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #a08064; /* Muted decorative color */
+  font-size: 1.2em;
+}
+
+#lesson-poetry-in-motion #elements-of-poetry em {
+  font-style: italic;
+  color: #777;
+}
+
+#lesson-poetry-in-motion #interactive-haiku {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 5px;
+  border: 1px solid #e0dcd7;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+#lesson-poetry-in-motion .haiku-writer div {
+  margin-bottom: 15px;
+}
+
+#lesson-poetry-in-motion .haiku-writer label {
+  display: block;
+  margin-bottom: 5px;
+  color: #5a3e2b;
+  font-size: 0.95em;
+}
+
+#lesson-poetry-in-motion .haiku-writer input[type="text"] {
+  width: calc(100% - 70px); /* Adjust width to make space for syllable count */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 1em;
+  transition: border-color 0.3s ease;
+}
+#lesson-poetry-in-motion .haiku-writer input[type="text"]:focus {
+  border-color: #a08064;
+  outline: none;
+}
+
+#lesson-poetry-in-motion .syllable-count {
+  display: inline-block;
+  width: 60px;
+  text-align: right;
+  font-size: 0.9em;
+  color: #777;
+  padding-left: 10px;
+}
+
+#lesson-poetry-in-motion .haiku-note {
+  font-size: 0.85em;
+  color: #888;
+  margin-top: 15px;
+  text-align: center;
+}
+
+#lesson-poetry-in-motion .outro-poetry {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #c9b8a8;
+}
+
+JavaScript Content:
+document.addEventListener('DOMContentLoaded', () => {
+  const poetryContainer = document.getElementById('lesson-poetry-in-motion');
+  if (!poetryContainer) return;
+
+  const haikuInputs = poetryContainer.querySelectorAll('.haiku-writer input[type="text"]');
+
+  haikuInputs.forEach(input => {
+    const syllableTarget = parseInt(input.dataset.syllables, 10);
+    const countDisplay = input.parentElement.querySelector('.syllable-count');
+
+    input.addEventListener('input', () => {
+      // Basic syllable approximation (counts groups of vowels, very rough)
+      // This is a placeholder for a more complex syllable counter.
+      // For this exercise, we'll do a simpler character count as a proxy or word count.
+      // Let's use word count for simplicity here as true syllable counting is complex.
+      // Or, let's just count characters as a simple proxy.
+      const text = input.value.trim();
+      let currentSyllables = 0;
+
+      if (text.length > 0) {
+        // Very naive "syllable" count based on non-space characters / average word length.
+        // This is NOT accurate for real syllables.
+        // For a slightly better naive approach, count vowel groups.
+        const vowelGroups = text.match(/[aeiouyAEIOUY]+/g);
+        currentSyllables = vowelGroups ? vowelGroups.length : 0;
+        
+        // A very simple adjustment for short words / single vowels
+        if (text.length <= 3 && currentSyllables === 0 && text.length > 0) {
+            currentSyllables = 1;
+        }
+      }
+      
+      if (countDisplay) {
+        countDisplay.textContent = `${currentSyllables}/${syllableTarget}`;
+        if (currentSyllables > syllableTarget) {
+          countDisplay.style.color = 'red';
+        } else if (currentSyllables === syllableTarget) {
+          countDisplay.style.color = 'green';
+        } else {
+          countDisplay.style.color = '#777';
+        }
+      }
+    });
+  });
+});

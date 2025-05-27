@@ -29,7 +29,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem; // This creates space between cards
-  justify-content: flex-start; // Align cards to the start of the container
+  justify-content: space-evenly; // Align cards to the start of the container
 
   // The LessonCard component itself should define its base width
   // For example, in LessonCard.module.scss:

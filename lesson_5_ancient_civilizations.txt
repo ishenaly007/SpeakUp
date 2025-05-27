@@ -1,0 +1,181 @@
+Title: Ancient Civilizations
+
+HTML Content:
+<div id="lesson-ancient-civilizations" class="lesson-content">
+  <h1>Echoes of Ancient Civilizations</h1>
+  <p class="intro-ancient">Walk through the annals of time and explore the wonders of civilizations that shaped our world. From monumental architecture to profound philosophies, their legacies endure.</p>
+
+  <section id="ancient-egypt">
+    <h2>Ancient Egypt: Land of Pharaohs and Pyramids</h2>
+    <p>Along the fertile banks of the Nile, one of the world's most iconic civilizations flourished for millennia. The Egyptians are renowned for their pyramids, hieroglyphs, mummification, and a complex pantheon of gods.</p>
+    <div class="civilization-gallery">
+      <figure>
+        <img src="placeholder_pyramids_of_giza.png" alt="Placeholder for the Pyramids of Giza">
+        <figcaption>The Great Pyramids of Giza, tombs for pharaohs, stand as a testament to their engineering prowess.</figcaption>
+      </figure>
+      <figure>
+        <img src="placeholder_hieroglyphs.png" alt="Placeholder for Egyptian hieroglyphs on a temple wall">
+        <figcaption>Hieroglyphs were the formal writing system used in ancient Egypt.</figcaption>
+      </figure>
+    </div>
+    <p>Key aspects: Pharaohs as god-kings, advancements in mathematics and medicine, belief in an afterlife.</p>
+  </section>
+
+  <section id="ancient-rome">
+    <h2>Ancient Rome: From Republic to Empire</h2>
+    <p>What began as a small city-state in Italy grew into a vast empire that dominated the Mediterranean world. Rome is famous for its military might, engineering (aqueducts, roads), law, and Latin language.</p>
+    <div class="civilization-feature">
+      <img src="placeholder_colosseum.png" alt="Placeholder for the Colosseum in Rome">
+      <div>
+        <h3>The Colosseum</h3>
+        <p>This massive amphitheater hosted gladiatorial contests and public spectacles, symbolizing Roman power and entertainment.</p>
+      </div>
+    </div>
+    <p>Key aspects: Roman Republic, Roman Empire, influential legal systems, spread of Roman culture and language.</p>
+  </section>
+
+  <section id="maya-civilization">
+    <h2>The Maya Civilization: Masters of Astronomy and Calendars</h2>
+    <p>In Mesoamerica, the Maya developed a sophisticated civilization known for its art, architecture, mathematics, calendar, and astronomical system. They built impressive city-states with pyramids and observatories in the heart of the rainforest.</p>
+    <div class="civilization-gallery">
+      <figure>
+        <img src="placeholder_mayan_pyramid_chichen_itza.png" alt="Placeholder for a Mayan pyramid like El Castillo at Chichen Itza">
+        <figcaption>Mayan pyramids often served religious and astronomical purposes.</figcaption>
+      </figure>
+      <figure>
+        <img src="placeholder_mayan_glyphs.png" alt="Placeholder for Mayan glyphs or codices">
+        <figcaption>The Maya had a complex writing system, one of the few fully developed in the pre-Columbian Americas.</figcaption>
+      </figure>
+    </div>
+    <p>Key aspects: Advanced understanding of mathematics (including zero), intricate calendar systems, impressive city-states like Tikal and Palenque.</p>
+  </section>
+
+  <p class="outro-ancient">The achievements of these ancient civilizations continue to inspire and inform us, offering windows into our shared human past.</p>
+</div>
+
+CSS Content:
+#lesson-ancient-civilizations {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  padding: 25px;
+  background-image: url('placeholder_papyrus_texture.png'); /* Placeholder for papyrus texture */
+  background-color: #f5e8c3; /* Fallback papyrus-like color */
+  border: 2px solid #c8b48c; /* Darker tan border */
+  border-radius: 5px;
+  color: #5c4033; /* Dark brown text */
+  line-height: 1.7;
+}
+
+#lesson-ancient-civilizations h1 {
+  font-size: 2.7em;
+  text-align: center;
+  color: #8b4513; /* SaddleBrown */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #b08d57;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+#lesson-ancient-civilizations h2 {
+  font-size: 2.1em;
+  color: #704214; /* Darker brown, less red */
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-bottom: 1px dashed #a07940;
+  padding-bottom: 8px;
+}
+
+#lesson-ancient-civilizations .intro-ancient,
+#lesson-ancient-civilizations .outro-ancient {
+  font-style: italic;
+  font-size: 1.15em;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #654321; /* Slightly lighter brown */
+}
+
+#lesson-ancient-civilizations p {
+  margin-bottom: 12px;
+  text-indent: 20px; /* Indent paragraphs */
+}
+#lesson-ancient-civilizations p:first-of-type {
+  text-indent: 0; /* No indent for first paragraph in a section */
+}
+#lesson-ancient-civilizations section > p:first-child { /* More specific to target paragraph directly under section */
+  text-indent: 0;
+}
+
+
+#lesson-ancient-civilizations .civilization-gallery {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  padding: 10px;
+  background-color: rgba(240, 220, 180, 0.3); /* Slightly transparent overlay */
+  border-radius: 4px;
+}
+
+#lesson-ancient-civilizations .civilization-gallery figure {
+  margin: 10px;
+  text-align: center;
+  width: calc(50% - 40px); /* Adjust width for two items per row, considering margin */
+  min-width: 250px; /* Minimum width before wrapping */
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 10px;
+  border: 1px solid #d2b48c;
+  border-radius: 3px;
+}
+
+#lesson-ancient-civilizations .civilization-gallery img {
+  width: 100%;
+  max-width: 300px; /* Max image width */
+  height: 180px; /* Fixed height for uniformity */
+  background-color: #c0c0c0; /* Placeholder background */
+  border-radius: 3px;
+  margin-bottom: 8px;
+  object-fit: cover; /* Ensures image covers the area, might crop */
+  border: 1px solid #b08d57;
+}
+
+#lesson-ancient-civilizations .civilization-gallery figcaption {
+  font-size: 0.95em;
+  color: #604e3a;
+  font-style: italic;
+}
+
+#lesson-ancient-civilizations .civilization-feature {
+  display: flex;
+  align-items: center;
+  background-color: rgba(230, 210, 170, 0.4);
+  padding: 15px;
+  border-radius: 4px;
+  margin: 20px 0;
+  border: 1px solid #b08d57;
+}
+
+#lesson-ancient-civilizations .civilization-feature img {
+  width: 150px;
+  height: 150px;
+  background-color: #b0b0b0; /* Placeholder background */
+  border-radius: 3px;
+  margin-right: 20px;
+  object-fit: cover;
+  border: 1px solid #a07940;
+}
+
+#lesson-ancient-civilizations .civilization-feature h3 {
+  color: #8B4513; /* SaddleBrown */
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+#lesson-ancient-civilizations .outro-ancient {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px dashed #a07940;
+}
+
+JavaScript Content:
+No JavaScript
