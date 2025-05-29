@@ -1,8 +1,8 @@
 CREATE TABLE lessons
 (
     id          SERIAL PRIMARY KEY,
-    title       VARCHAR(255) NOT NULL,
-    level       VARCHAR(10)  NOT NULL,
+    title       TEXT         NOT NULL,
+    level       VARCHAR(100) NOT NULL,
     description TEXT         NOT NULL,
     note        TEXT
 );
@@ -33,8 +33,8 @@ ALTER TABLE test_options
 CREATE TABLE user_lessons
 (
     id           SERIAL PRIMARY KEY,
-    user_id      BIGINT       NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    lesson_id    INTEGER      NOT NULL REFERENCES lessons (id) ON DELETE CASCADE,
+    user_id      BIGINT  NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    lesson_id    INTEGER NOT NULL REFERENCES lessons (id) ON DELETE CASCADE,
     completed_at TIMESTAMP
 );
 
