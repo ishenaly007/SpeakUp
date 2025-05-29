@@ -16,6 +16,7 @@ export default defineConfig({
         ws: false,
       },
     },
+    allowedHosts: ['ab1t.top'],
   },
   test: {
     globals: true,
