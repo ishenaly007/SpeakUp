@@ -1,0 +1,173 @@
+Title: The Magic of Colors
+
+HTML Content:
+<div id="lesson-magic-of-colors" class="lesson-content">
+  <h1>Discover the Magic of Colors!</h1>
+  <p>Colors are all around us, making our world vibrant and beautiful. Let's explore some basic concepts of color theory.</p>
+
+  <section id="primary-colors">
+    <h2>Primary Colors</h2>
+    <p>Primary colors are the building blocks of all other colors. They cannot be made by mixing other colors. The primary colors are:</p>
+    <div class="color-showcase">
+      <div class="color-box red"><span class="color-name">Red</span></div>
+      <div class="color-box blue"><span class="color-name">Blue</span></div>
+      <div class="color-box yellow"><span class="color-name">Yellow</span></div>
+    </div>
+  </section>
+
+  <section id="secondary-colors">
+    <h2>Secondary Colors</h2>
+    <p>Secondary colors are made by mixing two primary colors.</p>
+    <ul>
+      <li>Red + Yellow = <span class="color-example orange">Orange</span></li>
+      <li>Blue + Yellow = <span class="color-example green">Green</span></li>
+      <li>Red + Blue = <span class="color-example purple">Purple</span></li>
+    </ul>
+    <div class="color-showcase">
+      <div class="color-box orange"><span class="color-name">Orange</span></div>
+      <div class="color-box green"><span class="color-name">Green</span></div>
+      <div class="color-box purple"><span class="color-name">Purple</span></div>
+    </div>
+  </section>
+
+  <section id="color-interaction">
+    <h2>Color Interaction</h2>
+    <p>Click on a color name below to see its effect!</p>
+    <div id="interactive-color-display" class="color-display-box">Click a color name!</div>
+    <button data-color="red">Red</button>
+    <button data-color="blue">Blue</button>
+    <button data-color="yellow">Yellow</button>
+    <button data-color="green">Green</button>
+    <button data-color="orange">Orange</button>
+    <button data-color="purple">Purple</button>
+  </section>
+</div>
+
+CSS Content:
+#lesson-magic-of-colors {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f0f8ff; /* AliceBlue */
+  border-radius: 8px;
+}
+
+#lesson-magic-of-colors h1 {
+  color: #333;
+  text-align: center;
+  border-bottom: 2px solid #ff69b4; /* HotPink */
+  padding-bottom: 10px;
+}
+
+#lesson-magic-of-colors h2 {
+  color: #555;
+  margin-top: 30px;
+}
+
+#lesson-magic-of-colors .color-showcase {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+#lesson-magic-of-colors .color-box {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px black;
+  border: 2px solid white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+#lesson-magic-of-colors .color-name {
+  background-color: rgba(0,0,0,0.3);
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+#lesson-magic-of-colors .red { background-color: #FF0000; }
+#lesson-magic-of-colors .blue { background-color: #0000FF; }
+#lesson-magic-of-colors .yellow { background-color: #FFFF00; color: #333; text-shadow: 1px 1px 1px white;}
+#lesson-magic-of-colors .orange { background-color: #FFA500; }
+#lesson-magic-of-colors .green { background-color: #008000; }
+#lesson-magic-of-colors .purple { background-color: #800080; }
+
+#lesson-magic-of-colors .color-example {
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 3px;
+  color: white;
+}
+#lesson-magic-of-colors .color-example.orange { background-color: #FFA500;}
+#lesson-magic-of-colors .color-example.green { background-color: #008000;}
+#lesson-magic-of-colors .color-example.purple { background-color: #800080;}
+
+#lesson-magic-of-colors #color-interaction {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#lesson-magic-of-colors .color-display-box {
+  width: 80%;
+  height: 100px;
+  margin: 10px auto;
+  border: 2px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  background-color: #fff;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+#lesson-magic-of-colors #color-interaction button {
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  transition: transform 0.2s ease;
+}
+#lesson-magic-of-colors #color-interaction button:hover {
+  transform: scale(1.1);
+}
+#lesson-magic-of-colors #color-interaction button[data-color="red"] { background-color: #FF0000; }
+#lesson-magic-of-colors #color-interaction button[data-color="blue"] { background-color: #0000FF; }
+#lesson-magic-of-colors #color-interaction button[data-color="yellow"] { background-color: #FFFF00; color: #333;}
+#lesson-magic-of-colors #color-interaction button[data-color="green"] { background-color: #008000; }
+#lesson-magic-of-colors #color-interaction button[data-color="orange"] { background-color: #FFA500; }
+#lesson-magic-of-colors #color-interaction button[data-color="purple"] { background-color: #800080; }
+
+JavaScript Content:
+document.addEventListener('DOMContentLoaded', () => {
+  const lessonContainer = document.querySelector('#lesson-magic-of-colors');
+  if (!lessonContainer) return;
+
+  const displayBox = lessonContainer.querySelector('#interactive-color-display');
+  const buttons = lessonContainer.querySelectorAll('#color-interaction button');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const color = button.dataset.color;
+      if (displayBox) {
+        displayBox.style.backgroundColor = color;
+        displayBox.textContent = `Selected: ${color.charAt(0).toUpperCase() + color.slice(1)}`;
+        if (color === 'yellow') {
+            displayBox.style.color = '#333';
+        } else {
+            displayBox.style.color = 'white';
+        }
+      }
+    });
+  });
+});

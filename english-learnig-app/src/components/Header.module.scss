@@ -1,0 +1,123 @@
+// Using global variables
+@import '../styles/global.scss'; // Assuming variables.scss for global vars or import global.scss
+
+.header {
+  background-color: #f0f0f0; // Could be a global variable e.g., $header-bg-color
+  padding: 1rem 1.5rem;       // Adjusted padding
+  border-bottom: 1px solid #ccc; // Could be $border-color
+  position: fixed; // Make header fixed
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; // Ensure it's above other content
+  height: $header-height; // Use variable from global.scss (assuming it's imported or defined)
+  display: flex; // For alignment
+  align-items: center; // Vertically center content
+  justify-content: space-between; // Space between title and nav
+
+  .siteTitle {
+    text-decoration: none;
+    color: $primary-color; // Use global primary color
+    font-size: 1.5rem; // Larger font for title
+    font-weight: 700; // Bold title
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: darken($primary-color, 10%); // Darken on hover
+    }
+  }
+
+  .nav {
+    display: flex;
+    gap: 1.5rem; // Increased gap
+    align-items: center;
+  }
+
+  .navLink {
+    text-decoration: none;
+    color: $text-color; // Use global text color
+    font-weight: 500;   // Slightly bolder links
+    padding: 0.5rem 0;  // Add some padding for better click area
+    position: relative; // For ::after pseudo-element
+
+    &:hover, &.activeLink { // Combine hover and active styles
+      color: $primary-color; // Use global primary color
+    }
+
+    // Underline effect for active/hover
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px; // Position underline slightly below text
+      left: 0;
+      background-color: $primary-color;
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after,
+    &.activeLink::after {
+      width: 100%;
+    }
+  }
+
+  button {
+    padding: 0.6rem 1.2rem; // Adjusted padding
+    background-color: $primary-color; // Use global primary color for consistency
+    color: white;
+    border: none;
+    border-radius: 5px; // Standardized border-radius
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken($primary-color, 10%); // Darken primary color on hover
+    }
+  }
+}
+
+// Responsive adjustments for Header
+@media (max-width: 768px) {
+  .header {
+    height: auto; // Allow header to grow if content wraps
+    padding: 0.75rem 1rem; // Reduce padding on smaller screens
+    flex-direction: column; // Stack title and nav
+    align-items: flex-start; // Align to start
+
+    .siteTitle {
+      margin-bottom: 0.5rem; // Space below title
+    }
+
+    .nav {
+      flex-direction: column; // Stack nav items
+      align-items: flex-start; // Align items to the start
+      gap: 0.5rem; // Reduce gap for stacked items
+      width: 100%; // Full width for nav
+    }
+
+    .navLink {
+      padding: 0.5rem; // Ensure full width clickable area
+      width: 100%; // Make links take full width for easier tapping
+      border-bottom: 1px solid #eee; // Separator for stacked links
+
+      &::after { // Remove underline for stacked links
+        display: none;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    button {
+      margin-top: 0.5rem; // Add some space above button
+      width: 100%; // Make button full width
+    }
+  }
+}
+
+// Fallback for variables if not imported via a central variables file
+$primary-color: #007bff !default;
+$text-color: #333 !default;
+$header-height: 70px !default;

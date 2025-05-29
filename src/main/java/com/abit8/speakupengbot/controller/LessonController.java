@@ -81,7 +81,6 @@ public class LessonController {
         return ResponseEntity.ok(response);
     }
 
-    // Проверка ответа на тест
     @PostMapping("/{lessonId}/tests/{testIndex}")
     public ResponseEntity<?> checkTest(
             @PathVariable Long lessonId,
@@ -109,24 +108,35 @@ public class LessonController {
         response.setIsCorrect(isCorrect);
         response.setCorrectOption(test.getCorrectOption());
 
-        Optional<User> userOpt = userService.loginTelegramUser(userId);
-        if (userOpt.isPresent() && !userLessonService.existsByUserIdAndLessonId(userId, lessonId)) {
-            User user = userOpt.get();
-            int xpChange = isCorrect ? 5 : -2;
-            user.setXp(user.getXp() + xpChange);
-            userService.saveUser(user);
-            response.setXpChange(xpChange);
-        }
 
-        if (testIndex == tests.size() - 1 && isCorrect && userOpt.isPresent()) {
+        Optional<User> userOpt = userService.getUserById(userId);
+        if (userOpt.isPresent()) {
             User user = userOpt.get();
-            if (!userLessonService.existsByUserIdAndLessonId(userId, lessonId)) {
+            boolean lessonAlreadyCompleted = userLessonService.existsByUserIdAndLessonId(userId, lessonId);
+            if (!lessonAlreadyCompleted) {
+                int xpChange = isCorrect ? 5 : -2;
+                user.setXp(user.getXp() + xpChange);
+                userService.saveUser(user);
+                response.setXpChange(xpChange);
+            } else {
+                response.setXpChange(0);
+            }
+
+            if (testIndex == tests.size() - 1 && !lessonAlreadyCompleted) {
                 UserLesson userLesson = new UserLesson(user, lessonOpt.get());
                 userLesson.setCompletedAt(LocalDateTime.now());
                 userLessonService.save(userLesson);
                 response.setLessonCompleted(true);
+            } else if (lessonAlreadyCompleted) {
+                response.setLessonCompleted(true);
+            } else {
+                response.setLessonCompleted(false);
             }
+        } else {
+            response.setXpChange(0);
+            response.setLessonCompleted(false);
         }
+
         return ResponseEntity.ok(response);
     }
 }

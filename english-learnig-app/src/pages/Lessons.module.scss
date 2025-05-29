@@ -1,38 +1,75 @@
-@import '../styles/variables';
+.lessonsContainer {
+  padding: 1rem;
+}
 
-.wrapper {
-  max-width: 700px;
-  margin: 40px auto;
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.lessonsHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  img {
+    width: 100%;
+    max-height: 240px; // Or your preferred height
+    object-fit: cover; // Ensures the image covers the area, might crop
+    margin-bottom: 1rem;
+    border-radius: 8px; // Optional: for rounded corners
+  }
 
   h2 {
-    color: var(--primary-color);
-    margin-bottom: 24px;
-    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
   }
 
-  ul {
-    list-style: none;
-    padding: 0;
-
-    li {
-      background-color: var(--primary-light);
-      margin-bottom: 12px;
-      padding: 12px 16px;
-      border-radius: var(--border-radius);
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-
-      a {
-        color: white;
-        text-decoration: none;
-
-        &:hover {
-          text-decoration: underline;
-          color: var(--primary-dark);
-        }
-      }
-    }
+  p {
+    font-size: 1rem;
+    color: #555;
   }
+}
+
+.lessonsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; // This creates space between cards
+  justify-content: space-evenly; // Align cards to the start of the container
+
+  // The LessonCard component itself should define its base width
+  // For example, in LessonCard.module.scss:
+  // .lessonCard {
+  //   width: calc(25% - 0.75rem); // 0.75rem = 3/4 of the gap, for 4 cards
+  //                                  // (1rem gap means 3 gaps for 4 cards, so (gap * (items_per_row - 1)) / items_per_row)
+  //                                  // simpler: calc(25% - (gap_value * (items_per_row - 1) / items_per_row))
+  //                                  // For gap: 1rem, items: 4 => calc(25% - (1rem * 3 / 4)) = calc(25% - 0.75rem)
+  //                                  // This ensures the gap is accounted for correctly.
+  // }
+  // Alternatively, if LessonCard doesn't set a width and is allowed to grow/shrink,
+  // you might not need to be so specific here, but the items_per_row might vary.
+  // The approach in LessonCard.module.scss (width: calc(25% - 1rem);) is slightly off
+  // if the parent has 'gap: 1rem'. The total width taken by 4 cards and 3 gaps is 4*W + 3*gap.
+  // If W = calc(25% - 1rem), then 4*(calc(25% - 1rem)) + 3rem = 100% - 4rem + 3rem = 100% - 1rem.
+  // This means the row will be slightly less than 100% wide.
+  // A common way to achieve 4 per row with gap is to let the child calculate its basis like:
+  // flex-basis: calc( (100% / 4) - ( (4 - 1) * gap_value / 4 ) )
+  // flex-basis: calc(25% - (3 * 1rem / 4)) = calc(25% - 0.75rem);
+  // This is usually handled within the child component's styles.
+  // For now, the styling in LessonCard.module.scss is what will define the width.
+}
+
+// Responsive adjustments for the grid could also be here or in LessonCard.module.scss
+// Example of adjustments here if needed:
+@media (max-width: 1200px) { // Adjust breakpoint as needed
+  // If LessonCard.module.scss handles responsiveness, these are not strictly needed here
+  // .lessonsGrid > * { // Targeting children of the grid (LessonCards)
+  //   width: calc(33.333% - 0.75rem); // 3 cards
+  // }
+}
+
+@media (max-width: 768px) {
+  // .lessonsGrid > * {
+  //   width: calc(50% - 0.5rem); // 2 cards
+  // }
+}
+
+@media (max-width: 576px) {
+  // .lessonsGrid > * {
+  //   width: 100%; // 1 card
+  // }
 }

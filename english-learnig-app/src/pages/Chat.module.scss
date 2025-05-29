@@ -1,0 +1,181 @@
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 100px); // Adjust based on header height
+  max-width: 800px;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); // Added subtle shadow
+}
+
+.instructions {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+  text-align: center; // Center align the instructions
+  h2 { 
+    margin-top: 0; 
+    font-size: 1.5rem; // Slightly larger heading
+    color: #333;
+  }
+  p {
+    font-size: 0.9rem;
+    color: #555;
+  }
+}
+
+.loadingText {
+  padding: 1rem;
+  text-align: center;
+  color: #555;
+}
+
+.errorText {
+  color: red;
+  padding: 0.5rem 1rem;
+  background-color: #ffe0e0;
+  border-bottom: 1px solid #ffcccc;
+  text-align: center;
+}
+
+.messagesArea {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; // Slightly increased gap
+  background-color: #f4f7f6; // Light background for messages area
+}
+
+.message {
+  padding: 0.6rem 1.1rem; // Slightly more padding
+  border-radius: 18px; // More rounded bubbles
+  max-width: 75%; // Allow slightly wider messages
+  word-wrap: break-word;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05); // Subtle shadow for messages
+
+  p {
+    margin: 0; // Remove default paragraph margin
+    line-height: 1.4; // Improve readability
+  }
+
+  &.user {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 6px; // Tail for user bubble
+  }
+
+  &.ai {
+    background-color: #e9ecef; // Kept as is
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 6px; // Tail for AI bubble
+  }
+
+  .timestamp {
+    font-size: 0.7rem;
+    display: block;
+    // text-align: right; // Align based on sender if needed
+    margin-top: 0.3rem; // Increased margin
+    opacity: 0.6; // Slightly less opacity
+  }
+
+  // Align timestamp based on sender
+  &.user .timestamp {
+    text-align: right;
+  }
+  &.ai .timestamp {
+    text-align: left;
+  }
+}
+
+.inputArea {
+  display: flex;
+  padding: 1rem;
+  border-top: 1px solid #ddd; // Slightly darker border
+  background-color: #ffffff; // White background for input area
+
+  input {
+    flex-grow: 1;
+    padding: 0.75rem; // Increased padding
+    border: 1px solid #ccc;
+    border-radius: 20px; // Rounded input field
+    margin-right: 0.75rem; // Increased margin
+    font-size: 0.95rem;
+
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+  }
+
+  button {
+    padding: 0.75rem 1.2rem; // Increased padding
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px; // Rounded button
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+
+    &:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Media Queries for Chat Page
+@media (max-width: 600px) {
+  .chatContainer {
+    height: calc(100vh - 60px); // Adjust based on smaller header if any
+    border-radius: 0; // Full screen on small devices
+    border: none;
+    max-width: 100%;
+  }
+
+  .instructions {
+    padding: 0.75rem;
+    h2 { font-size: 1.2rem; }
+    p { font-size: 0.8rem; }
+  }
+
+  .messagesArea {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .message {
+    padding: 0.5rem 0.9rem;
+    max-width: 85%; // Allow slightly wider messages on smaller screens
+    &.user {
+      border-bottom-right-radius: 4px;
+    }
+    &.ai {
+      border-bottom-left-radius: 4px;
+    }
+  }
+
+  .inputArea {
+    padding: 0.75rem;
+    input {
+      padding: 0.6rem;
+      font-size: 0.9rem;
+      margin-right: 0.5rem;
+    }
+    button {
+      padding: 0.6rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+}

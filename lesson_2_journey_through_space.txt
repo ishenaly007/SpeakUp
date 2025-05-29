@@ -1,0 +1,124 @@
+Title: Journey Through Space
+
+HTML Content:
+<div id="lesson-journey-through-space" class="lesson-content">
+  <h1>Journey Through Space</h1>
+  <p>Gaze into the cosmos. Our universe is vast and full of wonders.</p>
+  <p>Let the stars guide your imagination.</p>
+  <div class="planet-placeholder">
+    <img src="placeholder_planet_earth.png" alt="Placeholder for Planet Earth">
+    <span>Earth</span>
+  </div>
+  <div class="planet-placeholder">
+    <img src="placeholder_planet_mars.png" alt="Placeholder for Planet Mars">
+    <span>Mars</span>
+  </div>
+  <div class="planet-placeholder">
+    <img src="placeholder_planet_jupiter.png" alt="Placeholder for Planet Jupiter">
+    <span>Jupiter</span>
+  </div>
+</div>
+
+CSS Content:
+#lesson-journey-through-space {
+  font-family: 'Arial Black', Gadget, sans-serif;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden; /* Important for keeping pseudo-elements contained */
+  min-height: 300px; /* Ensure content is visible */
+  border-radius: 8px;
+}
+
+#lesson-journey-through-space::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Place it behind the content */
+  background: #000011; /* Dark blue/black space color */
+  animation: animateStars 120s linear infinite, animateBackgroundColor 60s linear infinite;
+}
+
+#lesson-journey-through-space::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%; /* Wider to allow for smooth movement */
+  height: 200%; /* Taller to allow for smooth movement */
+  z-index: -1; /* Behind content, but can be above the ::before if needed for layering */
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 50px 160px, #ddd, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 160px 120px, #eee, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px; /* Size of the repeating star pattern */
+  animation: animateStars 50s linear infinite;
+}
+
+@keyframes animateStars {
+  from {
+    transform: translateY(0px) translateX(0px);
+  }
+  to {
+    transform: translateY(-200px) translateX(-200px); /* Corresponds to background-size */
+  }
+}
+
+@keyframes animateBackgroundColor {
+  0% { background-color: #000011; }
+  25% { background-color: #020024; } /* Deeper blue */
+  50% { background-color: #0b001a; } /* Hint of purple */
+  75% { background-color: #020024; }
+  100% { background-color: #000011; }
+}
+
+
+#lesson-journey-through-space h1 {
+  font-size: 2.5em;
+  text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+  margin-bottom: 20px;
+}
+
+#lesson-journey-through-space p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+#lesson-journey-through-space .planet-placeholder {
+  display: inline-block;
+  margin: 20px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+#lesson-journey-through-space .planet-placeholder:hover {
+  transform: scale(1.1);
+}
+
+#lesson-journey-through-space .planet-placeholder img {
+  width: 80px;
+  height: 80px;
+  display: block;
+  margin: 0 auto 5px;
+  border-radius: 50%;
+  background-color: #ccc; /* Placeholder background */
+}
+
+#lesson-journey-through-space .planet-placeholder span {
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+JavaScript Content:
+No JavaScript

@@ -31,12 +31,15 @@ public class Lesson {
     @Column(name = "css_content", columnDefinition = "TEXT")
     private String cssContent; // CSS для сайта
 
+    @Column(name = "javascript_content", columnDefinition = "TEXT")
+    private String javascriptContent; // JavaScript для сайта
+
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Test> tests;
 
     public Lesson() {}
 
-    public Lesson(String title, String level, String description, String note, String telegraphUrl, String htmlContent, String cssContent) {
+    public Lesson(String title, String level, String description, String note, String telegraphUrl, String htmlContent, String cssContent, String javascriptContent) {
         this.title = title;
         this.level = level;
         this.description = description;
@@ -44,6 +47,7 @@ public class Lesson {
         this.telegraphUrl = telegraphUrl;
         this.htmlContent = htmlContent;
         this.cssContent = cssContent;
+        this.javascriptContent = javascriptContent;
     }
 
     // Геттеры и сеттеры
@@ -63,6 +67,8 @@ public class Lesson {
     public void setHtmlContent(String htmlContent) { this.htmlContent = htmlContent; }
     public String getCssContent() { return cssContent; }
     public void setCssContent(String cssContent) { this.cssContent = cssContent; }
+    public String getJavascriptContent() { return javascriptContent; }
+    public void setJavascriptContent(String javascriptContent) { this.javascriptContent = javascriptContent; }
     public List<Test> getTests() { return tests; }
     public void setTests(List<Test> tests) { this.tests = tests; }
 }

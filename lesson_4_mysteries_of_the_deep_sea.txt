@@ -1,0 +1,199 @@
+Title: Mysteries of the Deep Sea
+
+HTML Content:
+<div id="lesson-deep-sea-mysteries" class="lesson-content">
+  <h1>Mysteries of the Deep Sea</h1>
+  <p class="intro-deep-sea">Journey to the darkest corners of our planet, where sunlight never reaches and bizarre creatures thrive. The deep sea is a realm of crushing pressure, frigid temperatures, and incredible biodiversity.</p>
+
+  <section id="bioluminescence-zone">
+    <h2>The Twilight Zone & Bioluminescence</h2>
+    <p>As we descend, light fades. In the twilight zone (mesopelagic zone), between 200 and 1000 meters, many creatures produce their own light through a chemical process called bioluminescence. This light is used for communication, camouflage, and predation.</p>
+    <div class="creature-gallery">
+      <figure>
+        <img src="placeholder_anglerfish.png" alt="Placeholder for an Anglerfish with its lure">
+        <figcaption>The Anglerfish uses a bioluminescent lure to attract prey.</figcaption>
+      </figure>
+      <figure>
+        <img src="placeholder_dragonfish.png" alt="Placeholder for a Dragonfish">
+        <figcaption>Dragonfish can produce red light, invisible to many other deep-sea creatures.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="abyssal-plain">
+    <h2>The Abyssal Plain</h2>
+    <p>Below 4000 meters lies the abyssal plain, a vast, dark, and seemingly barren expanse. Yet, life persists. Creatures here are adapted to extreme pressure and scarce food, often relying on "marine snow" – organic matter drifting from above.</p>
+    <div class="creature-feature">
+      <img src="placeholder_gulper_eel.png" alt="Placeholder for a Gulper Eel">
+      <div>
+        <h3>The Gulper Eel (Pelican Eel)</h3>
+        <p>Known for its enormous mouth, the gulper eel can consume prey much larger than itself. Its body is mostly a large stomach.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="hydrothermal-vents">
+    <h2>Hydrothermal Vents: Oases of Life</h2>
+    <p>Discovered in 1977, hydrothermal vents are like underwater geysers, spewing superheated, mineral-rich water from beneath the Earth's crust. These vents support unique ecosystems based on chemosynthesis, where bacteria convert chemicals into energy, forming the base of a food web that includes giant tube worms, crabs, and shrimp.</p>
+    <div class="vent-showcase">
+        <img src="placeholder_hydrothermal_vent.png" alt="Placeholder for a Hydrothermal Vent">
+        <p>Giant tube worms, some reaching over 2 meters in length, have no digestive system and rely entirely on symbiotic bacteria.</p>
+    </div>
+  </section>
+
+  <p class="outro-deep-sea">The deep sea remains one of the least explored environments on Earth, holding countless secrets yet to be discovered.</p>
+</div>
+
+CSS Content:
+#lesson-deep-sea-mysteries {
+  font-family: 'Verdana', sans-serif;
+  padding: 25px;
+  background-color: #001f3f; /* Navy - very dark blue */
+  color: #b0c4de; /* LightSteelBlue - for general text */
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden; /* For any pseudo-element effects */
+}
+
+#lesson-deep-sea-mysteries::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px; /* Subtle grid for a "sonar" feel */
+  opacity: 0.3;
+  z-index: 0;
+  animation: subtleWaterMove 20s linear infinite alternate;
+}
+
+@keyframes subtleWaterMove {
+  from { background-position: 0 0; }
+  to { background-position: 40px 20px; }
+}
+
+#lesson-deep-sea-mysteries h1 {
+  font-size: 2.6em;
+  text-align: center;
+  color: #7fffd4; /* Aquamarine */
+  text-shadow: 0 0 10px #7fffd4, 0 0 5px #000;
+  margin-bottom: 20px;
+  position: relative; /* Ensure h1 is above pseudo-elements */
+  z-index: 1;
+}
+
+#lesson-deep-sea-mysteries h2 {
+  font-size: 1.8em;
+  color: #40e0d0; /* Turquoise */
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #003366; /* Darker blue */
+  padding-bottom: 5px;
+  position: relative;
+  z-index: 1;
+}
+
+#lesson-deep-sea-mysteries .intro-deep-sea,
+#lesson-deep-sea-mysteries .outro-deep-sea {
+  font-style: italic;
+  font-size: 1.1em;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #add8e6; /* LightBlue */
+  position: relative;
+  z-index: 1;
+}
+
+#lesson-deep-sea-mysteries p {
+  line-height: 1.6;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+#lesson-deep-sea-mysteries .creature-gallery {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+#lesson-deep-sea-mysteries .creature-gallery figure {
+  margin: 10px;
+  text-align: center;
+  width: 200px;
+  background-color: rgba(0, 31, 63, 0.7); /* Dark blue, slightly transparent */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #003366;
+}
+
+#lesson-deep-sea-mysteries .creature-gallery img {
+  width: 150px;
+  height: 100px;
+  background-color: #333; /* Placeholder background */
+  border-radius: 4px;
+  margin-bottom: 8px;
+  object-fit: cover;
+}
+
+#lesson-deep-sea-mysteries .creature-gallery figcaption {
+  font-size: 0.9em;
+  color: #98fb98; /* PaleGreen */
+}
+
+#lesson-deep-sea-mysteries .creature-feature {
+  display: flex;
+  align-items: center;
+  background-color: rgba(10, 40, 70, 0.5);
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 15px;
+  border: 1px solid #002a50;
+  position: relative;
+  z-index: 1;
+}
+
+#lesson-deep-sea-mysteries .creature-feature img {
+  width: 120px;
+  height: 120px;
+  background-color: #333; /* Placeholder background */
+  border-radius: 50%;
+  margin-right: 20px;
+  object-fit: cover;
+}
+
+#lesson-deep-sea-mysteries .creature-feature h3 {
+  color: #afeeee; /* PaleTurquoise */
+  margin-bottom: 5px;
+}
+
+#lesson-deep-sea-mysteries .vent-showcase {
+  text-align: center;
+  margin-top: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+#lesson-deep-sea-mysteries .vent-showcase img {
+  max-width: 70%;
+  height: auto;
+  border-radius: 5px;
+  border: 2px solid #20b2aa; /* LightSeaGreen */
+  background-color: #222; /* Placeholder background */
+  margin-bottom: 10px;
+}
+
+#lesson-deep-sea-mysteries .outro-deep-sea {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px dashed #003366;
+}
+
+JavaScript Content:
+No JavaScript

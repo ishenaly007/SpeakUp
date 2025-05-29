@@ -1,0 +1,217 @@
+Title: Adventures in Cooking
+
+HTML Content:
+<div id="lesson-adventures-in-cooking" class="lesson-content">
+  <h1>Adventures in Cooking: Rainbow Fruit Skewers!</h1>
+  <p class="intro-cooking">Let's go on a delicious adventure and make a super easy, super colorful, and super yummy snack: Rainbow Fruit Skewers! Perfect for parties, sunny days, or anytime you want a healthy treat.</p>
+
+  <div class="recipe-card">
+    <div class="recipe-image-placeholder">
+      <img src="placeholder_rainbow_fruit_skewers.png" alt="Placeholder for Rainbow Fruit Skewers">
+      <span>Yummy & Colorful!</span>
+    </div>
+
+    <section id="ingredients">
+      <h2><i class="fas fa-carrot"></i> What You'll Need (Ingredients)</h2>
+      <ul>
+        <li><i class="fas fa-apple-alt fruit-icon red"></i> Strawberries (Red)</li>
+        <li><i class="fas fa-lemon fruit-icon orange"></i> Orange slices or Cantaloupe chunks (Orange)</li>
+        <li><i class="fas fa-pepper-hot fruit-icon yellow"></i> Pineapple chunks or Banana slices (Yellow) <!-- Using pepper as a placeholder icon -->
+        <li><i class="fas fa-leaf fruit-icon green"></i> Kiwi slices or Green Grapes (Green)</li>
+        <li><i class="fas fa-seedling fruit-icon blue"></i> Blueberries (Blue) <!-- Using seedling as a placeholder icon -->
+        <li><i class="fas fa-wine-glass-alt fruit-icon purple"></i> Purple Grapes (Purple) <!-- Using wine glass as a placeholder icon -->
+        <li>Wooden skewers</li>
+        <li>Optional: Yogurt or a fruit dip for serving</li>
+      </ul>
+      <p class="safety-note"><i class="fas fa-exclamation-triangle"></i> Always ask a grown-up for help when using skewers or cutting fruit!</p>
+    </section>
+
+    <section id="instructions">
+      <h2><i class="fas fa-utensils"></i> Let's Make It! (Instructions)</h2>
+      <ol>
+        <li><strong>Wash Up!</strong> Wash your hands and all the fruits thoroughly.</li>
+        <li><strong>Prepare the Fruit:</strong>
+          <ul>
+            <li>Hull the strawberries (remove the green tops). Cut larger ones in half.</li>
+            <li>Peel and segment oranges, or cut cantaloupe into chunks.</li>
+            <li>Cut pineapple into chunks. If using banana, slice it (maybe dip in a little lemon juice to prevent browning).</li>
+            <li>Peel and slice kiwi, or wash grapes.</li>
+            <li>Wash blueberries and purple grapes.</li>
+          </ul>
+        </li>
+        <li><strong>Thread the Skewers:</strong> Carefully slide the fruit pieces onto the skewers in rainbow order (Red, Orange, Yellow, Green, Blue, Purple). You can repeat the pattern if your skewers are long!</li>
+        <li><strong>Chill (Optional):</strong> For an extra refreshing treat, you can chill the skewers in the fridge for about 15-20 minutes.</li>
+        <li><strong>Serve and Enjoy!</strong> Arrange your beautiful Rainbow Fruit Skewers on a plate. Serve with yogurt or fruit dip if you like.</li>
+      </ol>
+    </section>
+
+    <section id="tips-variations">
+      <h2><i class="fas fa-lightbulb"></i> Tips & Fun Variations</h2>
+      <ul>
+        <li><strong>Different Shapes:</strong> Use small cookie cutters to make fun shapes out of melon or pineapple.</li>
+        <li><strong>Add More Colors:</strong> What other fruits can you think of? Maybe some raspberries (pinkish-red) or blackberries (dark purple/black).</li>
+        <li><strong>Drizzle Time:</strong> Melt a little chocolate (ask a grown-up for help!) and drizzle it over the fruit skewers for an extra treat.</li>
+        <li><strong>Grill Them (Grown-up Job!):</strong> Some fruits like pineapple and peaches are delicious when grilled for a short time.</li>
+      </ul>
+    </section>
+  </div>
+  <p class="outro-cooking">Cooking is all about having fun and trying new things. Hope you enjoyed this colorful adventure!</p>
+</div>
+
+CSS Content:
+/* FontAwesome (or similar) would be needed for icons - using text placeholders for now if not available */
+/* For example: <i class="fas fa-carrot"></i> */
+
+#lesson-adventures-in-cooking {
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Kristen ITC', sans-serif; /* Fun, kid-friendly font */
+  padding: 25px;
+  background-color: #fff0e6; /* Light peachy background */
+  border: 2px dashed #ffa07a; /* LightSalmon dashed border */
+  border-radius: 15px;
+  color: #5d4037; /* Brownish text */
+}
+
+#lesson-adventures-in-cooking h1 {
+  font-size: 2.5em;
+  text-align: center;
+  color: #ff6347; /* Tomato red */
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 2px #fbc1ac;
+}
+
+#lesson-adventures-in-cooking h2 {
+  font-size: 1.8em;
+  color: #20b2aa; /* LightSeaGreen */
+  margin-top: 25px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 2px dotted #20b2aa;
+}
+#lesson-adventures-in-cooking h2 .fas { /* Icon styling */
+  margin-right: 10px;
+  color: #ff7f50; /* Coral */
+}
+
+#lesson-adventures-in-cooking .intro-cooking,
+#lesson-adventures-in-cooking .outro-cooking {
+  font-size: 1.1em;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #7a5230;
+  line-height: 1.5;
+}
+
+#lesson-adventures-in-cooking .recipe-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+#lesson-adventures-in-cooking .recipe-image-placeholder {
+  text-align: center;
+  margin-bottom: 20px;
+}
+#lesson-adventures-in-cooking .recipe-image-placeholder img {
+  max-width: 80%;
+  height: auto;
+  max-height: 250px;
+  border-radius: 8px;
+  border: 3px solid #ffdab9; /* PeachPuff */
+  background-color: #f0f0f0; /* Placeholder background */
+}
+#lesson-adventures-in-cooking .recipe-image-placeholder span {
+  display: block;
+  font-size: 1.2em;
+  color: #ff4500; /* OrangeRed */
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+#lesson-adventures-in-cooking ul, #lesson-adventures-in-cooking ol {
+  padding-left: 30px;
+}
+
+#lesson-adventures-in-cooking li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+#lesson-adventures-in-cooking #ingredients li {
+  list-style: none; /* Remove default if using icons */
+  padding-left: 5px;
+}
+#lesson-adventures-in-cooking .fruit-icon {
+  margin-right: 8px;
+  width: 20px; /* For alignment */
+  display: inline-block;
+  text-align: center;
+}
+/* Example icon colors - actual icons would have their own color or inherit */
+#lesson-adventures-in-cooking .fruit-icon.red { color: #FF0000; }
+#lesson-adventures-in-cooking .fruit-icon.orange { color: #FFA500; }
+#lesson-adventures-in-cooking .fruit-icon.yellow { color: #FFFF00; text-shadow: 1px 1px 0 #ccc; }
+#lesson-adventures-in-cooking .fruit-icon.green { color: #008000; }
+#lesson-adventures-in-cooking .fruit-icon.blue { color: #0000FF; }
+#lesson-adventures-in-cooking .fruit-icon.purple { color: #800080; }
+
+
+#lesson-adventures-in-cooking #instructions ul {
+  list-style-type: circle;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+#lesson-adventures-in-cooking .safety-note {
+  background-color: #fffacd; /* LemonChiffon */
+  border: 1px solid #fada5e; /* Light yellow-orange border */
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: 0.95em;
+  color: #8b4513; /* SaddleBrown */
+}
+#lesson-adventures-in-cooking .safety-note .fas {
+  color: #ff4500; /* OrangeRed for warning icon */
+  margin-right: 5px;
+}
+
+#lesson-adventures-in-cooking #tips-variations ul {
+  list-style-image: url('placeholder_star_bullet.png'); /* Placeholder for a custom bullet */
+  /* Fallback if image not available */
+  list-style-type: disc; 
+}
+#lesson-adventures-in-cooking #tips-variations .fas {
+  color: #ffd700; /* Gold for lightbulb icon */
+}
+
+#lesson-adventures-in-cooking .outro-cooking {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 2px dotted #ffdab9;
+  font-weight: bold;
+}
+
+/* Basic FontAwesome-like placeholders using text */
+.fas::before {
+  font-family: "Font Awesome 5 Free"; /* This won't work without FA installed, it's for concept */
+  font-weight: 900;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+.fa-carrot::before { content: "🥕"; } /* Using emoji as simple text placeholder */
+.fa-apple-alt::before { content: "🍎"; }
+.fa-lemon::before { content: "🍊"; } /* Closest emoji for orange fruit */
+.fa-pepper-hot::before { content: "🍍"; } /* Closest emoji for pineapple */
+.fa-leaf::before { content: "🥝"; } /* Closest emoji for kiwi/green grape */
+.fa-seedling::before { content: "🫐"; } /* Closest emoji for blueberry */
+.fa-wine-glass-alt::before { content: "🍇"; } /* Closest emoji for purple grape */
+.fa-exclamation-triangle::before { content: "⚠️"; }
+.fa-utensils::before { content: "🍴"; }
+.fa-lightbulb::before { content: "💡"; }
+
+
+JavaScript Content:
+No JavaScript

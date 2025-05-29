@@ -1,0 +1,259 @@
+Title: Nature's Wonders
+
+HTML Content:
+<div id="lesson-natures-wonders" class="lesson-content">
+  <h1>Nature's Wonders: The Cycle of Life & Growth</h1>
+  <p class="intro-nature">Nature is a tapestry of constant change and renewal. From the smallest seed to the vast forest, life flows in beautiful cycles, demonstrating resilience and interconnectedness.</p>
+
+  <div id="falling-elements-container-nature"></div>
+
+  <section id="seasons-change">
+    <h2>The Dance of Seasons</h2>
+    <p>Spring brings rebirth, with vibrant blossoms and new growth. Summer is a time of abundance and warmth. Autumn paints the world in fiery colors as leaves fall, preparing for a period of rest. Winter, though seemingly dormant, holds the promise of renewal.</p>
+    <div class="seasons-gallery">
+      <figure>
+        <img src="placeholder_spring_blossoms.png" alt="Placeholder for Spring blossoms">
+        <figcaption>Spring: A Time of Awakening</figcaption>
+      </figure>
+      <figure>
+        <img src="placeholder_summer_forest.png" alt="Placeholder for a lush summer forest">
+        <figcaption>Summer: Peak of Vitality</figcaption>
+      </figure>
+      <figure>
+        <img src="placeholder_autumn_leaves_path.png" alt="Placeholder for a path covered in autumn leaves">
+        <figcaption>Autumn: A Spectacle of Colors</figcaption>
+      </figure>
+      <figure>
+        <img src="placeholder_winter_landscape.png" alt="Placeholder for a snow-covered winter landscape">
+        <figcaption>Winter: Rest and Reflection</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="interconnectedness">
+    <h2>All Things Connected</h2>
+    <p>In nature, everything is linked. Bees pollinate flowers, which then produce fruit. Fallen leaves decompose, enriching the soil for new plants. This intricate web of life sustains ecosystems and highlights the importance of every element, big or small.</p>
+    <div class="nature-detail">
+      <img src="placeholder_bee_on_flower.png" alt="Placeholder of a bee pollinating a flower">
+      <p>Pollinators like bees are crucial for the reproduction of many plants, including those that provide us with food.</p>
+    </div>
+  </section>
+  
+  <section id="growth-resilience">
+      <h2>The Power of Growth</h2>
+      <p>A tiny seed can grow into a mighty tree, weathering storms and reaching for the sky. This inherent drive to grow and adapt is a powerful force in nature, reminding us of the resilience of life.</p>
+      <div class="nature-detail">
+          <img src="placeholder_seedling_sprouting.png" alt="Placeholder of a seedling sprouting from the earth">
+          <p>Even in harsh conditions, life finds a way to take root and flourish.</p>
+      </div>
+  </section>
+
+  <p class="outro-nature">Take a moment to observe the wonders around you. Nature's cycles offer profound lessons in beauty, change, and the enduring power of life.</p>
+</div>
+
+CSS Content:
+#lesson-natures-wonders {
+  font-family: 'Georgia', serif;
+  padding: 25px;
+  background: linear-gradient(to bottom, #a8e063 0%, #56ab2f 100%); /* Green gradient */
+  color: #2e2e2e; /* Dark grey for text, for contrast on green */
+  border-radius: 10px;
+  position: relative; /* For positioning the falling elements container */
+  overflow: hidden; /* To contain falling elements */
+  min-height: 500px; /* Ensure space for falling elements */
+}
+
+#falling-elements-container-nature {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* So it doesn't interfere with content interaction */
+  z-index: 1; /* Below content if needed, or above if elements should be over text */
+}
+
+.falling-leaf, .falling-petal {
+  position: absolute;
+  top: -20px; /* Start above the screen */
+  font-size: 20px; /* Size of the leaf/petal character */
+  user-select: none; /* Prevent text selection */
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.falling-leaf { color: #c04000; /* Autumn leaf color */ } /* Example: 🍂 */
+.falling-petal { color: #ffb6c1; } /* LightPink for petals */ /* Example: 🌸 */
+
+#lesson-natures-wonders h1 {
+  font-size: 2.8em;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+  margin-bottom: 20px;
+  position: relative; z-index: 2;
+}
+
+#lesson-natures-wonders h2 {
+  font-size: 2em;
+  color: #3a5f0b; /* Darker green */
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #4a7729;
+  padding-bottom: 8px;
+  position: relative; z-index: 2;
+}
+
+#lesson-natures-wonders .intro-nature,
+#lesson-natures-wonders .outro-nature {
+  font-style: italic;
+  font-size: 1.1em;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #f0f0f0; /* Lighter text for contrast */
+  line-height: 1.6;
+  position: relative; z-index: 2;
+}
+
+#lesson-natures-wonders p {
+  margin-bottom: 12px;
+  line-height: 1.7;
+  position: relative; z-index: 2;
+  color: #333; /* Ensure good readability for main paragraphs */
+}
+
+#lesson-natures-wonders .seasons-gallery {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  position: relative; z-index: 2;
+}
+
+#lesson-natures-wonders .seasons-gallery figure {
+  margin: 10px;
+  text-align: center;
+  width: calc(50% - 30px); /* Two items per row */
+  min-width: 200px;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#lesson-natures-wonders .seasons-gallery img {
+  width: 100%;
+  max-width: 200px;
+  height: 130px;
+  background-color: #8fbc8f; /* DarkSeaGreen placeholder */
+  border-radius: 4px;
+  margin-bottom: 8px;
+  object-fit: cover;
+}
+
+#lesson-natures-wonders .seasons-gallery figcaption {
+  font-size: 0.95em;
+  color: #2f4f4f; /* DarkSlateGray */
+}
+
+#lesson-natures-wonders .nature-detail {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 15px;
+  border-radius: 6px;
+  margin: 20px 0;
+  position: relative; z-index: 2;
+}
+
+#lesson-natures-wonders .nature-detail img {
+  width: 100px;
+  height: 100px;
+  background-color: #90ee90; /* LightGreen placeholder */
+  border-radius: 50%;
+  margin-right: 20px;
+  object-fit: cover;
+}
+
+#lesson-natures-wonders .outro-nature {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px dashed #4a7729;
+}
+
+JavaScript Content:
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('falling-elements-container-nature');
+  if (!container) return;
+
+  const elements = ['🍂', '🍁', '🌸', '🌷', '🌿']; // Leaves, Petals, small green plants
+  const colors = ['#c04000', '#ff7f50', '#ffb6c1', '#ff69b4', '#90ee90']; // Corresponding colors
+
+  function createElement() {
+    const element = document.createElement('div');
+    const randomIndex = Math.floor(Math.random() * elements.length);
+    element.textContent = elements[randomIndex];
+    // element.style.color = colors[randomIndex]; // Using CSS classes for color now
+    if (elements[randomIndex] === '🌸' || elements[randomIndex] === '🌷') {
+        element.className = 'falling-petal';
+    } else {
+        element.className = 'falling-leaf';
+    }
+    
+    element.style.left = Math.random() * 100 + 'vw'; // Start across the width
+    element.style.animationDuration = Math.random() * 5 + 5 + 's'; // 5-10 seconds fall time
+    element.style.fontSize = Math.random() * 10 + 15 + 'px'; // 15-25px size
+    element.style.opacity = Math.random() * 0.5 + 0.5; // 0.5-1.0 opacity
+
+    // Add horizontal drift
+    const drift = (Math.random() - 0.5) * 200; // -100px to +100px horizontal movement
+
+    const animation = element.animate([
+      { transform: `translate(0, -20px) rotate(0deg)`, opacity: 1 },
+      { transform: `translate(${drift}px, ${container.offsetHeight + 20}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+    ], {
+      duration: (Math.random() * 5 + 8) * 1000, // 8-13 seconds
+      easing: 'linear',
+    });
+
+    animation.onfinish = () => {
+      element.remove();
+    };
+
+    container.appendChild(element);
+  }
+
+  // Check if the lesson content is visible (basic check, might need IntersectionObserver for accuracy)
+  const lessonNaturesWonders = document.getElementById('lesson-natures-wonders');
+  if (lessonNaturesWonders && getComputedStyle(lessonNaturesWonders).display !== 'none') {
+     // Create a few elements every second, up to a certain limit if needed
+     const intervalId = setInterval(() => {
+        if (container.children.length < 50) { // Limit to 50 elements at a time
+          createElement();
+        }
+     }, 800); // Add a new element every 0.8 seconds
+
+     // Clear interval if the element is removed or hidden (simplified cleanup)
+     // In a real SPA, you'd need more robust cleanup on component unmount
+     const observer = new MutationObserver((mutationsList, obs) => {
+        for(const mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+                let removed = false;
+                mutation.removedNodes.forEach(node => {
+                    if (node === lessonNaturesWonders) removed = true;
+                });
+                if (removed || !document.body.contains(lessonNaturesWonders)) {
+                    clearInterval(intervalId);
+                    obs.disconnect();
+                    return;
+                }
+            }
+        }
+        if (!document.body.contains(lessonNaturesWonders)) {
+             clearInterval(intervalId);
+             obs.disconnect();
+        }
+     });
+     observer.observe(document.body, { childList: true, subtree: true });
+  }
+});

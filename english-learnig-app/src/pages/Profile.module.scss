@@ -1,56 +1,81 @@
-@import '../styles/variables';
+.profileContainer {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
 
-.wrapper {
-  max-width: 480px;
-  margin: 60px auto;
-  padding: 24px 32px;
-  background: white;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-h2 {
-  color: var(--primary-color);
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-p {
-  font-size: 1.1rem;
-  margin-bottom: 12px;
-}
-
-.nav {
-  display: flex;
-  flex-direction: column;
-  margin: 24px 0;
-
-  .link {
-    padding: 10px 16px;
-    margin-bottom: 10px;
-    background-color: var(--primary-light);
-    color: white;
-    text-decoration: none;
-    border-radius: var(--border-radius);
-    font-weight: 600;
+  h2 {
     text-align: center;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: var(--primary-color);
-    }
+    margin-bottom: 1.5rem;
+    color: #333;
   }
 }
 
-.logoutBtn {
-  padding: 12px;
-  background-color: var(--primary-color);
-  border: none;
-  border-radius: var(--border-radius);
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s ease;
+.profileCard {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    margin-top: 1.5rem; // Adjusted margin
+    margin-bottom: 1rem;
+    color: #555;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.profileItem {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  color: #444;
+  word-wrap: break-word; // Ensure long strings (e.g. email) wrap
+
+  strong {
+    color: #007bff; // Consider using $primary-color if variables are imported
+    margin-right: 0.5rem;
+  }
+}
+
+.loading, .error, .noData {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 2rem;
+}
+
+.error {
+  color: red; // Consider using a global error color variable
+}
+
+// Media Queries for Profile Page
+@media (max-width: 768px) {
+  .profileContainer {
+    margin: 1rem auto;
+    padding: 0.5rem; // Reduce outer padding
+  }
+  .profileCard {
+    padding: 1.5rem; // Reduce card padding
+  }
+  .profileItem {
+    font-size: 0.95rem; // Slightly smaller font
+  }
+}
+
+@media (max-width: 480px) {
+  .profileContainer {
+    h2 {
+      font-size: 1.5rem; // Smaller main heading
+    }
+  }
+  .profileCard {
+    padding: 1rem; // Further reduce card padding
+    h3 {
+      font-size: 1.1rem; // Smaller sub-headings
+    }
+  }
+  .profileItem {
+    font-size: 0.9rem; // Further reduce font size
+    line-height: 1.5;
+  }
 }
