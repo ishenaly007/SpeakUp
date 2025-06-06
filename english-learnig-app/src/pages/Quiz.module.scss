@@ -1,3 +1,5 @@
+@import '../styles/global.scss';
+
 .quizContainer {
   max-width: 800px;
   margin: 2rem auto;
@@ -16,11 +18,17 @@
   margin-bottom: 1.5rem;
 }
 
+.title {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
 .button {
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
   color: white;
-  background-color: #007bff;
+  background-color: $primary-color;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -28,7 +36,7 @@
   margin: 0.5rem;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: darken($primary-color, 10%);
   }
 
   &:disabled {
@@ -52,14 +60,13 @@
   border-radius: 5px;
   margin-bottom: 1rem;
 }
+
 .errorTextSmall {
   color: #dc3545;
   font-size: 0.9rem;
   margin-top: 0.5rem;
 }
 
-
-/* Initial View Specifics */
 .initialView {
   h2 {
     font-size: 1.8rem;
@@ -73,7 +80,6 @@
   }
 }
 
-/* Active Quiz View Specifics */
 .activeQuizView {
   .questionCounter {
     font-size: 0.9rem;
@@ -92,11 +98,11 @@
 
   .timerBar {
     height: 100%;
-    background-color: #28a745; // Green for timer
+    background-color: #28a745;
     border-radius: 5px;
-    transition: width 0.1s linear; // Smooth transition for timer
+    transition: width 0.1s linear;
   }
-  
+
   .timerText {
     font-size: 0.9rem;
     color: #555;
@@ -116,25 +122,26 @@
 
   .optionsContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); // Slightly smaller min for options
-    gap: 0.75rem; // Slightly reduced gap
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
     margin-top: 1rem;
   }
 
   .optionButton {
-    padding: 0.8rem; // Adjusted padding
-    font-size: 1rem; // Adjusted font size
+    padding: 0.8rem;
+    font-size: 1rem;
     background-color: #fff;
-    border: 1px solid #007bff;
-    color: #007bff;
+    border: 1px solid $primary-color;
+    color: $primary-color;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
 
-    &:hover {
-      background-color: #007bff;
+    &:hover:not(:disabled) {
+      background-color: $primary-color;
       color: white;
     }
+
     &:disabled {
       background-color: #e9ecef;
       color: #6c757d;
@@ -144,11 +151,10 @@
   }
 }
 
-/* Results View Specifics */
 .resultsView {
   h2 {
     font-size: 1.8rem;
-    color: #28a745; // Green for success
+    color: #28a745;
     margin-bottom: 1rem;
   }
   p {
@@ -158,22 +164,25 @@
   }
   .resultsActions {
     margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
   }
 }
 
-// Media Queries for Quiz Page
 @media (max-width: 768px) {
   .quizContainer {
     padding: 1.5rem;
     margin: 1rem auto;
+    max-width: 90%;
   }
 
   .activeQuizView {
     .questionWord {
-      font-size: 1.5rem; // Smaller font for question word
+      font-size: 1.5rem;
     }
     .optionButton {
-      font-size: 0.9rem; // Smaller font for options
+      font-size: 0.9rem;
       padding: 0.7rem;
     }
   }
@@ -192,21 +201,23 @@
   .quizContainer {
     padding: 1rem;
   }
+
   .activeQuizView {
     .questionWord {
       font-size: 1.3rem;
     }
-    .timerText, .questionCounter {
+    .timerText,
+    .questionCounter {
       font-size: 0.8rem;
     }
-     .optionsContainer {
-       // For very small screens, ensure options stack nicely if still too wide
-       grid-template-columns: 1fr; // Stack options vertically
-     }
+    .optionsContainer {
+      grid-template-columns: 1fr;
+    }
     .optionButton {
       font-size: 0.85rem;
     }
   }
+
   .initialView {
     h2 {
       font-size: 1.5rem;
@@ -216,3 +227,7 @@
     }
   }
 }
+
+// Fallback variables
+$primary-color: #007bff !default;
+$text-color: #333 !default;

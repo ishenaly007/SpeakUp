@@ -1,107 +1,376 @@
-@import '../styles/global.scss'; // Or global.scss if variables are there
+@import '../styles/global.scss'; // Assuming global variables are defined here
 
 .homeContainer {
   text-align: center;
+  background: #f8f9fa;
 }
 
 .heroSection {
-  position: relative; 
+  position: relative;
   width: 100%;
-  overflow: hidden; 
+  overflow: hidden;
 
   .heroImage {
     width: 100%;
-    height: auto; 
-    max-height: 400px; // Max height for the image
-    object-fit: cover; // Ensure image covers the area without distortion
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
     display: block;
   }
 
   .heroTextContainer {
-    padding: 1.5rem; // Adjusted padding
-    background-color: rgba(244, 244, 244, 0.9); // Slightly transparent background for better blending if over image
-    // For text below image, remove background or set to solid color e.g. $background-color
-
-    // If you want text overlaid on image:
-    // position: absolute;
-    // top: 50%;
-    // left: 50%;
-    // transform: translate(-50%, -50%);
-    // color: white; 
-    // background-color: rgba(0, 0, 0, 0.6); 
-    // padding: 2rem;
-    // border-radius: 8px;
-    // width: 80%; // Ensure text container doesn't span full image width
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    margin: 0 auto;
+    max-width: 800px;
+    position: relative;
+    top: -50px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   }
 
-  .heroTitle {
-    font-size: 2.2rem; // Adjusted size
-    margin-bottom: 0.75rem; // Adjusted margin
-    color: $text-color; // Use global text color
-    font-weight: 600; // Make title a bit bolder
+  .title {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    color: $text-color;
+    font-weight: 700;
+    animation: fadeIn 1s ease-in;
   }
 
-  .heroSubtitle {
-    font-size: 1.1rem; // Adjusted size
-    margin-bottom: 1.5rem;
-    color: darken($text-color, 10%); // Slightly darker text for subtitle
+  .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: darken($text-color, 15%);
+    font-weight: 500;
   }
 
   .ctaButton {
-    padding: 0.75rem 1.8rem; // Adjusted padding
-    font-size: 1rem;      // Adjusted font size
-    color: white;
-    background-color: $primary-color; 
+    padding: 12px 32px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: $primary-color;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-transform: uppercase; // Uppercase text for CTA
-    letter-spacing: 0.5px;   // Add some letter spacing
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
 
     &:hover {
       background-color: darken($primary-color, 10%);
+      transform: translateY(-2px);
     }
   }
 }
 
-// Responsive adjustments for Home Page
+.featuresSection {
+  padding: 4rem 2rem;
+  background: #fff;
+
+  .sectionTitle {
+    font-size: 2rem;
+    color: $text-color;
+    margin-bottom: 3rem;
+    font-weight: 600;
+  }
+
+  .featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .featureCard {
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-10px);
+    }
+
+    .featureIcon {
+      font-size: 2.5rem;
+      color: $primary-color;
+      margin-bottom: 1rem;
+    }
+
+    .featureTitle {
+      font-size: 1.5rem;
+      color: $text-color;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .featureDescription {
+      font-size: 1rem;
+      color: darken($text-color, 10%);
+    }
+  }
+}
+
+.howItWorksSection {
+  padding: 4rem 2rem;
+  background: #f1f3f5;
+
+  .sectionTitle {
+    font-size: 2rem;
+    color: $text-color;
+    margin-bottom: 3rem;
+    font-weight: 600;
+  }
+
+  .stepsContainer {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .step {
+    flex: 1;
+    min-width: 250px;
+    text-align: center;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .stepNumber {
+      font-size: 2rem;
+      color: $primary-color;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .stepTitle {
+      font-size: 1.3rem;
+      color: $text-color;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .stepDescription {
+      font-size: 1rem;
+      color: darken($text-color, 10%);
+    }
+  }
+}
+
+.testimonialsSection {
+  padding: 4rem 2rem;
+  background: #fff;
+
+  .sectionTitle {
+    font-size: 2rem;
+    color: $text-color;
+    margin-bottom: 3rem;
+    font-weight: 600;
+  }
+
+  .testimonialsContainer {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    scroll-behavior: smooth;
+  }
+
+  .testimonialCard {
+    flex: 0 0 300px;
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    text-align: left;
+
+    .testimonialText {
+      font-size: 1rem;
+      color: darken($text-color, 10%);
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    .testimonialAuthor {
+      font-size: 1rem;
+      color: $text-color;
+      font-weight: 600;
+    }
+  }
+}
+
+.ctaSection {
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, $primary-color, darken($primary-color, 20%));
+  color: #fff;
+  text-align: center;
+
+  .sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .sectionDescription {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ctaButton {
+    padding: 12px 32px;
+    font-size: 1.1rem;
+    color: $primary-color;
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+
+    &:hover {
+      background: darken(#fff, 10%);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.footer {
+  padding: 2rem;
+  background: #333;
+  color: #fff;
+  text-align: center;
+
+  .footerLinks {
+    margin-bottom: 1rem;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-size: 0.9rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .footerText {
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fadeIn {
+  animation: fadeIn 1s ease-in;
+}
+
 @media (max-width: 768px) {
   .heroSection {
     .heroImage {
-      max-height: 300px; // Reduce image height on smaller screens
+      max-height: 400px;
     }
     .heroTextContainer {
-      padding: 1rem;
+      padding: 1.5rem;
+      top: -30px;
     }
-    .heroTitle {
-      font-size: 1.8rem; // Reduce title font size
+    .title {
+      font-size: 2.2rem;
     }
-    .heroSubtitle {
-      font-size: 1rem; // Reduce subtitle font size
+    .subtitle {
+      font-size: 1.1rem;
     }
     .ctaButton {
-      padding: 0.6rem 1.5rem;
-      font-size: 0.9rem;
+      padding: 10px 24px;
+      font-size: 1rem;
+    }
+  }
+
+  .featuresSection {
+    .featuresGrid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .howItWorksSection {
+    .stepsContainer {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .testimonialsSection {
+    .testimonialsContainer {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .ctaSection {
+    .sectionTitle {
+      font-size: 1.8rem;
+    }
+    .sectionDescription {
+      font-size: 1rem;
     }
   }
 }
 
-@media (max-width: 480px) { // For very small screens
+@media (max-width: 480px) {
   .heroSection {
     .heroImage {
-      max-height: 200px; // Further reduce image height
+      max-height: 300px;
     }
-    .heroTitle {
-      font-size: 1.5rem;
+    .title {
+      font-size: 1.8rem;
     }
-    .heroSubtitle {
-      font-size: 0.9rem;
+    .subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .featuresSection {
+    .sectionTitle {
+      font-size: 1.8rem;
+    }
+  }
+
+  .howItWorksSection {
+    .sectionTitle {
+      font-size: 1.8rem;
+    }
+  }
+
+  .testimonialsSection {
+    .sectionTitle {
+      font-size: 1.8rem;
     }
   }
 }
 
-// Fallback for variables if not imported
 $primary-color: #007bff !default;
 $text-color: #333 !default;
 $background-color: #f8f9fa !default;

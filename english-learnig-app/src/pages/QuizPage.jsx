@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { startQuiz, submitQuiz } from '../services/quizService'; // fetchQuizResults might be used later
+import { startQuiz, submitQuiz } from '../services/quizService';
 import { useNavigate } from 'react-router-dom';
-import styles from './Quiz.module.scss'; // To be created
+import styles from './Quiz.module.scss';
 
 const QuizPage = () => {
   const { user } = useAuth();
@@ -12,92 +12,95 @@ const QuizPage = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [score, setScore] = useState(0);
-  const [timer, setTimer] = useState(5); // 5 seconds per question
+  const [timer, setTimer] = useState(10); // 10 seconds per question
   const [timerIntervalId, setTimerIntervalId] = useState(null);
   const [quizResults, setQuizResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleAnswer = useCallback(async (selectedOption, answerType = 'selected') => {
-    if (timerIntervalId) clearInterval(timerIntervalId);
+  const handleAnswer = useCallback(
+      async (selectedOption, answerType = 'selected') => {
+        console.log(`handleAnswer called: option=${selectedOption}, type=${answerType}`);
+        if (timerIntervalId) {
+          clearInterval(timerIntervalId);
+          setTimerIntervalId(null);
+        }
 
-    const question = currentQuestions[currentQuestionIndex];
-    // Ensure question is valid before proceeding
-    if (!question) {
-        setError("Error: Question data is missing.");
-        setQuizState('initial'); // Or some other error state
-        return;
-    }
-    
-    const isCorrect = selectedOption === question.correctAnswer;
-    let currentScore = score;
+        const question = currentQuestions[currentQuestionIndex];
+        if (!question) {
+          setError('Ошибка: Данные вопроса отсутствуют.');
+          setQuizState('initial');
+          return;
+        }
 
-    if (isCorrect) {
-      currentScore += 1;
-      setScore(prevScore => prevScore + 1);
-    }
-    
-    const newAnswer = {
-      questionEnglishWord: question.englishWord,
-      selectedAnswer: selectedOption,
-      correctAnswer: question.correctAnswer,
-      isCorrect: isCorrect,
-    };
-    const updatedUserAnswers = [...userAnswers, newAnswer];
-    setUserAnswers(updatedUserAnswers);
+        const isCorrect = selectedOption === question.correctAnswer;
+        if (isCorrect) {
+          setScore(prevScore => prevScore + 1);
+        }
 
-    const nextIndex = currentQuestionIndex + 1;
-    if (nextIndex < currentQuestions.length) {
-      setCurrentQuestionIndex(nextIndex);
-      // Timer for next question will start via useEffect
-    } else {
-      // All questions answered, submit quiz
-      setLoading(true);
-      setError(null);
-      
-      // Calculate final score from the updatedUserAnswers array for accuracy
-      const finalScore = updatedUserAnswers.filter(ans => ans.isCorrect).length;
-      
-      const correctWordsForSubmission = updatedUserAnswers
-        .filter(ans => ans.isCorrect)
-        .map(ans => ({ english: ans.questionEnglishWord }));
+        const newAnswer = {
+          questionEnglishWord: question.englishWord,
+          selectedAnswer: selectedOption,
+          correctAnswer: question.correctAnswer,
+          isCorrect: isCorrect,
+        };
+        const updatedUserAnswers = [...userAnswers, newAnswer];
+        setUserAnswers(updatedUserAnswers);
 
-      try {
-        const results = await submitQuiz(user.id, finalScore, currentQuestions.length, correctWordsForSubmission);
-        setQuizResults(results);
-        setQuizState('results');
-      } catch (err) {
-        setError(err.message || 'Failed to submit results.');
-      } finally {
-        setLoading(false);
-      }
-    }
-  }, [currentQuestionIndex, currentQuestions, userAnswers, score, timerIntervalId, user?.id]);
+        const nextIndex = currentQuestionIndex + 1;
+        if (nextIndex < currentQuestions.length) {
+          setCurrentQuestionIndex(nextIndex);
+        } else {
+          setLoading(true);
+          setError(null);
 
+          const finalScore = updatedUserAnswers.filter(ans => ans.isCorrect).length;
+          const correctWordsForSubmission = updatedUserAnswers
+              .filter(ans => ans.isCorrect)
+              .map(ans => ({ english: ans.questionEnglishWord }));
 
-  // --- Timer Logic ---
+          try {
+            const results = await submitQuiz(user.id, finalScore, currentQuestions.length, correctWordsForSubmission);
+            setQuizResults(results);
+            setQuizState('results');
+          } catch (err) {
+            setError(err.message || 'Не удалось отправить результаты.');
+          } finally {
+            setLoading(false);
+          }
+        }
+      },
+      [currentQuestionIndex, currentQuestions, userAnswers, timerIntervalId, user?.id]
+  );
+
+  // Timer Logic
   useEffect(() => {
     if (quizState === 'active' && currentQuestionIndex < currentQuestions.length) {
-      setTimer(5); // Reset timer for new question
+      console.log(`Starting timer for question ${currentQuestionIndex + 1}`);
+      setTimer(10); // Reset timer to 10 seconds
       const intervalId = setInterval(() => {
         setTimer(prevTimer => {
-          if (prevTimer <= 1) { // When timer reaches 1, next tick will be 0
+          console.log(`Timer: ${prevTimer.toFixed(1)}s`);
+          if (prevTimer <= 0) {
             clearInterval(intervalId);
-            handleAnswer(null, 'timeout'); // Auto-submit as incorrect/timeout
+            console.log('Timer expired, calling handleAnswer');
+            handleAnswer(null, 'timeout');
             return 0;
           }
-          return prevTimer - 1;
+          return prevTimer - 0.1;
         });
-      }, 1000);
+      }, 100);
       setTimerIntervalId(intervalId);
-      return () => clearInterval(intervalId); // Cleanup on unmount or question change
+      return () => {
+        console.log('Cleaning up timer interval');
+        clearInterval(intervalId);
+      };
     }
   }, [quizState, currentQuestionIndex, currentQuestions, handleAnswer]);
 
-
   const handleStartQuiz = async (theme = null) => {
     if (!user?.id) {
-      setError("User not authenticated.");
+      setError('Пользователь не аутентифицирован.');
       return;
     }
     setLoading(true);
@@ -111,26 +114,25 @@ const QuizPage = () => {
         setScore(0);
         setQuizResults(null);
         setQuizState('active');
-        // Timer will be started by useEffect
       } else {
-        setError("No questions received from the server. Please try again later.");
+        setError('Вопросы не получены с сервера. Попробуйте позже.');
         setQuizState('initial');
       }
     } catch (err) {
-      setError(err.message || 'Failed to start quiz.');
+      setError(err.message || 'Не удалось начать квиз.');
       setQuizState('initial');
     } finally {
       setLoading(false);
     }
   };
-  
+
   const handlePlayAgain = () => {
     setQuizState('initial');
     setCurrentQuestions([]);
     setCurrentQuestionIndex(0);
     setUserAnswers([]);
     setScore(0);
-    setTimer(5);
+    setTimer(10);
     if (timerIntervalId) clearInterval(timerIntervalId);
     setTimerIntervalId(null);
     setQuizResults(null);
@@ -142,122 +144,135 @@ const QuizPage = () => {
     navigate('/');
   };
 
-  // --- Render logic based on quizState ---
-  if (error && quizState !== 'active') { // Show prominent error unless in active quiz (where error might be temporary)
+  // Render logic based on quizState
+  if (error && quizState !== 'active') {
     return (
-      <div className={styles.quizContainer}>
-        <p className={styles.errorText}>Error: {error}</p>
-        <button onClick={handlePlayAgain} className={styles.button}>Try Again</button>
-      </div>
+        <div className={styles.quizContainer}>
+          <p className={styles.errorText}>Ошибка: {error}</p>
+          <button onClick={handlePlayAgain} className={styles.button}>
+            Попробовать снова
+          </button>
+        </div>
     );
   }
 
   if (quizState === 'initial') {
     return (
-      <div className={styles.quizContainer}>
-        <div className={styles.initialView}>
-          <img 
-            src="https://i.pinimg.com/564x/e3/be/6a/e3be6a8d8e062911789d03981774e65c.jpg" 
-            alt="Quiz Time" 
-            className={styles.headerImage}
-          />
-          <h2>Проверьте свои знания!</h2>
-          <p>Нажмите кнопку ниже, чтобы начать.</p>
-          {loading ? (
-            <p>Loading quiz...</p>
-          ) : (
-            <button onClick={() => handleStartQuiz()} className={styles.button} disabled={loading}>
-              Начать квиз
-            </button>
-          )}
-          {/* Optional: Theme selection could be added here */}
+        <div className={styles.quizContainer}>
+          <div className={styles.initialView}>
+            <img
+                src="https://wallpaperaccess.com/full/3308619.jpg"
+                alt="Quiz Time"
+                className={styles.headerImage}
+            />
+            <h2 className={styles.title}>Проверьте свои знания!</h2>
+            <p>Нажмите кнопку ниже, чтобы начать.</p>
+            {loading ? (
+                <p>Загрузка квиза...</p>
+            ) : (
+                <button
+                    onClick={() => handleStartQuiz()}
+                    className={styles.button}
+                    disabled={loading}
+                >
+                  Начать квиз
+                </button>
+            )}
+          </div>
         </div>
-      </div>
     );
   }
-  
+
   if (quizState === 'active') {
-    if (loading) return <div className={styles.quizContainer}><p>Loading question...</p></div>;
+    if (loading) return <div className={styles.quizContainer}><p>Загрузка вопроса...</p></div>;
     if (!currentQuestions || currentQuestions.length === 0 || currentQuestionIndex >= currentQuestions.length) {
       return (
-        <div className={styles.quizContainer}>
-          <p className={styles.errorText}>Error: No questions available or index out of bounds.</p>
-          <button onClick={handlePlayAgain} className={styles.button}>Start Over</button>
-        </div>
+          <div className={styles.quizContainer}>
+            <p className={styles.errorText}>Ошибка: Вопросы отсутствуют или индекс вне диапазона.</p>
+            <button onClick={handlePlayAgain} className={styles.button}>
+              Начать заново
+            </button>
+          </div>
       );
     }
 
     const question = currentQuestions[currentQuestionIndex];
-    if(!question) { 
-      return <div className={styles.quizContainer}><p>Loading question data...</p></div>;
+    if (!question) {
+      return <div className={styles.quizContainer}><p>Загрузка данных вопроса...</p></div>;
     }
 
     return (
-      <div className={styles.quizContainer}>
-        <div className={styles.activeQuizView}>
-          <p className={styles.questionCounter}>Вопрос {currentQuestionIndex + 1} / {currentQuestions.length}</p>
-          <div className={styles.timerBarContainer}>
-            <div 
-              className={styles.timerBar} 
-              style={{ width: `${(timer / 5) * 100}%` }} 
-            />
+        <div className={styles.quizContainer}>
+          <div className={styles.activeQuizView}>
+            <p className={styles.questionCounter}>
+              Вопрос {currentQuestionIndex + 1} / {currentQuestions.length}
+            </p>
+            <div className={styles.timerBarContainer}>
+              <div
+                  className={styles.timerBar}
+                  style={{ width: `${(timer / 10) * 100}%` }}
+              />
+            </div>
+            <p className={styles.timerText}>Осталось времени: {timer.toFixed(1)}с</p>
+            <h3 className={styles.questionWord}>{question.englishWord}</h3>
+            <div className={styles.optionsContainer}>
+              {question.options.map((opt, index) => (
+                  <button
+                      key={index}
+                      onClick={() => handleAnswer(opt)}
+                      className={styles.optionButton}
+                      disabled={timer <= 0}
+                  >
+                    {opt}
+                  </button>
+              ))}
+            </div>
+            {error && <p className={styles.errorTextSmall}>{error}</p>}
           </div>
-          <p className={styles.timerText}>Осталось времени: {timer}с</p>
-          
-          <h3 className={styles.questionWord}>{question.englishWord}</h3>
-          
-          <div className={styles.optionsContainer}>
-            {question.options.map((opt, index) => (
-              <button 
-                key={index} 
-                onClick={() => handleAnswer(opt)} 
-                className={styles.optionButton}
-                disabled={timer === 0} // Disable if timer ran out
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-          {error && <p className={styles.errorTextSmall}>{error}</p>}
         </div>
-      </div>
     );
   }
-  
+
   if (quizState === 'results') {
-    if (loading) return <div className={styles.quizContainer}><p>Submitting results...</p></div>;
+    if (loading) return <div className={styles.quizContainer}><p>Отправка результатов...</p></div>;
     if (!quizResults) {
       return (
-         <div className={styles.quizContainer}>
-            <p className={styles.errorText}>Could not load quiz results.</p>
-            <button onClick={handlePlayAgain} className={styles.button}>Play Again</button>
-         </div>
+          <div className={styles.quizContainer}>
+            <p className={styles.errorText}>Не удалось загрузить результаты квиза.</p>
+            <button onClick={handlePlayAgain} className={styles.button}>
+              Пройти снова
+            </button>
+          </div>
       );
     }
     return (
-      <div className={styles.quizContainer}>
-        <div className={styles.resultsView}>
-          <img
-              src="https://us-tuna-sounds-images.voicemod.net/f2133a6d-e729-444c-ad25-85f0964b4d43-1658826052776.jpg"
-              alt="Quiz Time"
-              className={styles.headerImage}
-          />
-          <h2>Квиз завершен!</h2>
-          <p>____________________</p>
-          <p>Ваш результат: {quizResults.score} из {quizResults.totalQuestions}</p>
-          <p>Заработано XP: {quizResults.xpEarned}</p>
-          {/* Display correct words if needed */}
-          {/* quizResults.correctWords might contain the list if backend sends it back */}
-          <div className={styles.resultsActions}>
-            <button onClick={handlePlayAgain} className={styles.button}>Пройти снова</button>
-            <button onClick={navigateToHome} className={`${styles.button} ${styles.secondaryButton}`}>Главная</button>
+        <div className={styles.quizContainer}>
+          <div className={styles.resultsView}>
+            <img
+                src="https://img.freepik.com/free-photo/flat-lay-assortment-optimism-concept-elements_23-2148861677.jpg?semt=ais_items_boosted&w=740"
+                alt="Quiz Completed"
+                className={styles.headerImage}
+            />
+            <h2 className={styles.title}>Квиз завершен!</h2>
+            <p>Ваш результат: {quizResults.score} из {quizResults.totalQuestions}</p>
+            <p>Заработано XP: {quizResults.xpEarned}</p>
+            <div className={styles.resultsActions}>
+              <button onClick={handlePlayAgain} className={styles.button}>
+                Пройти снова
+              </button>
+              <button
+                  onClick={navigateToHome}
+                  className={`${styles.button} ${styles.secondaryButton}`}
+              >
+                Главная
+              </button>
+            </div>
           </div>
         </div>
-      </div>
     );
   }
 
-  return <div className={styles.quizContainer}><p>Something went wrong. Please try refreshing.</p></div>; // Default fallback
+  return <div className={styles.quizContainer}><p>Что-то пошло не так. Пожалуйста, обновите страницу.</p></div>;
 };
 
 export default QuizPage;

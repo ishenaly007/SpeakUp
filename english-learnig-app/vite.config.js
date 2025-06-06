@@ -10,7 +10,7 @@ export default defineConfig({
     port: 5500,
     proxy: {
       '/api': {
-        target: 'https://ab1t.top',
+        target: 'http://localhost:8084',
         changeOrigin: true,
         secure: false,
         ws: false,

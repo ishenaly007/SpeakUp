@@ -1,53 +1,121 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
-// import styles from './Register.module.scss'; // You will create this
+import { Link, useNavigate } from 'react-router-dom';
+import styles from './Register.module.scss';
 
 const RegisterPage = () => {
-  const [username, setUsername] = useState(''); // Or name, based on UserRegisterRequest
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  // Add other fields as per UserRegisterRequest.java (e.g., name, confirmPassword)
-  const { register, error, setError } = useAuth();
-  const navigate = useNavigate();
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [formErrors, setFormErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const { register, error, setError } = useAuth();
+    const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    // Add form validation (e.g., password match)
-    try {
-      // Ensure the object matches UserRegisterRequest.java
-      await register({ username, email, password /*, other fields */ });
-      navigate('/login'); // Navigate to login after registration
-    } catch (err) {
-      console.error('Registration failed:', err);
-    }
-  };
+    const validateForm = () => {
+        const errors = {};
+        if (!username || username.length < 3) {
+            errors.username = 'Имя пользователя должно содержать минимум 3 символа';
+        }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errors.email = 'Введите действительный email';
+        }
+        if (!password || password.length < 8) {
+            errors.password = 'Пароль должен содержать минимум 8 символов';
+        }
+        if (password !== confirmPassword) {
+            errors.confirmPassword = 'Пароли не совпадают';
+        }
+        setFormErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
 
-  return (
-    // <div className={styles.registerContainer}>
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label> {/* Or Name */}
-          <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
+        setFormErrors({});
+
+        if (!validateForm()) {
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            await register({ username, email, password });
+            navigate('/login');
+        } catch (err) {
+            console.error('Registration failed:', err);
+            setError(err.message || 'Ошибка регистрации. Попробуйте снова.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div className={styles.registerContainer}>
+            <div className={styles.formWrapper}>
+                <h2 className={styles.title}>Регистрация</h2>
+                <form className={styles.form} onSubmit={handleSubmit}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="username" className={styles.label}>Имя пользователя:</label>
+                        <input
+                            type="text"
+                            id="username"
+                            className={`${styles.input} ${formErrors.username ? styles.error : ''}`}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                        {formErrors.username && <p className={styles.errorMessage}>{formErrors.username}</p>}
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="email" className={styles.label}>Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            className={`${styles.input} ${formErrors.email ? styles.error : ''}`}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        {formErrors.email && <p className={styles.errorMessage}>{formErrors.email}</p>}
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="password" className={styles.label}>Пароль:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            className={`${styles.input} ${formErrors.password ? styles.error : ''}`}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        {formErrors.password && <p className={styles.errorMessage}>{formErrors.password}</p>}
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="confirmPassword" className={styles.label}>Подтверждение пароля:</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            className={`${styles.input} ${formErrors.confirmPassword ? styles.error : ''}`}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                        {formErrors.confirmPassword && <p className={styles.errorMessage}>{formErrors.confirmPassword}</p>}
+                    </div>
+                    {error && <p className={styles.errorMessage}>{error}</p>}
+                    <button type="submit" className={styles.button} disabled={isLoading}>
+                        {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
+                    </button>
+                </form>
+                <p className={styles.linkWrapper}>
+                    Уже есть аккаунт? <Link to="/login" className={styles.link}>Войти</Link>
+                </p>
+            </div>
         </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        </div>
-        {/* Add confirm password field if needed */}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Register</button>
-      </form>
-      <p>Already have an account? <Link to="/login">Login here</Link></p>
-    </div>
-  );
+    );
 };
 
 export default RegisterPage;
