@@ -1,75 +1,123 @@
+@import '../styles/global.scss';
+
 .lessonsContainer {
-  padding: 1rem;
+  padding: 1rem; // Basic padding, can be adjusted
+  background-color: $background-color; // Ensure consistency
+  min-height: calc(100vh - #{$header-height}); // Full viewport height minus header
 }
 
 .lessonsHeader {
-  text-align: center;
+  background-color: lighten($primary-color, 48%); // Very light blue
+  padding: 2rem 1.5rem;
+  border-radius: $border-radius;
   margin-bottom: 2rem;
+  text-align: center; // Center align header content
 
-  img {
-    width: 100%;
-    max-height: 240px; // Or your preferred height
-    object-fit: cover; // Ensures the image covers the area, might crop
+  img { // Assuming an image might be here, as per original notes
+    max-width: 150px; // Example size
+    border-radius: 50%; // Circular image
     margin-bottom: 1rem;
-    border-radius: 8px; // Optional: for rounded corners
+    border: 3px solid $primary-color-light;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
 
   h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    color: $primary-color;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center; // Center icon and text
+    svg { // For icon in h2
+      margin-right: 0.75rem;
+      font-size: 2.2rem; // Adjust size to match h2
+    }
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: darken($text-color, 10%); // Slightly darker for better readability on light bg
+    max-width: 700px; // Constrain width for better readability
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.motivationSection {
+  background-color: $secondary-color;
+  color: #fff; // White text on dark background
+  padding: 1.5rem;
+  text-align: center;
+  border-radius: $border-radius;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+  h4 {
+    font-size: 1.5rem;
     margin-bottom: 0.5rem;
+    color: #fff; // Ensure h4 is also white
   }
 
   p {
     font-size: 1rem;
-    color: #555;
+    color: lighten($secondary-color, 60%); // Lighter text for contrast
   }
 }
 
 .lessonsGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem; // This creates space between cards
-  justify-content: space-evenly; // Align cards to the start of the container
-
-  // The LessonCard component itself should define its base width
-  // For example, in LessonCard.module.scss:
-  // .lessonCard {
-  //   width: calc(25% - 0.75rem); // 0.75rem = 3/4 of the gap, for 4 cards
-  //                                  // (1rem gap means 3 gaps for 4 cards, so (gap * (items_per_row - 1)) / items_per_row)
-  //                                  // simpler: calc(25% - (gap_value * (items_per_row - 1) / items_per_row))
-  //                                  // For gap: 1rem, items: 4 => calc(25% - (1rem * 3 / 4)) = calc(25% - 0.75rem)
-  //                                  // This ensures the gap is accounted for correctly.
-  // }
-  // Alternatively, if LessonCard doesn't set a width and is allowed to grow/shrink,
-  // you might not need to be so specific here, but the items_per_row might vary.
-  // The approach in LessonCard.module.scss (width: calc(25% - 1rem);) is slightly off
-  // if the parent has 'gap: 1rem'. The total width taken by 4 cards and 3 gaps is 4*W + 3*gap.
-  // If W = calc(25% - 1rem), then 4*(calc(25% - 1rem)) + 3rem = 100% - 4rem + 3rem = 100% - 1rem.
-  // This means the row will be slightly less than 100% wide.
-  // A common way to achieve 4 per row with gap is to let the child calculate its basis like:
-  // flex-basis: calc( (100% / 4) - ( (4 - 1) * gap_value / 4 ) )
-  // flex-basis: calc(25% - (3 * 1rem / 4)) = calc(25% - 0.75rem);
-  // This is usually handled within the child component's styles.
-  // For now, the styling in LessonCard.module.scss is what will define the width.
+  gap: 1rem; // This gap will be used by LessonCard's width calculation
+  justify-content: center; // Center cards if they don't fill the whole row
 }
 
-// Responsive adjustments for the grid could also be here or in LessonCard.module.scss
-// Example of adjustments here if needed:
-@media (max-width: 1200px) { // Adjust breakpoint as needed
-  // If LessonCard.module.scss handles responsiveness, these are not strictly needed here
-  // .lessonsGrid > * { // Targeting children of the grid (LessonCards)
-  //   width: calc(33.333% - 0.75rem); // 3 cards
-  // }
+// For loading/error messages
+.loadingMessage, .errorMessage {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 2rem;
+  color: $secondary-color;
 }
 
+.errorMessage {
+  color: $danger-color; // Assuming $danger-color is defined in global.scss or use a fallback
+}
+
+// Responsive adjustments
 @media (max-width: 768px) {
-  // .lessonsGrid > * {
-  //   width: calc(50% - 0.5rem); // 2 cards
-  // }
+  .lessonsContainer {
+    padding: 1rem;
+  }
+  .lessonsHeader {
+    padding: 1.5rem 1rem;
+    h2 {
+      font-size: 2rem;
+      svg {
+        font-size: 1.8rem;
+      }
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
+  .motivationSection {
+    padding: 1rem;
+    h4 {
+      font-size: 1.3rem;
+    }
+    p {
+      font-size: 0.9rem;
+    }
+  }
 }
 
-@media (max-width: 576px) {
-  // .lessonsGrid > * {
-  //   width: 100%; // 1 card
-  // }
+@media (max-width: 480px) {
+  .lessonsHeader {
+    h2 {
+      font-size: 1.8rem;
+      svg {
+        font-size: 1.6rem;
+      }
+    }
+  }
 }

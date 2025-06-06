@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { fetchLessons } from '../services/lessonService';
-import LessonCard from '../components/LessonCard'; // Import LessonCard
-import styles from './Lessons.module.scss'; // Create this file
+import LessonCard from '../components/LessonCard';
+import styles from './Lessons.module.scss';
+import { FaBookOpen } from 'react-icons/fa'; // Import icon
 
 const LessonsPage = () => {
   const [lessons, setLessons] = useState([]);
@@ -33,21 +34,26 @@ const LessonsPage = () => {
         console.error("User object without ID:", user);
       }
     }
-  }, [user]); // Re-run if user object changes
+  }, [user]);
 
-  if (loading) return <div>Loading lessons...</div>;
-  // Error display should be more prominent or user-friendly
-  if (error) return <div style={{ color: 'red', padding: '1rem' }}>Error: {error}</div>;
+  if (loading) return <div className={styles.loadingMessage}>Loading lessons...</div>;
+  if (error) return <div className={styles.errorMessage}>Error: {error}</div>;
 
   return (
     <div className={styles.lessonsContainer}>
       <div className={styles.lessonsHeader}>
-        <img src="https://c0.wallpaperflare.com/preview/634/900/965/book-bindings-bookcase-books-bookshelf.jpg" alt="Lessons banner" />
-        <h2>Доступные уроки</h2>
-        <p>Здесь вы найдете все доступные уроки. Выбирайте и начинайте учиться!</p>
+        {/* Optional: Image can be kept or removed if header is more text-focused */}
+        {/* <img src="https://c0.wallpaperflare.com/preview/634/900/965/book-bindings-bookcase-books-bookshelf.jpg" alt="Lessons banner" /> */}
+        <h2><FaBookOpen /> Available Lessons</h2>
+        <p>Explore our curated lessons designed to help you master English, step by step. Choose a lesson and start learning today!</p>
+      </div>
+
+      <div className={styles.motivationSection}>
+        <h4>✨ Tip of the Day ✨</h4>
+        <p>Consistency is key! Even 15 minutes of practice a day can make a big difference in your learning journey.</p>
       </div>
       
-      {lessons.length === 0 && !loading && <p>No lessons available at the moment.</p>}
+      {lessons.length === 0 && !loading && <p className={styles.noLessonsMessage}>No lessons available at the moment. Please check back later!</p>}
       
       <div className={styles.lessonsGrid}>
         {lessons.map(lesson => (

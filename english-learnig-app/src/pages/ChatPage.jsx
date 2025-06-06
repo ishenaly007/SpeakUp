@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { sendMessageToAI, fetchChatHistory } from '../services/chatService';
 import styles from './Chat.module.scss';
+import { FaPaperPlane, FaComments } from 'react-icons/fa'; // Imported icons
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
@@ -84,20 +85,24 @@ const ChatPage = () => {
   return (
       <div className={styles.chatContainer}>
         <div className={styles.instructions}>
-          <h2>Чат с ИИ</h2>
-          <p>Это чат с ИИ. Задавайте вопросы на английском или русском, просите объяснить грамматику, или просто пообщайтесь! ИИ постарается вам помочь и поддержать в изучении языка.</p>
+          <h2><FaComments /> Chat with AI</h2> {/* Translated & Icon */}
+          <p>This is a chat with an AI. Ask questions in English or Russian, request grammar explanations, or just chat! The AI will try to help and support you in your language learning.</p> {/* Translated */}
         </div>
 
         {loadingHistory && <p className={styles.loadingText}>Loading chat history...</p>}
-        {error && <p className={styles.errorText}>Error: {error}</p>}
+        {/* Error display: If error is just a string, it's shown. If it might be an object, ensure error.message is used if applicable */}
+        {error && <p className={styles.errorText}>{typeof error === 'string' ? error : error.message || 'An error occurred.'}</p>}
+
 
         <div className={styles.messagesArea}>
-          {messages.length === 0 && !loadingHistory && (
+          {messages.length === 0 && !loadingHistory && !error && ( // Also check for no error before showing "no messages"
               <p className={styles.noMessages}>No messages yet. Start the conversation!</p>
           )}
           {messages.map(msg => (
               <div key={msg.id} className={`${styles.message} ${styles[msg.sender]}`}>
                 <p>{msg.text}</p>
+                {/* Optional: Display timestamp if available and desired */}
+                {/* msg.timestamp && <span className={styles.timestamp}>{new Date(msg.timestamp).toLocaleTimeString()}</span> */}
               </div>
           ))}
           <div ref={messagesEndRef} />
@@ -108,11 +113,15 @@ const ChatPage = () => {
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type your message..."
-              disabled={sendingMessage || loadingHistory || !user}
+              placeholder="Type your message..." // Already English
+              disabled={sendingMessage || loadingHistory || !user?.id} // Check user.id for robustness
           />
-          <button type="submit" disabled={sendingMessage || loadingHistory || !newMessage.trim() || !user}>
-            {sendingMessage ? 'Sending...' : 'Send'}
+          <button
+              type="submit"
+              disabled={sendingMessage || loadingHistory || !newMessage.trim() || !user?.id} // Check user.id
+              aria-label={sendingMessage ? 'Sending message' : 'Send message'} // Accessibility
+          >
+            {sendingMessage ? 'Sending...' : <FaPaperPlane />} {/* Icon for Send */}
           </button>
         </form>
       </div>

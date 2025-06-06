@@ -1,12 +1,17 @@
 @import '../styles/global.scss';
 
+// Define box-shadows locally if not already in global.scss
+$box-shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+$box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
+
 .quizContainer {
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  background-color: $surface-color; // Use global
+  border-radius: $border-radius; // Use global
+  box-shadow: $box-shadow-lg; // Use defined local var
+  border-top: 4px solid $primary-color; // Use global
   text-align: center;
 }
 
@@ -19,215 +24,321 @@
 }
 
 .title {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 1rem;
+  font-size: 2rem; // Adjusted
+  color: $primary-color; // Use global
+  margin-bottom: 1.5rem; // Adjusted
 }
 
-.button {
+.button { // This is for primary buttons
   padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  color: white;
-  background-color: $primary-color;
+  font-size: 1.1rem; // Adjusted
+  color: #fff; // Ensure contrast
+  background-color: $primary-color; // Use global
   border: none;
-  border-radius: 5px;
+  border-radius: $border-radius; // Use global
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
   margin: 0.5rem;
+  box-shadow: $box-shadow-sm; // Use global or defined
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    margin-right: 0.5rem;
+  }
 
   &:hover {
     background-color: darken($primary-color, 10%);
+    box-shadow: $box-shadow-lg;
   }
 
   &:disabled {
-    background-color: #ccc;
+    background-color: lighten($secondary-color, 20%); // Use global vars
+    color: darken($secondary-color, 20%); // Use global vars
     cursor: not-allowed;
+    box-shadow: none;
   }
 }
 
 .secondaryButton {
-  background-color: #6c757d;
+  // Apply structure similar to .button for consistency
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  color: #fff;
+  background-color: $secondary-color; // Use global
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  margin: 0.5rem;
+  box-shadow: $box-shadow-sm;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    margin-right: 0.5rem;
+  }
+
   &:hover {
-    background-color: #545b62;
+    background-color: darken($secondary-color, 10%);
+    box-shadow: $box-shadow-lg;
+  }
+  &:disabled {
+    background-color: lighten($secondary-color, 30%);
+    color: darken($secondary-color, 30%);
+    cursor: not-allowed;
+    box-shadow: none;
   }
 }
 
-.errorText {
-  color: #dc3545;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
+.errorText { // For larger error blocks
+  color: $danger-color; // Use global
+  background-color: lighten($danger-color, 35%); // Use global with adjustment
+  border: 1px solid lighten($danger-color, 20%); // Use global with adjustment
   padding: 1rem;
-  border-radius: 5px;
+  border-radius: $border-radius; // Use global
   margin-bottom: 1rem;
 }
 
-.errorTextSmall {
-  color: #dc3545;
+.errorTextSmall { // For inline small error messages
+  color: $danger-color; // Use global
   font-size: 0.9rem;
   margin-top: 0.5rem;
+  display: block; // Ensure it takes space
 }
 
 .initialView {
-  h2 {
-    font-size: 1.8rem;
-    color: #333;
-    margin-bottom: 0.5rem;
+  h2 { // This is the main title like "Test Your Knowledge!"
+    font-size: 2.2rem; // Larger
+    color: $primary-color; // Use global
+    margin-bottom: 1rem; // Adjusted
   }
-  p {
-    font-size: 1.1rem;
-    color: #555;
-    margin-bottom: 1.5rem;
+  p { // This is the introductory text
+    font-size: 1.2rem; // Larger
+    color: $text-color; // Use global
+    margin-bottom: 2rem; // Adjusted
   }
 }
 
+// Define box-shadows locally if not in global.scss
+// $box-shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+// $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
+// These should be added at the top of the file if not already present from other chunks.
+// For now, assuming they will be added or are global.
+
 .activeQuizView {
   .questionCounter {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 0.5rem;
+    font-size: 1rem; // Adjusted
+    color: $secondary-color; // Use global
+    margin-bottom: 0.75rem; // Adjusted
+    svg {
+      margin-right: 0.3rem;
+      vertical-align: middle;
+    }
   }
 
   .timerBarContainer {
     width: 100%;
-    height: 10px;
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
+    height: 12px; // Adjusted
+    background-color: $border-color; // Use global
+    border-radius: $border-radius; // Use global
+    margin-bottom: 0.75rem; // Adjusted
     overflow: hidden;
   }
 
   .timerBar {
     height: 100%;
-    background-color: #28a745;
-    border-radius: 5px;
+    background-color: $success-color; // Use global (or $primary-color)
+    border-radius: $border-radius; // Use global
     transition: width 0.1s linear;
   }
 
   .timerText {
-    font-size: 0.9rem;
-    color: #555;
+    font-size: 1rem; // Adjusted
+    color: $secondary-color; // Use global
     margin-bottom: 1.5rem;
+    svg {
+      margin-right: 0.3rem;
+      vertical-align: middle;
+    }
   }
 
   .questionWord {
-    font-size: 2rem;
+    font-size: 2.2rem; // Adjusted
     font-weight: bold;
-    color: #333;
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    color: $text-color; // Use global
+    margin-bottom: 2rem; // Adjusted
+    padding: 1.5rem; // Adjusted
+    background-color: $background-color; // Use global (page background for contrast)
+    border-radius: $border-radius; // Use global
+    border: 1px solid $border-color; // Use global
+    text-align: center;
   }
 
   .optionsContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 0.75rem;
-    margin-top: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); // Adjusted
+    gap: 1rem; // Adjusted
   }
 
   .optionButton {
-    padding: 0.8rem;
+    padding: 0.8rem 1rem; // Adjusted
     font-size: 1rem;
-    background-color: #fff;
-    border: 1px solid $primary-color;
-    color: $primary-color;
-    border-radius: 5px;
+    background-color: $surface-color; // Use global
+    border: 2px solid $primary-color; // Adjusted border
+    color: $primary-color; // Use global
+    border-radius: $border-radius; // Use global
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    text-align: center;
 
     &:hover:not(:disabled) {
       background-color: $primary-color;
-      color: white;
+      color: #fff; // Ensure contrast
+      transform: translateY(-2px);
     }
 
     &:disabled {
-      background-color: #e9ecef;
-      color: #6c757d;
-      border-color: #ced4da;
+      background-color: $border-color; // Use global
+      color: $secondary-color; // Use global
+      border-color: darken($border-color, 10%); // Use global with adjustment
       cursor: not-allowed;
     }
   }
 }
 
 .resultsView {
+  padding: 2rem; // Added padding for consistency
   h2 {
-    font-size: 1.8rem;
-    color: #28a745;
-    margin-bottom: 1rem;
+    font-size: 2.2rem; // Adjusted
+    color: $success-color; // Use global
+    margin-bottom: 1.5rem; // Adjusted
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      margin-right: 0.75rem;
+    }
   }
   p {
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 0.75rem;
+    font-size: 1.2rem; // Adjusted
+    color: $text-color; // Use global
+    margin-bottom: 1rem; // Adjusted
+    strong { // For emphasizing parts of the score string
+        color: $primary-color;
+    }
   }
   .resultsActions {
-    margin-top: 1.5rem;
+    margin-top: 2rem; // Adjusted
     display: flex;
+    flex-wrap: wrap; // Allow button wrapping
     gap: 1rem;
     justify-content: center;
   }
 }
 
+// Responsive adjustments
 @media (max-width: 768px) {
   .quizContainer {
     padding: 1.5rem;
-    margin: 1rem auto;
-    max-width: 90%;
+    margin: 1rem auto; // Keep existing reasonable values
+    // max-width: 90%; // Keep existing reasonable values
+  }
+
+  .title { // Adjust title font size on smaller screens
+    font-size: 1.8rem;
+  }
+
+  .initialView {
+    h2 { font-size: 2rem; }
+    p { font-size: 1.1rem; }
   }
 
   .activeQuizView {
     .questionWord {
-      font-size: 1.5rem;
+      font-size: 1.8rem; // Adjusted for tablet
+      padding: 1rem; // Adjust padding
     }
     .optionButton {
       font-size: 0.9rem;
-      padding: 0.7rem;
+      // padding: 0.7rem; // Keep original if it works
     }
   }
 
   .resultsView {
+    padding: 1.5rem; // Adjust padding
     h2 {
-      font-size: 1.5rem;
+      font-size: 2rem; // Adjusted for tablet
+      svg { font-size: 1.8rem; }
     }
     p {
-      font-size: 1rem;
+      font-size: 1.1rem; // Adjusted for tablet
     }
+    .button, .secondaryButton { // Ensure buttons in results also scale
+        font-size: 1rem;
+        padding: 0.7rem 1.2rem;
+    }
+  }
+  .button, .secondaryButton { // General button scaling
+    font-size: 1rem;
+    padding: 0.7rem 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
   .quizContainer {
-    padding: 1rem;
+    padding: 1rem; // Further reduce padding
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .title { font-size: 1.6rem; }
+
+  .initialView {
+    h2 { font-size: 1.8rem; }
+    p { font-size: 1rem; }
   }
 
   .activeQuizView {
     .questionWord {
-      font-size: 1.3rem;
+      font-size: 1.5rem; // Further adjust for mobile
     }
     .timerText,
     .questionCounter {
-      font-size: 0.8rem;
+      font-size: 0.9rem; // Adjusted
     }
     .optionsContainer {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr; // Stack options
     }
     .optionButton {
-      font-size: 0.85rem;
+      font-size: 0.9rem; // Ensure readability
     }
   }
-
-  .initialView {
-    h2 {
-      font-size: 1.5rem;
-    }
-    p {
-      font-size: 1rem;
+  .resultsView {
+    h2 { font-size: 1.8rem; svg { font-size: 1.6rem; } }
+    p { font-size: 1rem; }
+  }
+   .button, .secondaryButton { // Ensure buttons are usable on small screens
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    &:not(:last-child) {
+        margin-bottom: 0.5rem;
     }
   }
 }
 
-// Fallback variables
-$primary-color: #007bff !default;
-$text-color: #333 !default;
+// Fallback variables (will be removed)
+// $primary-color: #007bff !default; (Removed)
+// $text-color: #333 !default; (Removed)
+
+// Loading and generic message styling
+.loadingMessage, .infoMessage {
+  font-size: 1.2rem;
+  color: $secondary-color;
+  padding: 2rem;
+  text-align: center;
+}

@@ -1,81 +1,159 @@
-.profileContainer {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem;
+@import '../styles/global.scss';
 
-  h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #333;
-  }
+.profileContainer {
+  padding: 2rem;
+  background-color: $background-color; // Fallback, will try gradient below
+  // Example gradient, adjust as needed
+  background-image: linear-gradient(to top right, lighten($background-color, 5%), darken($background-color, 5%));
 }
 
 .profileCard {
-  background-color: #fff;
+  background-color: $surface-color;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.05);
+  border-top: 4px solid $primary-color;
+  max-width: 700px;
+  margin: 0 auto;
+}
 
-  h3 {
-    margin-top: 1.5rem; // Adjusted margin
-    margin-bottom: 1rem;
-    color: #555;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 0.5rem;
+.profileHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid $border-color;
+
+  .avatarPlaceholder {
+    margin-right: 1.5rem;
+    color: $secondary-color; // Placeholder color
+  }
+
+  .username {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: $primary-color;
   }
 }
 
 .profileItem {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
   font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 0.5rem;
-  color: #444;
-  word-wrap: break-word; // Ensure long strings (e.g. email) wrap
+  color: $text-color;
 
   strong {
-    color: #007bff; // Consider using $primary-color if variables are imported
+    color: $primary-color;
     margin-right: 0.5rem;
   }
+
+  svg { // For icons next to items like email
+    margin-right: 0.75rem;
+    color: $secondary-color;
+    font-size: 1.2rem;
+  }
 }
 
-.loading, .error, .noData {
-  text-align: center;
-  font-size: 1.2rem;
-  padding: 2rem;
+.emailItem {
+  // Specific styles for email if needed, for now, general profileItem is used
+  // Example: color: $secondary-color;
+  // font-style: italic;
 }
 
-.error {
-  color: red; // Consider using a global error color variable
+.sectionTitle {
+  font-size: 1.5rem;
+  color: $primary-color;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid $primary-color-light;
 }
 
-// Media Queries for Profile Page
+.statsSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: lighten($background-color, 2%);
+  border-radius: 6px;
+
+  .statItem {
+    background-color: $surface-color;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    color: $text-color;
+
+    svg {
+      margin-right: 0.75rem;
+      color: $primary-color;
+      font-size: 1.5rem; // Icon size for stats
+    }
+    strong{
+      color: $text-color; // Stat labels
+    }
+  }
+}
+
+
+// Responsive adjustments
 @media (max-width: 768px) {
   .profileContainer {
-    margin: 1rem auto;
-    padding: 0.5rem; // Reduce outer padding
+    padding: 1rem;
   }
+
   .profileCard {
-    padding: 1.5rem; // Reduce card padding
+    padding: 1.5rem;
   }
-  .profileItem {
-    font-size: 0.95rem; // Slightly smaller font
+
+  .profileHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: center;
+
+    .avatarPlaceholder {
+      margin-right: 0;
+      margin-bottom: 1rem;
+      align-self: center;
+    }
+    .username{
+      font-size: 2rem;
+      align-self: center;
+    }
+  }
+
+  .statsSection {
+    grid-template-columns: 1fr; // Stack stats items on smaller screens
+    gap: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .profileContainer {
-    h2 {
-      font-size: 1.5rem; // Smaller main heading
-    }
+  .profileHeader .username {
+    font-size: 1.8rem;
   }
-  .profileCard {
-    padding: 1rem; // Further reduce card padding
-    h3 {
-      font-size: 1.1rem; // Smaller sub-headings
-    }
-  }
+
   .profileItem {
-    font-size: 0.9rem; // Further reduce font size
-    line-height: 1.5;
+    font-size: 0.9rem;
+    svg {
+      font-size: 1rem;
+    }
+  }
+
+  .sectionTitle {
+    font-size: 1.3rem;
+  }
+
+  .statsSection .statItem {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+    svg {
+      font-size: 1.3rem;
+    }
   }
 }

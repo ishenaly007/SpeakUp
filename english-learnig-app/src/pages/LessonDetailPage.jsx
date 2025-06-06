@@ -3,6 +3,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { fetchLesson, submitTestAnswer } from '../services/lessonService';
 import styles from './LessonDetail.module.scss';
+import { FaLayerGroup, FaInfoCircle, FaCheckCircle, FaQuestionCircle, FaAward, FaRedo, FaListAlt } from 'react-icons/fa';
 
 const LessonDetailPage = () => {
     const { title } = useParams();
@@ -173,9 +174,9 @@ const LessonDetailPage = () => {
         navigate('/lessons');
     };
 
-    if (loading) return <div className={styles.loading}>Loading lesson...</div>;
-    if (error) return <div className={styles.error}>Error: {error}</div>;
-    if (!lesson) return <div className={styles.error}>Lesson not found.</div>;
+    if (loading) return <div className={styles.loadingMessage}>Loading lesson...</div>; // Changed class
+    if (error) return <div className={styles.errorMessage}>Error: {error}</div>; // Changed class
+    if (!lesson) return <div className={styles.errorMessage}>Lesson not found.</div>; // Changed class, reuse for consistency
 
     const correctAnswers = testResults.filter(result => result.isCorrect === true).length;
 
@@ -183,26 +184,27 @@ const LessonDetailPage = () => {
         <div className={styles.lessonContainer}>
             <div className={styles.lessonHeader}>
                 <h2>{lesson.title}</h2>
-                <p><strong>Level:</strong> {lesson.level}</p>
+                <p><FaLayerGroup /> <strong>Level:</strong> {lesson.level}</p>
                 <p>{lesson.description}</p>
-                {lesson.note && <p className={styles.note}>{lesson.note}</p>}
-                {lesson.completed && <p className={styles.completed}>✔ Урок пройден</p>}
+                {lesson.note && <p className={styles.note}><FaInfoCircle /> {lesson.note}</p>}
+                {lesson.completed && <p className={styles.completed}><FaCheckCircle /> Lesson Completed</p>}
             </div>
 
             <div className={styles.lessonContent}>
                 <style>{lesson.cssContent}</style>
-                {/* This div will be targeted by the JS execution effect for script appending */}
                 <div dangerouslySetInnerHTML={{ __html: lesson.htmlContent }} id="lesson-html-render-area" />
             </div>
 
-            {!showResults && (
+            {!showResults && lesson.tests && lesson.tests.length > 0 && ( // Ensure tests exist before showing section
                 <div className={styles.testsSection}>
-                    <button onClick={handleShowTests} className={styles.testButton}>
-                        Пройти тест
-                    </button>
-                    {showTests && lesson.tests?.length > 0 && (
+                    {!showTests && (
+                         <button onClick={handleShowTests} className={styles.actionButton}> {/* Changed class */}
+                            <FaQuestionCircle /> Take Test
+                        </button>
+                    )}
+                    {showTests && ( // Removed lesson.tests?.length > 0 check as it's parent-checked
                         <div className={styles.testCard} ref={testCardRef}>
-                            <p className={styles.questionCounter}>Вопрос {currentTestIndex + 1} / {lesson.tests.length}</p>
+                            <p className={styles.questionCounter}><FaQuestionCircle /> Question {currentTestIndex + 1} / {lesson.tests.length}</p>
                             <div className={styles.timerBarContainer}>
                                 <div
                                     className={styles.timerBar}
@@ -229,16 +231,16 @@ const LessonDetailPage = () => {
 
             {showResults && (
                 <div className={styles.resultsView}>
-                    <h2>Урок завершен!</h2>
-                    <p>Ваш результат: {correctAnswers} из {lesson.tests.length}</p>
-                    <p>Заработано XP: {testResults.reduce((sum, result) => sum + (result.xpChange || 0), 0)}</p>
-                    {lesson.note && <p className={styles.note}>Совет: {lesson.note}</p>}
+                    <h2><FaAward /> Lesson Complete!</h2>
+                    <p>Your score: {correctAnswers} out of {lesson.tests.length}</p>
+                    <p>XP Earned: {testResults.reduce((sum, result) => sum + (result.xpChange || 0), 0)}</p>
+                    {lesson.note && <p className={styles.note}><FaInfoCircle /> Tip: {lesson.note}</p>}
                     <div className={styles.resultsActions}>
-                        <button onClick={handleRestartLesson} className={styles.testButton}>
-                            Пройти урок заново
+                        <button onClick={handleRestartLesson} className={styles.actionButton}> {/* Changed class */}
+                            <FaRedo /> Restart Lesson
                         </button>
-                        <button onClick={navigateToLessons} className={`${styles.testButton} ${styles.secondaryButton}`}>
-                            К списку уроков
+                        <button onClick={navigateToLessons} className={styles.secondaryButton}> {/* Changed class */}
+                            <FaListAlt /> Back to Lessons
                         </button>
                     </div>
                 </div>

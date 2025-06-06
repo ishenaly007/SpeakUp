@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { startQuiz, submitQuiz } from '../services/quizService';
 import { useNavigate } from 'react-router-dom';
 import styles from './Quiz.module.scss';
+import { FaPlay, FaQuestionCircle, FaClock, FaAward, FaRedo, FaHome } from 'react-icons/fa'; // FaTimesCircle, FaCheckCircle not directly used based on current structure
 
 const QuizPage = () => {
   const { user } = useAuth();
@@ -28,7 +29,7 @@ const QuizPage = () => {
 
         const question = currentQuestions[currentQuestionIndex];
         if (!question) {
-          setError('Ошибка: Данные вопроса отсутствуют.');
+          setError('Error: Question data is missing.'); // Translated
           setQuizState('initial');
           return;
         }
@@ -64,7 +65,7 @@ const QuizPage = () => {
             setQuizResults(results);
             setQuizState('results');
           } catch (err) {
-            setError(err.message || 'Не удалось отправить результаты.');
+            setError(err.message || 'Failed to submit results.'); // Translated
           } finally {
             setLoading(false);
           }
@@ -100,7 +101,7 @@ const QuizPage = () => {
 
   const handleStartQuiz = async (theme = null) => {
     if (!user?.id) {
-      setError('Пользователь не аутентифицирован.');
+      setError('User not authenticated.'); // Translated
       return;
     }
     setLoading(true);
@@ -115,11 +116,11 @@ const QuizPage = () => {
         setQuizResults(null);
         setQuizState('active');
       } else {
-        setError('Вопросы не получены с сервера. Попробуйте позже.');
+        setError('Questions not received from the server. Please try again later.'); // Translated
         setQuizState('initial');
       }
     } catch (err) {
-      setError(err.message || 'Не удалось начать квиз.');
+      setError(err.message || 'Failed to start quiz.'); // Translated
       setQuizState('initial');
     } finally {
       setLoading(false);
@@ -145,12 +146,12 @@ const QuizPage = () => {
   };
 
   // Render logic based on quizState
-  if (error && quizState !== 'active') {
+  if (error && quizState !== 'active') { // Show general error view if error occurs outside active quiz
     return (
         <div className={styles.quizContainer}>
-          <p className={styles.errorText}>Ошибка: {error}</p>
+          <p className={styles.errorText}>Error: {error}</p> {/* Translated */}
           <button onClick={handlePlayAgain} className={styles.button}>
-            Попробовать снова
+            <FaRedo /> Try Again {/* Translated & Icon */}
           </button>
         </div>
     );
@@ -161,21 +162,22 @@ const QuizPage = () => {
         <div className={styles.quizContainer}>
           <div className={styles.initialView}>
             <img
-                src="https://wallpaperaccess.com/full/3308619.jpg"
+                src="https://wallpaperaccess.com/full/3308619.jpg" // Consider a more theme-aligned or locally hosted image
                 alt="Quiz Time"
                 className={styles.headerImage}
             />
-            <h2 className={styles.title}>Проверьте свои знания!</h2>
-            <p>Нажмите кнопку ниже, чтобы начать.</p>
+            {/* .title class is applied by parent SCSS if h2 is direct child of initialView with this class */}
+            <h2>Test Your Knowledge!</h2> {/* Translated */}
+            <p>Press the button below to start.</p> {/* Translated */}
             {loading ? (
-                <p>Загрузка квиза...</p>
+                <p className={styles.loadingMessage}>Loading quiz...</p> // Translated & Class
             ) : (
                 <button
                     onClick={() => handleStartQuiz()}
-                    className={styles.button}
+                    className={styles.button} // Primary button class
                     disabled={loading}
                 >
-                  Начать квиз
+                  <FaPlay /> Start Quiz {/* Translated & Icon */}
                 </button>
             )}
           </div>
@@ -184,28 +186,28 @@ const QuizPage = () => {
   }
 
   if (quizState === 'active') {
-    if (loading) return <div className={styles.quizContainer}><p>Загрузка вопроса...</p></div>;
+    if (loading) return <div className={styles.quizContainer}><p className={styles.loadingMessage}>Loading question...</p></div>; // Translated & Class
     if (!currentQuestions || currentQuestions.length === 0 || currentQuestionIndex >= currentQuestions.length) {
       return (
           <div className={styles.quizContainer}>
-            <p className={styles.errorText}>Ошибка: Вопросы отсутствуют или индекс вне диапазона.</p>
+            <p className={styles.errorText}>Error: Questions are missing or index is out of range.</p> {/* Translated */}
             <button onClick={handlePlayAgain} className={styles.button}>
-              Начать заново
+              <FaRedo /> Start Over {/* Translated & Icon */}
             </button>
           </div>
       );
     }
 
     const question = currentQuestions[currentQuestionIndex];
-    if (!question) {
-      return <div className={styles.quizContainer}><p>Загрузка данных вопроса...</p></div>;
+    if (!question) { // Should ideally not happen if previous check is robust
+      return <div className={styles.quizContainer}><p className={styles.loadingMessage}>Loading question data...</p></div>; // Translated & Class
     }
 
     return (
         <div className={styles.quizContainer}>
           <div className={styles.activeQuizView}>
             <p className={styles.questionCounter}>
-              Вопрос {currentQuestionIndex + 1} / {currentQuestions.length}
+              <FaQuestionCircle /> Question {currentQuestionIndex + 1} / {currentQuestions.length} {/* Translated & Icon */}
             </p>
             <div className={styles.timerBarContainer}>
               <div
@@ -213,7 +215,7 @@ const QuizPage = () => {
                   style={{ width: `${(timer / 10) * 100}%` }}
               />
             </div>
-            <p className={styles.timerText}>Осталось времени: {timer.toFixed(1)}с</p>
+            <p className={styles.timerText}><FaClock /> Time left: {timer.toFixed(1)}s</p> {/* Translated & Icon */}
             <h3 className={styles.questionWord}>{question.englishWord}</h3>
             <div className={styles.optionsContainer}>
               {question.options.map((opt, index) => (
@@ -221,26 +223,26 @@ const QuizPage = () => {
                       key={index}
                       onClick={() => handleAnswer(opt)}
                       className={styles.optionButton}
-                      disabled={timer <= 0}
+                      disabled={timer <= 0} // Keep disabled logic
                   >
                     {opt}
                   </button>
               ))}
             </div>
-            {error && <p className={styles.errorTextSmall}>{error}</p>}
+            {error && <p className={styles.errorTextSmall}>{error}</p>} {/* Keep error display for active quiz */}
           </div>
         </div>
     );
   }
 
   if (quizState === 'results') {
-    if (loading) return <div className={styles.quizContainer}><p>Отправка результатов...</p></div>;
-    if (!quizResults) {
+    if (loading) return <div className={styles.quizContainer}><p className={styles.loadingMessage}>Submitting results...</p></div>; // Translated & Class
+    if (!quizResults) { // Error fetching results
       return (
           <div className={styles.quizContainer}>
-            <p className={styles.errorText}>Не удалось загрузить результаты квиза.</p>
+            <p className={styles.errorText}>Failed to load quiz results.</p> {/* Translated */}
             <button onClick={handlePlayAgain} className={styles.button}>
-              Пройти снова
+              <FaRedo /> Play Again {/* Translated & Icon */}
             </button>
           </div>
       );
@@ -248,23 +250,23 @@ const QuizPage = () => {
     return (
         <div className={styles.quizContainer}>
           <div className={styles.resultsView}>
-            <img
+            <img // Consider a more theme-aligned or locally hosted image for results
                 src="https://img.freepik.com/free-photo/flat-lay-assortment-optimism-concept-elements_23-2148861677.jpg?semt=ais_items_boosted&w=740"
                 alt="Quiz Completed"
                 className={styles.headerImage}
             />
-            <h2 className={styles.title}>Квиз завершен!</h2>
-            <p>Ваш результат: {quizResults.score} из {quizResults.totalQuestions}</p>
-            <p>Заработано XP: {quizResults.xpEarned}</p>
+            <h2><FaAward /> Quiz Complete!</h2> {/* Translated & Icon */}
+            <p>Your score: <strong>{quizResults.score}</strong> out of <strong>{quizResults.totalQuestions}</strong></p> {/* Translated & Emphasis */}
+            <p>XP Earned: <strong>{quizResults.xpEarned}</strong></p> {/* Translated & Emphasis */}
             <div className={styles.resultsActions}>
-              <button onClick={handlePlayAgain} className={styles.button}>
-                Пройти снова
+              <button onClick={handlePlayAgain} className={styles.button}> {/* Primary button */}
+                <FaRedo /> Play Again {/* Translated & Icon */}
               </button>
               <button
                   onClick={navigateToHome}
-                  className={`${styles.button} ${styles.secondaryButton}`}
+                  className={styles.secondaryButton} // Secondary button class
               >
-                Главная
+                <FaHome /> Home {/* Translated & Icon */}
               </button>
             </div>
           </div>
@@ -272,7 +274,8 @@ const QuizPage = () => {
     );
   }
 
-  return <div className={styles.quizContainer}><p>Что-то пошло не так. Пожалуйста, обновите страницу.</p></div>;
+  // Fallback for any unknown state
+  return <div className={styles.quizContainer}><p className={styles.infoMessage}>Something went wrong. Please refresh the page.</p></div>; {/* Translated & Class */}
 };
 
 export default QuizPage;

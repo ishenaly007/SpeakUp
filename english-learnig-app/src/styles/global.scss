@@ -7,9 +7,16 @@
 
 // Variables
 $primary-color: #007bff;
+$primary-color-light: lighten($primary-color, 15%);
 $secondary-color: #6c757d;
+$success-color: #28a745;
+$danger-color: #dc3545; // Standard danger/error color
 $background-color: #f8f9fa;
+$surface-color: #ffffff; // For elements on top of background, like cards
+$card-bg: #fff; // Specific for cards, can be same as surface
 $text-color: #333;
+$border-color: #dee2e6; // Subtle border color
+$border-radius: 8px; // Common border radius
 $font-family-sans-serif: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 $header-height: 70px; // Example header height
 

@@ -1,43 +1,63 @@
+@import '../styles/global.scss';
+
+// Local SCSS variables (if not in global.scss)
+$border-radius-sm: 4px !default;
+$border-radius-lg: 20px !default;
+$box-shadow-sm: 0 1px 3px rgba(0,0,0,0.1) !default; // Using !default to allow override from global if they exist
+$box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
+
+
 .chatContainer {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 100px); // Adjust based on header height
+  height: calc(100vh - 100px); // Consider using $header-height if available and accurate
   max-width: 800px;
-  margin: auto;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  margin: 1rem auto; // Added some top/bottom margin
+  border: 1px solid $border-color; // Use global
+  border-radius: $border-radius; // Use global
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1); // Added subtle shadow
+  box-shadow: $box-shadow-lg; // Use themed shadow
 }
 
 .instructions {
-  padding: 1rem;
-  border-bottom: 1px solid #eee;
-  background-color: #f9f9f9;
-  text-align: center; // Center align the instructions
+  padding: 1.5rem; // Increased padding
+  border-bottom: 1px solid $border-color; // Use global
+  background-color: lighten($primary-color, 48%); // Use themed bg
+  text-align: center;
   h2 { 
     margin-top: 0; 
-    font-size: 1.5rem; // Slightly larger heading
-    color: #333;
+    font-size: 1.6rem; // Adjusted
+    color: $primary-color; // Use global
+    display: flex; // For icon alignment
+    align-items: center;
+    justify-content: center;
+    svg {
+      margin-right: 0.75rem;
+    }
   }
   p {
-    font-size: 0.9rem;
-    color: #555;
+    font-size: 1rem; // Adjusted
+    color: $text-color; // Use global
+    max-width: 600px; // Limit width for readability
+    margin: 0.5rem auto 0; // Center if needed
   }
 }
 
-.loadingText {
-  padding: 1rem;
+.loadingText, .noMessages { // Grouped similar elements
+  padding: 2rem; // Increased padding
   text-align: center;
-  color: #555;
+  color: $secondary-color; // Use global
+  font-size: 1.1rem; // Adjusted
 }
 
 .errorText {
-  color: red;
-  padding: 0.5rem 1rem;
-  background-color: #ffe0e0;
-  border-bottom: 1px solid #ffcccc;
+  color: $danger-color; // Use global
+  padding: 1rem; // Adjusted
+  background-color: lighten($danger-color, 35%); // Use global with adjustment
+  border: 1px solid $danger-color; // Use global
+  border-radius: $border-radius; // Use global
   text-align: center;
+  margin: 1rem; // Add margin to separate from other elements
 }
 
 .messagesArea {
@@ -46,136 +66,169 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; // Slightly increased gap
-  background-color: #f4f7f6; // Light background for messages area
+  gap: 0.75rem;
+  background-color: $background-color; // Use global page background
 }
 
 .message {
-  padding: 0.6rem 1.1rem; // Slightly more padding
-  border-radius: 18px; // More rounded bubbles
-  max-width: 75%; // Allow slightly wider messages
+  padding: 0.75rem 1.25rem; // Adjusted padding
+  border-radius: 18px; // Keep bubble radius, or use $border-radius for consistency
+  max-width: 75%;
   word-wrap: break-word;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.05); // Subtle shadow for messages
+  box-shadow: $box-shadow-sm; // Use themed shadow
+  line-height: 1.5; // Adjusted line height
 
   p {
-    margin: 0; // Remove default paragraph margin
-    line-height: 1.4; // Improve readability
+    margin: 0;
   }
 
   &.user {
-    background-color: #007bff;
-    color: white;
+    background-color: $primary-color; // Use global
+    color: #fff; // Ensure high contrast text on primary
     align-self: flex-end;
-    border-bottom-right-radius: 6px; // Tail for user bubble
+    border-bottom-right-radius: $border-radius-sm; // Themed tail
   }
 
   &.ai {
-    background-color: #e9ecef; // Kept as is
-    color: #333;
+    background-color: $surface-color; // Use global
+    color: $text-color; // Use global
     align-self: flex-start;
-    border-bottom-left-radius: 6px; // Tail for AI bubble
+    border: 1px solid $border-color; // Add border for AI messages
+    border-bottom-left-radius: $border-radius-sm; // Themed tail
   }
 
   .timestamp {
-    font-size: 0.7rem;
+    font-size: 0.75rem; // Slightly larger timestamp
     display: block;
-    // text-align: right; // Align based on sender if needed
-    margin-top: 0.3rem; // Increased margin
-    opacity: 0.6; // Slightly less opacity
+    margin-top: 0.3rem;
+    opacity: 0.7; // Adjusted opacity
   }
 
-  // Align timestamp based on sender
   &.user .timestamp {
+    color: rgba(#fff, 0.8); // Lighter timestamp for user messages
     text-align: right;
   }
   &.ai .timestamp {
+    color: $secondary-color; // Themed timestamp for AI messages
     text-align: left;
   }
 }
 
 .inputArea {
   display: flex;
+  align-items: center; // Vertically align items
   padding: 1rem;
-  border-top: 1px solid #ddd; // Slightly darker border
-  background-color: #ffffff; // White background for input area
+  border-top: 1px solid $border-color; // Use global
+  background-color: $surface-color; // Use global
 
-  input {
+  input[type="text"] { // More specific selector
     flex-grow: 1;
-    padding: 0.75rem; // Increased padding
-    border: 1px solid #ccc;
-    border-radius: 20px; // Rounded input field
-    margin-right: 0.75rem; // Increased margin
-    font-size: 0.95rem;
+    padding: 0.75rem 1rem; // Adjusted padding
+    border: 1px solid $border-color; // Use global
+    border-radius: $border-radius-lg; // Use themed variable for pill shape
+    margin-right: 0.75rem;
+    font-size: 1rem; // Adjusted
+    background-color: $background-color; // Or $surface-color
 
     &:focus {
       outline: none;
-      border-color: #007bff;
-      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+      border-color: $primary-color; // Use global
+      box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25); // Themed focus
     }
   }
 
   button {
-    padding: 0.75rem 1.2rem; // Increased padding
-    background-color: #007bff;
-    color: white;
+    padding: 0.75rem 1.2rem;
+    background-color: $primary-color; // Use global
+    color: #fff; // Ensure contrast
     border: none;
-    border-radius: 20px; // Rounded button
+    border-radius: $border-radius-lg; // Match input for pill shape
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 1rem; // Adjusted
     transition: background-color 0.2s ease;
+    display: flex; // For icon alignment
+    align-items: center;
+    justify-content: center;
 
-    &:hover {
-      background-color: #0056b3;
+    svg { // Style for potential icon in button
+        margin-right: 0.5rem; // If icon is on the left
+        // margin-left: 0.5rem; // If icon is on the right
+    }
+
+    &:hover:not(:disabled) {
+      background-color: darken($primary-color, 10%); // Use global with adjustment
     }
 
     &:disabled {
-      background-color: #aaa;
+      background-color: lighten($secondary-color, 20%); // Use global with adjustment
+      color: darken($secondary-color, 20%); // Adjust text color for disabled state
       cursor: not-allowed;
     }
   }
 }
 
 // Media Queries for Chat Page
+@media (max-width: 768px) { // Broader breakpoint for general tablet/mobile adjustments
+  .chatContainer {
+    // Consider adjusting height based on $header-height if used
+    // height: calc(100vh - #{$header-height} - 1rem); // Example if header is present
+     margin: 0.5rem; // Reduce margin
+  }
+   .instructions {
+    padding: 1rem;
+    h2 { font-size: 1.4rem; svg {font-size: 1.3rem;} }
+    p { font-size: 0.9rem; }
+  }
+  .inputArea {
+    padding: 0.75rem;
+    input[type="text"] { padding: 0.6rem 0.8rem; font-size: 0.95rem;}
+    button { padding: 0.6rem 1rem; font-size: 0.95rem; }
+  }
+}
+
 @media (max-width: 600px) {
   .chatContainer {
-    height: calc(100vh - 60px); // Adjust based on smaller header if any
-    border-radius: 0; // Full screen on small devices
+    height: calc(100vh - 60px); // Fallback or specific mobile adjustment
+    border-radius: 0;
     border: none;
     max-width: 100%;
+    margin: 0; // Full screen
   }
 
   .instructions {
     padding: 0.75rem;
-    h2 { font-size: 1.2rem; }
-    p { font-size: 0.8rem; }
+    border-radius: 0; // No radius if full width
+    h2 { font-size: 1.3rem; svg {font-size: 1.2rem;}}
+    p { font-size: 0.85rem; }
   }
 
   .messagesArea {
-    padding: 0.75rem;
+    padding: 0.5rem; // Less padding on mobile
     gap: 0.5rem;
   }
 
   .message {
     padding: 0.5rem 0.9rem;
-    max-width: 85%; // Allow slightly wider messages on smaller screens
-    &.user {
-      border-bottom-right-radius: 4px;
-    }
-    &.ai {
-      border-bottom-left-radius: 4px;
-    }
+    max-width: 85%;
+    font-size: 0.9rem; // Slightly smaller text on mobile
+    &.user { border-bottom-right-radius: $border-radius-sm; } // Consistent tail
+    &.ai { border-bottom-left-radius: $border-radius-sm; } // Consistent tail
   }
 
   .inputArea {
-    padding: 0.75rem;
-    input {
-      padding: 0.6rem;
+    padding: 0.5rem; // Less padding
+    border-radius: 0; // No radius if full width
+    input[type="text"] {
+      padding: 0.5rem 0.75rem;
       font-size: 0.9rem;
       margin-right: 0.5rem;
+      border-radius: $border-radius-lg; // Keep pill shape
     }
     button {
-      padding: 0.6rem 1rem;
+      padding: 0.5rem 0.75rem;
       font-size: 0.9rem;
+      border-radius: $border-radius-lg; // Keep pill shape
+      svg { margin-right: 0.25rem; font-size: 0.8rem;} // Adjust icon in button
     }
   }
 }

@@ -1,9 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Optional: for navigation
-import styles from './LessonCard.module.scss'; // To be created
+import { useNavigate } from 'react-router-dom';
+import styles from './LessonCard.module.scss';
+import { FaLayerGroup } from 'react-icons/fa'; // Import the icon
 
 const LessonCard = ({ lesson }) => {
-  const navigate = useNavigate(); // Optional
+  const navigate = useNavigate();
 
   // Преобразуем title в slug: нижний регистр, пробелы → дефисы, удаляем лишние символы
   const slugify = (text) => {
@@ -24,9 +25,12 @@ const LessonCard = ({ lesson }) => {
       onClick={handleClick}
     >
       <h3>{lesson.title}</h3>
-      <p><strong>Level:</strong> {lesson.level}</p>
+      <p>
+        <FaLayerGroup className={styles.icon} />
+        <strong>Level:</strong> {lesson.level}
+      </p>
       <p className={styles.description}>{lesson.description}</p>
-      {lesson.completed && <p className={styles.completedText}>✔ Пройден</p>}
+      {lesson.completed && <p className={styles.completedText}>✔ Completed</p>} {/* Changed to English */}
     </div>
   );
 };
