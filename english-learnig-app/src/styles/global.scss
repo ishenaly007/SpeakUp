@@ -8,7 +8,7 @@
 // Variables
 $primary-color: #007bff;
 $secondary-color: #6c757d;
-$background-color: #f8f9fa;
+$background-color: #f8f9fa; // Base background color
 $text-color: #333;
 $font-family-sans-serif: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 $header-height: 70px; // Example header height
@@ -16,10 +16,10 @@ $header-height: 70px; // Example header height
 body {
   font-family: $font-family-sans-serif;
   line-height: 1.6;
-  background-color: $background-color;
+  // Subtle gradient for the overall page background
+  background-image: linear-gradient(to bottom, $background-color, darken($background-color, 3%));
+  background-attachment: fixed; // Prevent gradient from scrolling with content for a smoother look
   color: $text-color;
-  // Padding top is removed here, as it will be handled by the <main> element or specific page containers
-  // to avoid global padding affecting pages like Login/Register if they don't have the fixed Header.
 }
 
 a {
@@ -35,19 +35,32 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
 }
 
-// Main content container to provide padding for fixed header
-// This 'main' selector targets the <main> tag used in App.jsx
 main {
-  padding-top: $header-height; // Ensures content isn't hidden by a fixed header
-  padding-left: 1rem; // General horizontal padding
-  padding-right: 1rem; // General horizontal padding
-  padding-bottom: 1rem; // General bottom padding
+  padding-top: $header-height;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
 }
 
-// Utility classes (optional)
+// Utility classes
 .container {
   width: 90%;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+}
+
+// Styling for empty state messages
+.emptyStateMessage {
+  text-align: center;
+  color: $secondary-color; // Muted color
+  padding: 2rem 1rem; // Padding for emphasis
+  font-style: italic;
+  font-size: 1rem; // Ensure readable font size
+  // Optional: if you want a subtle border or background
+  // background-color: lighten($background-color, 1%);
+  // border-top: 1px solid darken($background-color, 5%);
+  // border-bottom: 1px solid darken($background-color, 5%);
+  // margin-top: 2rem;
+  // margin-bottom: 2rem;
 }

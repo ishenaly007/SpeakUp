@@ -1,26 +1,61 @@
+// Define some color variables for consistency
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$background-color: #f8f9fa; // A light gray for the page background
+$card-background-color: #ffffff;
+$text-color: #333;
+$light-text-color: #555;
+$border-color: #eee;
+$placeholder-bg-color: #e0e0e0;
+
 .profileContainer {
   max-width: 800px;
   margin: 2rem auto;
-  padding: 1rem;
+  // Add a light background gradient
+  background-image: linear-gradient(to bottom, $background-color, darken($background-color, 5%));
+  border-radius: 8px; // Softer edges
+  padding: 2rem; // Better internal spacing
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); // Subtle lift
 
-  h2 {
+  h2 { // This will be styled by profileHeader, but keep general h2 styling if needed elsewhere
     text-align: center;
-    margin-bottom: 1.5rem;
-    color: #333;
+    margin-bottom: 1.5rem; // Original margin, will be overridden by profileHeader
+    color: $text-color; // Original color
   }
 }
 
+.profileHeader { // For the main "My Profile" title
+  font-size: 2rem; // Increased font-size
+  color: $primary-color; // Use primary color
+  margin-bottom: 1.5rem;
+  text-align: center; // Ensure it remains centered
+}
+
+.avatarPlaceholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%; // Circular
+  background-color: $placeholder-bg-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem; // For text like "No Image" or initials
+  color: $secondary-color;
+  margin: 0 auto 1.5rem auto; // Centered and with margin at the bottom
+}
+
 .profileCard {
-  background-color: #fff;
+  background-color: $card-background-color;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Existing shadow, confirm if it should be replaced or complemented
+  margin-bottom: 1rem; // Added to serve as detailSection margin
 
   h3 {
-    margin-top: 1.5rem; // Adjusted margin
+    margin-top: 1.5rem;
     margin-bottom: 1rem;
-    color: #555;
-    border-bottom: 1px solid #eee;
+    color: $light-text-color;
+    border-bottom: 1px solid $border-color;
     padding-bottom: 0.5rem;
   }
 }
@@ -28,12 +63,13 @@
 .profileItem {
   font-size: 1rem;
   line-height: 1.6;
-  margin-bottom: 0.5rem;
-  color: #444;
-  word-wrap: break-word; // Ensure long strings (e.g. email) wrap
+  margin-bottom: 1rem; // Increased from 0.5rem to make sections distinct
+  color: $text-color; // Changed from #444 to use variable
+  word-wrap: break-word;
 
-  strong {
-    color: #007bff; // Consider using $primary-color if variables are imported
+  strong { // Style for labels like "Username:", "Email:"
+    color: $secondary-color; // Use secondary color for labels
+    font-weight: bold; // Ensure it's bold
     margin-right: 0.5rem;
   }
 }
@@ -45,37 +81,53 @@
 }
 
 .error {
-  color: red; // Consider using a global error color variable
+  color: red; // Consider using a global error color variable, e.g., $error-color: red;
 }
 
 // Media Queries for Profile Page
 @media (max-width: 768px) {
   .profileContainer {
     margin: 1rem auto;
-    padding: 0.5rem; // Reduce outer padding
+    padding: 1rem; // Adjusted padding for smaller screens
   }
   .profileCard {
-    padding: 1.5rem; // Reduce card padding
+    padding: 1.5rem;
+  }
+  .profileHeader {
+    font-size: 1.8rem; // Adjust header font size
+  }
+  .avatarPlaceholder {
+    width: 100px;
+    height: 100px;
+    font-size: 1.2rem;
   }
   .profileItem {
-    font-size: 0.95rem; // Slightly smaller font
+    font-size: 0.95rem;
   }
 }
 
 @media (max-width: 480px) {
   .profileContainer {
-    h2 {
-      font-size: 1.5rem; // Smaller main heading
+    h2 { // General h2, if any, not covered by profileHeader
+      font-size: 1.5rem;
     }
   }
+  .profileHeader {
+    font-size: 1.6rem; // Further adjust header font size
+  }
+  .avatarPlaceholder {
+    width: 80px;
+    height: 80px;
+    font-size: 1rem;
+  }
   .profileCard {
-    padding: 1rem; // Further reduce card padding
+    padding: 1rem;
     h3 {
-      font-size: 1.1rem; // Smaller sub-headings
+      font-size: 1.1rem;
     }
   }
   .profileItem {
-    font-size: 0.9rem; // Further reduce font size
+    font-size: 0.9rem;
     line-height: 1.5;
   }
 }

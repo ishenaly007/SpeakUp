@@ -1,10 +1,22 @@
+// Define color variables
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$success-color: #28a745;
+$danger-color: #dc3545;
+$light-bg: #f8f9fa;
+$border-color-light: #dee2e6;
+$border-color-medium: #adb5bd;
+$text-color: #333;
+$text-light: #fff;
+$container-bg: #fff; // For quiz container background
+
 .quizContainer {
   max-width: 800px;
   margin: 2rem auto;
-  padding: 2rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 2rem; // Updated padding
+  background-color: $container-bg; // Updated background
+  border-radius: 8px; // Updated border-radius
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); // Updated box-shadow
   text-align: center;
 }
 
@@ -16,54 +28,65 @@
   margin-bottom: 1.5rem;
 }
 
+// General Button Style (applies to .button, .secondaryButton will modify it)
 .button {
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  color: white;
-  background-color: #007bff;
+  padding: 0.75rem 1.5rem; // Updated padding
+  font-size: 1rem; // Updated font-size
+  color: $text-light;
+  background-color: $primary-color;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 0.5rem;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  margin: 0.5rem; // Keep existing margin strategy
+  margin-top: 1rem; // Added margin-top for spacing from content above
 
   &:hover {
-    background-color: #0056b3;
+    background-color: darken($primary-color, 10%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
-
+  &:active {
+    background-color: darken($primary-color, 15%);
+  }
   &:disabled {
-    background-color: #ccc;
+    background-color: lighten($primary-color, 20%);
     cursor: not-allowed;
+    box-shadow: none;
   }
 }
 
 .secondaryButton {
-  background-color: #6c757d;
+  background-color: $secondary-color;
   &:hover {
-    background-color: #545b62;
+    background-color: darken($secondary-color, 10%);
+  }
+  &:active {
+    background-color: darken($secondary-color, 15%);
+  }
+  &:disabled {
+    background-color: lighten($secondary-color, 20%);
   }
 }
 
 .errorText {
-  color: #dc3545;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
+  color: $danger-color;
+  background-color: lighten($danger-color, 35%);
+  border: 1px solid lighten($danger-color, 20%);
   padding: 1rem;
   border-radius: 5px;
   margin-bottom: 1rem;
 }
 .errorTextSmall {
-  color: #dc3545;
+  color: $danger-color;
   font-size: 0.9rem;
   margin-top: 0.5rem;
 }
-
 
 /* Initial View Specifics */
 .initialView {
   h2 {
     font-size: 1.8rem;
-    color: #333;
+    color: $text-color;
     margin-bottom: 0.5rem;
   }
   p {
@@ -92,9 +115,9 @@
 
   .timerBar {
     height: 100%;
-    background-color: #28a745; // Green for timer
+    background-color: $success-color; // Green for timer
     border-radius: 5px;
-    transition: width 0.1s linear; // Smooth transition for timer
+    transition: width 0.1s linear;
   }
   
   .timerText {
@@ -103,61 +126,113 @@
     margin-bottom: 1.5rem;
   }
 
+  // Question Text Area
   .questionWord {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    font-size: 1.5rem; // Updated font-size
+    font-weight: 500; // Updated font-weight
+    color: $text-color; // Updated color
+    margin-bottom: 1.5rem; // Updated margin-bottom
+    padding: 1rem; // Kept padding for visual separation
+    background-color: $container-bg; // Kept background
+    border-radius: 5px; // Kept radius
+    border: 1px solid #ddd; // Kept border
   }
 
+  // Answer Options List (Container)
   .optionsContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); // Slightly smaller min for options
-    gap: 0.75rem; // Slightly reduced gap
-    margin-top: 1rem;
+    // display: grid; // Already a grid
+    // grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    // gap: 0.75rem;
+    // margin-top: 1rem; // Existing styles seem fine
+    list-style-type: none; // Added
+    padding: 0; // Added
+    margin-bottom: 1.5rem; // Added
   }
 
+  // Option Item (Button)
   .optionButton {
-    padding: 0.8rem; // Adjusted padding
-    font-size: 1rem; // Adjusted font size
-    background-color: #fff;
-    border: 1px solid #007bff;
-    color: #007bff;
-    border-radius: 5px;
+    display: block; // Ensures it takes full width if grid column allows
+    background-color: $light-bg; // Updated background
+    border: 1px solid $border-color-light; // Updated border
+    color: $text-color; // Set default text color for options
+    padding: 1rem; // Updated padding
+    margin-bottom: 0.75rem; // Added margin-bottom for spacing between options
+    border-radius: 5px; // Updated border-radius
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    text-align: left; // Align text to the left for better readability
+    width: 100%; // Make button take full width of its grid cell
 
     &:hover {
-      background-color: #007bff;
-      color: white;
+      background-color: $border-color-light; //darken($light-bg, 5%); Updated hover
+      border-color: $border-color-medium; // Updated hover
     }
-    &:disabled {
+    &:disabled { // Kept disabled state
       background-color: #e9ecef;
       color: #6c757d;
       border-color: #ced4da;
       cursor: not-allowed;
     }
+
+    // Selected state (applied via JS)
+    &.selected {
+      background-color: $primary-color;
+      color: $text-light;
+      border-color: darken($primary-color, 10%);
+    }
+
+    // Correct state (applied via JS after submission check)
+    &.correct {
+      background-color: $success-color;
+      color: $text-light;
+      border-color: darken($success-color, 10%);
+    }
+
+    // Incorrect state (applied via JS after submission check)
+    &.incorrect {
+      background-color: $danger-color;
+      color: $text-light;
+      border-color: darken($danger-color, 10%);
+    }
   }
 }
+
+// Feedback Area (for text like "Correct!" or "Incorrect!")
+.feedbackText {
+  font-size: 1rem;
+  margin-top: 1rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 4px;
+
+  &.correctFeedback {
+    color: $success-color;
+    background-color: lighten($success-color, 40%);
+  }
+  &.incorrectFeedback {
+    color: $danger-color;
+    background-color: lighten($danger-color, 35%);
+  }
+}
+
 
 /* Results View Specifics */
 .resultsView {
   h2 {
     font-size: 1.8rem;
-    color: #28a745; // Green for success
+    color: $success-color;
     margin-bottom: 1rem;
   }
   p {
     font-size: 1.1rem;
-    color: #333;
+    color: $text-color;
     margin-bottom: 0.75rem;
   }
   .resultsActions {
     margin-top: 1.5rem;
+    display: flex; // Added for button alignment
+    justify-content: center; // Center buttons
+    gap: 1rem; // Space between buttons
   }
 }
 
@@ -170,11 +245,11 @@
 
   .activeQuizView {
     .questionWord {
-      font-size: 1.5rem; // Smaller font for question word
+      font-size: 1.3rem;
     }
     .optionButton {
-      font-size: 0.9rem; // Smaller font for options
-      padding: 0.7rem;
+      font-size: 0.9rem;
+      padding: 0.8rem;
     }
   }
 
@@ -194,14 +269,13 @@
   }
   .activeQuizView {
     .questionWord {
-      font-size: 1.3rem;
+      font-size: 1.2rem; // Further adjust
     }
     .timerText, .questionCounter {
       font-size: 0.8rem;
     }
      .optionsContainer {
-       // For very small screens, ensure options stack nicely if still too wide
-       grid-template-columns: 1fr; // Stack options vertically
+       grid-template-columns: 1fr;
      }
     .optionButton {
       font-size: 0.85rem;
@@ -214,5 +288,8 @@
     p {
       font-size: 1rem;
     }
+  }
+  .resultsActions {
+    flex-direction: column; // Stack buttons vertically
   }
 }

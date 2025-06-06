@@ -71,9 +71,12 @@ const ProfilePage = () => {
 
   return (
     <div className={styles.profileContainer}>
-      <h2>My Profile</h2>
+      <h2 className={styles.profileHeader}>My Profile</h2>
       {profileData && ( // Render card only if profileData is available
         <div className={styles.profileCard}>
+          <div className={styles.avatarPlaceholder}>
+            <span>Avatar</span>
+          </div>
           <div className={styles.profileItem}><strong>Username:</strong> {profileData.username}</div>
           <div className={styles.profileItem}><strong>Email:</strong> {profileData.email}</div>
           <div className={styles.profileItem}>
@@ -86,7 +89,7 @@ const ProfilePage = () => {
           )}
           <div className={styles.profileItem}><strong>Member Since:</strong> {formatDate(profileData.createdAt)}</div>
           
-          <h3>Learning Progress</h3>
+          <h3>Learning Progress</h3> {/* This h3 will be styled by .profileCard h3 in SCSS */}
           <div className={styles.profileItem}><strong>Lessons Completed:</strong> {completedLessonsCount}</div>
           <div className={styles.profileItem}><strong>Quizzes Taken:</strong> {quizStats.totalQuizzes}</div>
           <div className={styles.profileItem}>

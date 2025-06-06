@@ -41,11 +41,59 @@
 }
 
 .lessonContent {
-  border: 1px solid #e0e0e0;
-  padding: 1.5rem;
+  border: 1px solid #e0e0e0; // Use $border-color
+  padding: 2rem; // Increased padding
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #fff; // Use $card-background-color or similar
   margin-bottom: 2rem;
+  font-size: 1.1rem; // Base font size for lesson text
+  line-height: 1.7; // Improved line height for readability
+
+  // Ensure direct children, and specifically paragraphs within the dynamically set HTML,
+  // inherit or adopt these text styles if they don't have their own.
+  & > div { // Targets the div where dangerouslySetInnerHTML occurs
+    p, li, span, div { // Apply to common text-hosting elements
+      font-size: inherit; // Inherit 1.1rem from .lessonContent
+      line-height: inherit; // Inherit 1.7 from .lessonContent
+      color: #333; // Default text color for content
+    }
+    // More specific styling for elements if needed
+    h1, h2, h3, h4, h5, h6 {
+      color: #222; // Darker for headings within content
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+    a {
+      color: $primary-color;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    pre, code {
+      font-family: 'Courier New', Courier, monospace; // Monospace for code
+      background-color: #f4f4f4;
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.95em; // Slightly smaller for code snippets
+    }
+    pre {
+      padding: 1em;
+      overflow-x: auto; // Allow scrolling for code blocks
+    }
+  }
+
+  // Styling for images and other media within lesson content
+  img,
+  video,
+  iframe {
+    max-width: 100%;
+    height: auto;
+    display: block; // Prevents extra space below images
+    margin: 1rem auto; // Center media and give some vertical space
+    border-radius: 4px; // Slightly rounded corners for media
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); // Subtle shadow for media
+  }
 }
 
 .testsSection {
@@ -214,9 +262,15 @@
     }
   }
 
+  .lessonContent {
+    padding: 1.5rem; // Adjust padding for smaller screens
+    font-size: 1rem; // Slightly smaller font on mobile
+    line-height: 1.6; // Adjust line height for smaller font
+  }
+
   .testCard, .resultsView {
     padding: 1.5rem;
-    max-width: 90%;
+    // max-width: 90%; // Already constrained by parent's width effectively
 
     .questionWord {
       font-size: 1.5rem;
@@ -241,6 +295,11 @@
 @media (max-width: 480px) {
   .lessonContainer {
     padding: 1rem;
+    margin: 0.5rem auto; // Reduce margin for very small screens
+  }
+
+  .lessonContent {
+    padding: 1rem; // Further reduce padding
   }
 
   .testCard {

@@ -47,7 +47,7 @@ const LessonsPage = () => {
         <p>Здесь вы найдете все доступные уроки. Выбирайте и начинайте учиться!</p>
       </div>
       
-      {lessons.length === 0 && !loading && <p>No lessons available at the moment.</p>}
+      {lessons.length === 0 && !loading && <p className="emptyStateMessage">No lessons available at the moment.</p>}
       
       <div className={styles.lessonsGrid}>
         {lessons.map(lesson => (

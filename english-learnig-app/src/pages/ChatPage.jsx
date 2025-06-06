@@ -93,13 +93,25 @@ const ChatPage = () => {
 
         <div className={styles.messagesArea}>
           {messages.length === 0 && !loadingHistory && (
-              <p className={styles.noMessages}>No messages yet. Start the conversation!</p>
+              <p className={`${styles.noMessages} ${"emptyStateMessage"}`}>No messages yet. Start the conversation!</p>
           )}
-          {messages.map(msg => (
+          {messages.map(msg => {
+            let formattedTime = '';
+            try {
+              const date = new Date(msg.timestamp);
+              if (!isNaN(date)) {
+                formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+              }
+            } catch (e) {
+              console.error("Error formatting time:", e);
+            }
+            return (
               <div key={msg.id} className={`${styles.message} ${styles[msg.sender]}`}>
                 <p>{msg.text}</p>
+                {formattedTime && <span className={styles.timestamp}>{formattedTime}</span>}
               </div>
-          ))}
+            );
+          })}
           <div ref={messagesEndRef} />
         </div>
 

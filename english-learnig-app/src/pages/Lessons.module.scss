@@ -28,7 +28,7 @@
 .lessonsGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem; // This creates space between cards
+  gap: 1.5rem; // Adjusted gap to 1.5rem
   justify-content: space-evenly; // Align cards to the start of the container
 
   // The LessonCard component itself should define its base width

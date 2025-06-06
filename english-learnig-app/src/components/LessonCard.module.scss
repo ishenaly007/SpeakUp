@@ -1,33 +1,30 @@
+// Define a primary color, ideally this would come from a global stylesheet
+$primary-color: #007bff; // Example primary color (blue)
+
 .lessonCard {
   border: 1px solid #e0e0e0;
-  padding: 1.5rem;
-  margin: 0.5rem; // Will be controlled by gap in parent grid
+  padding: 1.5rem; // Good padding
+  // margin will be handled by parent's gap property
   border-radius: 8px;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); // Adjusted box-shadow
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   cursor: pointer;
   
-  // For the flex grid in LessonsPage.module.scss
-  // flex-basis: calc(25% - 1rem); // 4 cards per row, accounting for gap. 1rem is the gap in .lessonsGrid
-  // Or, if using gap property in parent, just set width or flex-grow/shrink
-  // flex-grow: 1;
-  // flex-shrink: 1;
-  // max-width: calc(25% - 1rem); // Ensure it doesn't grow too large if only a few items
-
-  // A more direct way if parent is display:flex and flex-wrap:wrap with a gap
-  width: calc(25% - 1rem); // Adjust based on the gap in .lessonsGrid
+  // Width calculation for a flex grid with a 1.5rem gap (defined in Lessons.module.scss)
+  // For 4 cards per row: calc( (100% / 4) - ( (4 - 1) * 1.5rem / 4 ) ) = calc(25% - 1.125rem)
+  width: calc(25% - 1.125rem);
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); // Adjusted hover box-shadow
   }
 
-  h3 {
-    font-size: 1.4rem;
-    color: #333;
+  h3 { // Lesson Title
+    font-size: 1.2rem; // Adjusted font-size
+    color: $primary-color; // Use primary color
     margin-top: 0;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem; // Adjusted margin-bottom
   }
 
   p {
@@ -39,36 +36,42 @@
   .description {
     font-size: 0.9rem;
     color: #777;
-    min-height: 50px; // Give some consistent height
+    min-height: 50px;
     margin-bottom: 1rem;
   }
 
   .completedText {
-    color: #28a745; // Green color for completed text
+    color: #28a745;
     font-weight: bold;
     font-size: 0.9rem;
     margin-top: 0.5rem;
   }
 
-  // If a lesson is marked as completed
   &.completed {
-    border-left: 5px solid #28a745; // Green border for completed lessons
+    border-left: 5px solid #28a745;
     background-color: #f9fdf9;
   }
 }
 
 // Responsive adjustments
+@media (max-width: 1200px) { // Adjusted breakpoint for potentially 3 cards
+  .lessonCard {
+    // For 3 cards per row: calc( (100% / 3) - ( (3 - 1) * 1.5rem / 3 ) ) = calc(33.333% - 1rem)
+    width: calc(33.333% - 1rem);
+  }
+}
+
 @media (max-width: 992px) { // Tablet: 2 cards per row
   .lessonCard {
-    width: calc(50% - 0.5rem); // (100% / 2) - ( (2 - 1) * gap_value / 2 ) = 50% - (gap / 2)
-                                // Assuming parent gap is 1rem, so 50% - 0.5rem
+    // For 2 cards per row: calc( (100% / 2) - ( (2 - 1) * 1.5rem / 2 ) ) = calc(50% - 0.75rem)
+    width: calc(50% - 0.75rem);
   }
 }
 
 @media (max-width: 768px) { // Mobile: 1 card per row
   .lessonCard {
-    width: 100%; // Takes full width, gap will be handled by parent if any on vertical stacking
-    // margin-left: 0; // Not needed if parent handles gap
-    // margin-right: 0; // Not needed if parent handles gap
+    width: 100%; // Takes full width
+    margin-left: 0; // Remove specific margins if any were added for flex calculations
+    margin-right: 0;
   }
 }
