@@ -25,7 +25,7 @@ const LessonDetailPage = () => {
     useEffect(() => {
         if (!user?.id || !state?.lessonId) {
             console.error('User not authenticated or lesson ID missing');
-            setError('User not authenticated or lesson ID missing.');
+            setError('Пользователь не аутентифицирован или отсутствует ID урока.');
             setLoading(false);
             return;
         }
@@ -43,7 +43,7 @@ const LessonDetailPage = () => {
             })
             .catch(err => {
                 console.error('Failed to load lesson:', err);
-                setError(err.message || 'Failed to load lesson.');
+                setError(err.message || 'Не удалось загрузить урок.');
                 setLoading(false);
             });
     }, [user?.id, state?.lessonId]);
@@ -159,7 +159,7 @@ const LessonDetailPage = () => {
             }
         } catch (err) {
             console.error('Error submitting answer:', err);
-            setError(err.message || 'Failed to submit answer.');
+            setError(err.message || 'Не удалось отправить ответ.');
         }
     };
 
@@ -174,9 +174,9 @@ const LessonDetailPage = () => {
         navigate('/lessons');
     };
 
-    if (loading) return <div className={styles.loadingMessage}>Loading lesson...</div>; // Changed class
-    if (error) return <div className={styles.errorMessage}>Error: {error}</div>; // Changed class
-    if (!lesson) return <div className={styles.errorMessage}>Lesson not found.</div>; // Changed class, reuse for consistency
+    if (loading) return <div className={styles.loadingMessage}>Загрузка урока...</div>;
+    if (error) return <div className={styles.errorMessage}>Ошибка: {error}</div>;
+    if (!lesson) return <div className={styles.errorMessage}>Урок не найден.</div>;
 
     const correctAnswers = testResults.filter(result => result.isCorrect === true).length;
 
@@ -184,10 +184,10 @@ const LessonDetailPage = () => {
         <div className={styles.lessonContainer}>
             <div className={styles.lessonHeader}>
                 <h2>{lesson.title}</h2>
-                <p><FaLayerGroup /> <strong>Level:</strong> {lesson.level}</p>
+                <p><FaLayerGroup /> <strong>Уровень:</strong> {lesson.level}</p>
                 <p>{lesson.description}</p>
                 {lesson.note && <p className={styles.note}><FaInfoCircle /> {lesson.note}</p>}
-                {lesson.completed && <p className={styles.completed}><FaCheckCircle /> Lesson Completed</p>}
+                {lesson.completed && <p className={styles.completed}><FaCheckCircle /> Урок пройден</p>}
             </div>
 
             <div className={styles.lessonContent}>
@@ -199,12 +199,12 @@ const LessonDetailPage = () => {
                 <div className={styles.testsSection}>
                     {!showTests && (
                          <button onClick={handleShowTests} className={styles.actionButton}> {/* Changed class */}
-                            <FaQuestionCircle /> Take Test
+                            <FaQuestionCircle /> Пройти тест
                         </button>
                     )}
                     {showTests && ( // Removed lesson.tests?.length > 0 check as it's parent-checked
                         <div className={styles.testCard} ref={testCardRef}>
-                            <p className={styles.questionCounter}><FaQuestionCircle /> Question {currentTestIndex + 1} / {lesson.tests.length}</p>
+                            <p className={styles.questionCounter}><FaQuestionCircle /> Вопрос {currentTestIndex + 1} / {lesson.tests.length}</p>
                             <div className={styles.timerBarContainer}>
                                 <div
                                     className={styles.timerBar}
@@ -231,16 +231,16 @@ const LessonDetailPage = () => {
 
             {showResults && (
                 <div className={styles.resultsView}>
-                    <h2><FaAward /> Lesson Complete!</h2>
-                    <p>Your score: {correctAnswers} out of {lesson.tests.length}</p>
-                    <p>XP Earned: {testResults.reduce((sum, result) => sum + (result.xpChange || 0), 0)}</p>
-                    {lesson.note && <p className={styles.note}><FaInfoCircle /> Tip: {lesson.note}</p>}
+                    <h2><FaAward /> Урок завершен!</h2>
+                    <p>Ваш результат: {correctAnswers} из {lesson.tests.length}</p>
+                    <p>Получено XP: {testResults.reduce((sum, result) => sum + (result.xpChange || 0), 0)}</p>
+                    {lesson.note && <p className={styles.note}><FaInfoCircle /> Подсказка: {lesson.note}</p>}
                     <div className={styles.resultsActions}>
                         <button onClick={handleRestartLesson} className={styles.actionButton}> {/* Changed class */}
-                            <FaRedo /> Restart Lesson
+                            <FaRedo /> Начать урок заново
                         </button>
                         <button onClick={navigateToLessons} className={styles.secondaryButton}> {/* Changed class */}
-                            <FaListAlt /> Back to Lessons
+                            <FaListAlt /> Назад к урокам
                         </button>
                     </div>
                 </div>

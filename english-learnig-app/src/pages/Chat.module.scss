@@ -2,177 +2,233 @@
 
 // Local SCSS variables (if not in global.scss)
 $border-radius-sm: 4px !default;
-$border-radius-lg: 20px !default;
-$box-shadow-sm: 0 1px 3px rgba(0,0,0,0.1) !default; // Using !default to allow override from global if they exist
+$border-radius-lg: 20px !default; // Will be overridden by 25px for input elements
+$box-shadow-sm: 0 1px 3px rgba(0,0,0,0.1) !default;
 $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
 
-
-.chatContainer {
+.animatedBackground {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  min-height: calc(100vh - #{$header-height}); // Use SASS var for header height
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 100px); // Consider using $header-height if available and accurate
-  max-width: 800px;
-  margin: 1rem auto; // Added some top/bottom margin
-  border: 1px solid $border-color; // Use global
-  border-radius: $border-radius; // Use global
-  overflow: hidden;
-  box-shadow: $box-shadow-lg; // Use themed shadow
+  align-items: center;
+  padding: 20px;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.chatContainer {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+  // Height calculation based on fixed header/footer values as SASS vars might not be accessible in calc reliably for vh units
+  // $footer-height would need to be defined globally, assuming 60px for now.
+  height: calc(100vh - #{$header-height} - 40px - 60px); // 70px header, 40px parent padding, 60px footer
+  // overflow: hidden; // Removed, messagesArea handles scrolling
 }
 
 .instructions {
-  padding: 1.5rem; // Increased padding
-  border-bottom: 1px solid $border-color; // Use global
-  background-color: lighten($primary-color, 48%); // Use themed bg
   text-align: center;
+  padding: 15px;
+  background-color: #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   h2 { 
     margin-top: 0; 
-    font-size: 1.6rem; // Adjusted
-    color: $primary-color; // Use global
-    display: flex; // For icon alignment
+    font-size: 1.6rem;
+    color: $primary-color;
+    display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px; // Updated gap
     svg {
-      margin-right: 0.75rem;
+      margin-right: 0; // Gap handles spacing
     }
   }
   p {
-    font-size: 1rem; // Adjusted
-    color: $text-color; // Use global
-    max-width: 600px; // Limit width for readability
-    margin: 0.5rem auto 0; // Center if needed
+    font-size: 1rem;
+    color: $text-color;
+    max-width: 600px;
+    margin: 0.5rem auto 0;
   }
 }
 
-.loadingText, .noMessages { // Grouped similar elements
-  padding: 2rem; // Increased padding
+.loadingText, .noMessages {
+  padding: 15px; // Unified padding
+  margin-top: 20px; // Added margin-top
   text-align: center;
-  color: $secondary-color; // Use global
-  font-size: 1.1rem; // Adjusted
+  font-size: 1.1rem;
+}
+
+.noMessages {
+  color: #6c757d; // Updated color
+}
+
+.loadingText {
+  color: $secondary-color; // Retained from original
 }
 
 .errorText {
-  color: $danger-color; // Use global
-  padding: 1rem; // Adjusted
-  background-color: lighten($danger-color, 35%); // Use global with adjustment
-  border: 1px solid $danger-color; // Use global
-  border-radius: $border-radius; // Use global
+  color: #dc3545;
+  background-color: #FFD2D2;
+  border: 1px solid #D8000C;
+  border-radius: 4px; // Updated border-radius
+  padding: 15px; // Unified padding
   text-align: center;
-  margin: 1rem; // Add margin to separate from other elements
+  margin: 1rem;
 }
 
 .messagesArea {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  background-color: $background-color; // Use global page background
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+  display: flex; // Added to allow gap for messages if needed, or manage individual margins
+  flex-direction: column; // Ensure messages stack vertically
+  // gap: 0.75rem; // Replaced by message margin-bottom
 }
 
 .message {
-  padding: 0.75rem 1.25rem; // Adjusted padding
-  border-radius: 18px; // Keep bubble radius, or use $border-radius for consistency
+  padding: 10px 15px;
+  border-radius: 15px;
+  margin-bottom: 12px; // Added margin
   max-width: 75%;
   word-wrap: break-word;
-  box-shadow: $box-shadow-sm; // Use themed shadow
-  line-height: 1.5; // Adjusted line height
+  box-shadow: $box-shadow-sm;
+  line-height: 1.5;
 
   p {
     margin: 0;
   }
 
   &.user {
-    background-color: $primary-color; // Use global
-    color: #fff; // Ensure high contrast text on primary
+    background-color: $primary-color;
+    color: #fff;
     align-self: flex-end;
-    border-bottom-right-radius: $border-radius-sm; // Themed tail
+    border-bottom-right-radius: 5px; // Updated radius
+    margin-left: auto; // Ensure it stays to the right
   }
 
   &.ai {
-    background-color: $surface-color; // Use global
-    color: $text-color; // Use global
+    background-color: #e9ecef; // Updated background
+    color: $text-color;
     align-self: flex-start;
-    border: 1px solid $border-color; // Add border for AI messages
-    border-bottom-left-radius: $border-radius-sm; // Themed tail
+    border-bottom-left-radius: 5px; // Updated radius
+    // border: 1px solid $border-color; // Removed border for AI messages as per new diff
   }
 
   .timestamp {
-    font-size: 0.75rem; // Slightly larger timestamp
+    font-size: 0.75rem;
     display: block;
     margin-top: 0.3rem;
-    opacity: 0.7; // Adjusted opacity
-  }
+    opacity: 0.7;
 
-  &.user .timestamp {
-    color: rgba(#fff, 0.8); // Lighter timestamp for user messages
-    text-align: right;
-  }
-  &.ai .timestamp {
-    color: $secondary-color; // Themed timestamp for AI messages
-    text-align: left;
+    &.user { // This nesting was incorrect in original provided, fixing
+      color: rgba(#fff, 0.8);
+      text-align: right;
+    }
+    &.ai { // This nesting was incorrect in original provided, fixing
+      color: $secondary-color;
+      text-align: left;
+    }
   }
 }
+// Corrected timestamp class to be outside .user and .ai specific blocks if they are general to .message
+.message .timestamp.user { // More specific selector if needed
+    color: rgba(#fff, 0.8);
+    text-align: right;
+}
+.message .timestamp.ai { // More specific selector if needed
+    color: $secondary-color;
+    text-align: left;
+}
+
 
 .inputArea {
   display: flex;
-  align-items: center; // Vertically align items
-  padding: 1rem;
-  border-top: 1px solid $border-color; // Use global
-  background-color: $surface-color; // Use global
+  align-items: center;
+  padding: 1rem; // Keep existing padding or adjust to 15px top
+  padding-top: 15px; // Specific top padding
+  border-top: 1px solid #ddd;
+  background-color: $surface-color;
 
-  input[type="text"] { // More specific selector
+  input[type="text"] {
     flex-grow: 1;
-    padding: 0.75rem 1rem; // Adjusted padding
-    border: 1px solid $border-color; // Use global
-    border-radius: $border-radius-lg; // Use themed variable for pill shape
-    margin-right: 0.75rem;
-    font-size: 1rem; // Adjusted
-    background-color: $background-color; // Or $surface-color
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    margin-right: 10px;
+    font-size: 1rem;
+    background-color: $background-color;
 
     &:focus {
       outline: none;
-      border-color: $primary-color; // Use global
-      box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25); // Themed focus
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
     }
   }
 
   button {
-    padding: 0.75rem 1.2rem;
-    background-color: $primary-color; // Use global
-    color: #fff; // Ensure contrast
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
     border: none;
-    border-radius: $border-radius-lg; // Match input for pill shape
+    border-radius: 25px;
     cursor: pointer;
-    font-size: 1rem; // Adjusted
-    transition: background-color 0.2s ease;
-    display: flex; // For icon alignment
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    svg { // Style for potential icon in button
-        margin-right: 0.5rem; // If icon is on the left
-        // margin-left: 0.5rem; // If icon is on the right
+    svg {
+        margin-right: 0.5rem;
     }
 
     &:hover:not(:disabled) {
-      background-color: darken($primary-color, 10%); // Use global with adjustment
+      background-color: #0056b3;
     }
 
     &:disabled {
-      background-color: lighten($secondary-color, 20%); // Use global with adjustment
-      color: darken($secondary-color, 20%); // Adjust text color for disabled state
+      background-color: #a0a0a0;
+      color: darken($secondary-color, 20%);
+      opacity: 0.7; // Added from diff
       cursor: not-allowed;
     }
   }
 }
 
-// Media Queries for Chat Page
-@media (max-width: 768px) { // Broader breakpoint for general tablet/mobile adjustments
+// Media Queries - Review and adjust heights considering the new main height calculation
+@media (max-width: 768px) {
+  .animatedBackground {
+    padding: 10px; // Reduce padding on smaller screens for the background
+    min-height: calc(100vh - #{$header-height}); // Ensure it still respects header
+  }
   .chatContainer {
-    // Consider adjusting height based on $header-height if used
-    // height: calc(100vh - #{$header-height} - 1rem); // Example if header is present
-     margin: 0.5rem; // Reduce margin
+    // Adjust height considering less padding on animatedBackground
+    height: calc(100vh - #{$header-height} - 20px - 60px); // 20px for parent padding now
+    padding: 15px; // Slightly less padding for the container itself
   }
    .instructions {
     padding: 1rem;
@@ -187,48 +243,53 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
 }
 
 @media (max-width: 600px) {
+  .animatedBackground {
+    padding: 0; // No padding on very small screens, chat container takes full width
+    min-height: calc(100vh - #{$header-height}); // Use mobile header height if different
+  }
   .chatContainer {
-    height: calc(100vh - 60px); // Fallback or specific mobile adjustment
+    height: calc(100vh - #{$header-height} - 0px - 60px); // No parent padding, mobile header, footer
     border-radius: 0;
-    border: none;
+    // border: none; // Already no border
     max-width: 100%;
-    margin: 0; // Full screen
+    margin: 0;
+    padding: 10px; // Minimal padding for content
   }
 
   .instructions {
     padding: 0.75rem;
-    border-radius: 0; // No radius if full width
+    border-radius: 0;
     h2 { font-size: 1.3rem; svg {font-size: 1.2rem;}}
     p { font-size: 0.85rem; }
   }
 
   .messagesArea {
-    padding: 0.5rem; // Less padding on mobile
+    padding: 0.5rem;
     gap: 0.5rem;
   }
 
   .message {
     padding: 0.5rem 0.9rem;
     max-width: 85%;
-    font-size: 0.9rem; // Slightly smaller text on mobile
-    &.user { border-bottom-right-radius: $border-radius-sm; } // Consistent tail
-    &.ai { border-bottom-left-radius: $border-radius-sm; } // Consistent tail
+    font-size: 0.9rem;
+    &.user { border-bottom-right-radius: $border-radius-sm; }
+    &.ai { border-bottom-left-radius: $border-radius-sm; }
   }
 
   .inputArea {
-    padding: 0.5rem; // Less padding
-    border-radius: 0; // No radius if full width
+    padding: 0.5rem;
+    border-radius: 0;
     input[type="text"] {
       padding: 0.5rem 0.75rem;
       font-size: 0.9rem;
       margin-right: 0.5rem;
-      border-radius: $border-radius-lg; // Keep pill shape
+      border-radius: 25px; // Keep pill shape
     }
     button {
       padding: 0.5rem 0.75rem;
       font-size: 0.9rem;
-      border-radius: $border-radius-lg; // Keep pill shape
-      svg { margin-right: 0.25rem; font-size: 0.8rem;} // Adjust icon in button
+      border-radius: 25px; // Keep pill shape
+      svg { margin-right: 0.25rem; font-size: 0.8rem;}
     }
   }
 }

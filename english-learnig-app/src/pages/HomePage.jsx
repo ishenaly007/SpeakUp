@@ -19,7 +19,7 @@ const HomePage = () => {
               className={styles.heroImage}
           />
           <div className={styles.heroTextContainer}>
-            <h1 className={`${styles.title} ${styles.fadeIn}`}>Добро пожаловать в SpeakUp!</h1>
+            <h1 className={`${styles.title} ${styles.fadeIn}`}>Добро пожаловать в EduSpeak!</h1>
             <p className={`${styles.subtitle} ${styles.fadeIn}`}>
               Начните свой путь к свободному владению английским уже сегодня.
             </p>
@@ -31,7 +31,7 @@ const HomePage = () => {
 
         {/* Features Section */}
         <section className={styles.featuresSection}>
-          <h2 className={`${styles.sectionTitle} ${styles.fadeIn}`}>Почему SpeakUp?</h2>
+          <h2 className={`${styles.sectionTitle} ${styles.fadeIn}`}>Почему EduSpeak?</h2>
           <div className={styles.featuresGrid}>
             <div className={`${styles.featureCard} ${styles.fadeIn}`}>
               <div className={styles.featureIcon}>📚</div>
@@ -91,7 +91,7 @@ const HomePage = () => {
           <div className={styles.testimonialsContainer}>
             <div className={`${styles.testimonialCard} ${styles.fadeIn}`}>
               <p className={styles.testimonialText}>
-                "SpeakUp помог мне уверенно заговорить на английском за 3 месяца!"
+                "EduSpeak помог мне уверенно заговорить на английском за 3 месяца!"
               </p>
               <p className={styles.testimonialAuthor}>Анна, 28 лет</p>
             </div>
@@ -114,22 +114,12 @@ const HomePage = () => {
         <section className={styles.ctaSection}>
           <h2 className={`${styles.sectionTitle} ${styles.fadeIn}`}>Готовы начать?</h2>
           <p className={`${styles.sectionDescription} ${styles.fadeIn}`}>
-            Присоединяйтесь к тысячам пользователей, которые уже улучшают свой английский с SpeakUp.
+            Присоединяйтесь к тысячам пользователей, которые уже улучшают свой английский с EduSpeak.
           </p>
           <button onClick={handleStartLearning} className={`${styles.ctaButton} ${styles.fadeIn}`}>
             Начать учиться
           </button>
         </section>
-
-        {/* Footer */}
-        <footer className={styles.footer}>
-          <div className={styles.footerLinks}>
-            <a href="/about">О нас</a>
-            <a href="/contact">Контакты</a>
-            <a href="/privacy">Политика конфиденциальности</a>
-          </div>
-          <p className={styles.footerText}>&copy; 2025 SpeakUp. Все права защищены.</p>
-        </footer>
       </div>
   );
 };

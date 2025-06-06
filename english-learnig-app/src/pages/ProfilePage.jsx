@@ -38,7 +38,7 @@ const ProfilePage = () => {
       })
       .catch(err => {
         console.error("Failed to load profile data:", err);
-        let errorMessage = 'Failed to load profile information.';
+        let errorMessage = 'Не удалось загрузить информацию профиля.';
         if (err.response && err.response.data && err.response.data.message) {
           errorMessage = err.response.data.message;
         } else if (err.message) {
@@ -51,7 +51,7 @@ const ProfilePage = () => {
       });
     } else if (!user && !loading) { // Check if user is null and not already in loading state from context
         setLoading(false);
-        setError("User not authenticated. Please log in.");
+        setError("Пользователь не аутентифицирован. Пожалуйста, войдите в систему.");
     } else if (!user && loading) {
         // If AuthContext is still loading user, wait for it.
         // setError("Authenticating user..."); // Or just let it be loading
@@ -60,14 +60,14 @@ const ProfilePage = () => {
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString('en-GB', {
-      day: '2-digit', month: 'short', year: 'numeric'
-    }); // Example: 01 Jan 2023
+    return new Date(dateString).toLocaleDateString('ru-RU', {
+      day: '2-digit', month: 'long', year: 'numeric'
+    }); // Example: 01 января 2023 г.
   };
   
-  if (loading && !profileData) return <div className={styles.loadingMessage}>Loading profile...</div>;
-  if (error) return <div className={styles.errorMessage}>Error: {error}</div>;
-  if (!profileData && !loading) return <div className={styles.noDataMessage}>No profile data available. Please try refreshing.</div>;
+  if (loading && !profileData) return <div className={styles.loadingMessage}>Загрузка профиля...</div>;
+  if (error) return <div className={styles.errorMessage}>Ошибка: {error}</div>;
+  if (!profileData && !loading) return <div className={styles.noDataMessage}>Данные профиля отсутствуют. Пожалуйста, попробуйте обновить страницу.</div>;
 
   return (
     <div className={styles.profileContainer}>
@@ -84,7 +84,7 @@ const ProfilePage = () => {
           </div>
 
           <div className={styles.profileItem}>
-            <FaLevelUpAlt /> <strong>Current Level:</strong> {profileData.calculatedLevel || 'N/A'}
+            <FaLevelUpAlt /> <strong>Текущий уровень:</strong> {profileData.calculatedLevel || 'N/A'}
             {profileData.level && ` (Set: ${profileData.level})`}
           </div>
 
@@ -94,32 +94,32 @@ const ProfilePage = () => {
 
           {(profileData.remainingXp !== null && typeof profileData.remainingXp !== 'undefined') && (
             <div className={styles.profileItem}>
-              <FaStar /> <strong>XP for Next Level:</strong> {profileData.remainingXp}
+              <FaStar /> <strong>XP до следующего уровня:</strong> {profileData.remainingXp}
             </div>
           )}
 
           <div className={styles.profileItem}>
-            <FaCalendarAlt /> <strong>Member Since:</strong> {formatDate(profileData.createdAt)}
+            <FaCalendarAlt /> <strong>Зарегистрирован с:</strong> {formatDate(profileData.createdAt)}
           </div>
 
-          <h3 className={styles.sectionTitle}>Learning Progress</h3>
+          <h3 className={styles.sectionTitle}>Прогресс обучения</h3>
           <div className={styles.statsSection}>
             <div className={styles.statItem}>
               <FaBook />
               <div>
-                <strong>Lessons Completed:</strong> {completedLessonsCount}
+                <strong>Завершено уроков:</strong> {completedLessonsCount}
               </div>
             </div>
             <div className={styles.statItem}>
               <FaQuestionCircle />
               <div>
-                <strong>Quizzes Taken:</strong> {quizStats.totalQuizzes}
+                <strong>Пройдено квизов:</strong> {quizStats.totalQuizzes}
               </div>
             </div>
             <div className={styles.statItem}>
               <FaTrophy />
               <div>
-                <strong>Average Quiz Win Rate:</strong>
+                <strong>Средний процент побед в квизах:</strong>
                 {typeof quizStats.totalWinrate === 'number' ? `${(quizStats.totalWinrate * 100).toFixed(1)}%` : quizStats.totalWinrate}
               </div>
             </div>

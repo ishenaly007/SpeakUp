@@ -83,20 +83,21 @@ const ChatPage = () => {
   };
 
   return (
-      <div className={styles.chatContainer}>
+      <div className={`${styles.animatedBackground}`}> {/* ADDED animatedBackground CLASS HERE */}
+        <div className={styles.chatContainer}> {/* This is now the inner container for chat content */}
         <div className={styles.instructions}>
-          <h2><FaComments /> Chat with AI</h2> {/* Translated & Icon */}
-          <p>This is a chat with an AI. Ask questions in English or Russian, request grammar explanations, or just chat! The AI will try to help and support you in your language learning.</p> {/* Translated */}
+          <h2><FaComments /> Чат с ИИ</h2>
+          <p>Это чат с искусственным интеллектом. Задавайте вопросы на английском или русском языке, просите объяснить грамматику или просто общайтесь! ИИ постарается помочь и поддержать вас в изучении языка.</p>
         </div>
 
-        {loadingHistory && <p className={styles.loadingText}>Loading chat history...</p>}
+        {loadingHistory && <p className={styles.loadingText}>Загрузка истории чата...</p>}
         {/* Error display: If error is just a string, it's shown. If it might be an object, ensure error.message is used if applicable */}
         {error && <p className={styles.errorText}>{typeof error === 'string' ? error : error.message || 'An error occurred.'}</p>}
 
 
         <div className={styles.messagesArea}>
           {messages.length === 0 && !loadingHistory && !error && ( // Also check for no error before showing "no messages"
-              <p className={styles.noMessages}>No messages yet. Start the conversation!</p>
+              <p className={styles.noMessages}>Сообщений пока нет. Начните диалог!</p>
           )}
           {messages.map(msg => (
               <div key={msg.id} className={`${styles.message} ${styles[msg.sender]}`}>
@@ -113,17 +114,18 @@ const ChatPage = () => {
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type your message..." // Already English
+              placeholder="Введите ваше сообщение..."
               disabled={sendingMessage || loadingHistory || !user?.id} // Check user.id for robustness
           />
           <button
               type="submit"
               disabled={sendingMessage || loadingHistory || !newMessage.trim() || !user?.id} // Check user.id
-              aria-label={sendingMessage ? 'Sending message' : 'Send message'} // Accessibility
+              aria-label={sendingMessage ? 'Отправка сообщения' : 'Отправить сообщение'} // Accessibility
           >
-            {sendingMessage ? 'Sending...' : <FaPaperPlane />} {/* Icon for Send */}
+            {sendingMessage ? 'Отправка...' : <FaPaperPlane />} {/* Icon for Send */}
           </button>
         </form>
+        </div>
       </div>
   );
 };

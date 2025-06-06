@@ -1,0 +1,57 @@
+.footer {
+  background-color: #333; // Dark background for the footer
+  color: #fff; // Light text color
+  padding: 20px 0; // Vertical padding, no horizontal padding here
+  width: 100%; // Ensure footer spans full width
+  text-align: center;
+  margin-top: auto; // Pushes footer to the bottom if content is short
+}
+
+.footerContent {
+  max-width: 1200px; // Max width for content within the footer
+  margin: 0 auto; // Center the content
+  padding: 0 20px; // Horizontal padding for content, ensures it's not edge-to-edge on large screens
+  display: flex;
+  flex-direction: column; // Stack items vertically on small screens
+  align-items: center; // Center items
+
+  @media (min-width: 768px) { // On larger screens, display items side-by-side
+    flex-direction: row;
+    justify-content: space-between; // Space out copyright and nav links
+  }
+}
+
+.footerNav {
+  margin-top: 10px; // Space above nav links on small screens
+
+  @media (min-width: 768px) {
+    margin-top: 0; // No top margin on larger screens as it's side-by-side
+  }
+
+  .navLink {
+    color: #f0f0f0; // Slightly off-white for links
+    text-decoration: none;
+    margin: 0 10px; // Spacing between links
+    transition: color 0.3s ease;
+
+    &:hover,
+    &.activeLink { // Style for hover and active states
+      color: #007bff; // Use primary color for active/hover, or choose another highlight
+      text-decoration: underline;
+    }
+  }
+}
+
+// Add a global style to ensure App takes full height
+// This might be better in global.scss or App.module.scss if it exists
+// For now, let's assume it's fine here or will be moved if causing issues.
+// It helps in making the footer stick to the bottom.
+:global(#root), :global(.App) { // Targeting root and App div
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+:global(main) { // Ensure main content area can expand
+  flex-grow: 1;
+}

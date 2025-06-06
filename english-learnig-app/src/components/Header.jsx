@@ -15,7 +15,7 @@ const Header = () => {
     return (
         <header className={styles.header}>
             <NavLink to="/" className={styles.siteTitle}>
-                SpeakUp
+                EduSpeak
             </NavLink>
             <nav className={styles.nav}>
                 {user ? (
@@ -43,6 +43,24 @@ const Header = () => {
                             className={({ isActive }) => `${styles.navLink} ${isActive ? styles.activeLink : ''}`}
                         >
                             Профиль
+                        </NavLink>
+                        <NavLink
+                            to="/contacts"
+                            className={({ isActive }) => `${styles.navLink} ${isActive ? styles.activeLink : ''}`}
+                        >
+                            Контакты
+                        </NavLink>
+                        <NavLink
+                            to="/about-us"
+                            className={({ isActive }) => `${styles.navLink} ${isActive ? styles.activeLink : ''}`}
+                        >
+                            О нас
+                        </NavLink>
+                        <NavLink
+                            to="/privacy-policy"
+                            className={({ isActive }) => `${styles.navLink} ${isActive ? styles.activeLink : ''}`}
+                        >
+                            Политика
                         </NavLink>
                         <button onClick={handleLogout}>Выйти</button>
                     </>

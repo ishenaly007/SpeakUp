@@ -5,14 +5,16 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/Header';
-// Placeholders for pages to be created - create these files with basic content
-// e.g., const HomePage = () => <h2>Home Page</h2>; export default HomePage;
-import HomePage from './pages/HomePage'; // To be created
-import LessonsPage from './pages/LessonsPage'; // To be created
+import Footer from './components/Footer'; // Import Footer
+import HomePage from './pages/HomePage';
+import LessonsPage from './pages/LessonsPage';
 import LessonDetailPage from './pages/LessonDetailPage';
-import ChatPage from './pages/ChatPage'; // To be created
-import QuizPage from './pages/QuizPage'; // To be created
-import ProfilePage from './pages/ProfilePage'; // To be created
+import ChatPage from './pages/ChatPage';
+import QuizPage from './pages/QuizPage';
+import ProfilePage from './pages/ProfilePage';
+import ContactsPage from './pages/ContactsPage'; // Import ContactsPage
+import AboutUsPage from './pages/AboutUsPage'; // Import AboutUsPage
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'; // Import PrivacyPolicyPage
 
 import './styles/global.scss'; // Assuming global styles
 
@@ -20,7 +22,7 @@ function App() {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading application...</div>; // Global loading state
+    return <div style={{ textAlign: 'center', padding: '50px', fontSize: '1.2rem' }}>Загрузка приложения...</div>; // Global loading state
   }
 
   return (
@@ -38,12 +40,16 @@ function App() {
             <Route path="chat" element={<ChatPage />} />
             <Route path="quizzes" element={<QuizPage />} />
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="contacts" element={<ContactsPage />} /> {/* Add route for ContactsPage */}
+            <Route path="about-us" element={<AboutUsPage />} /> {/* Add route for AboutUsPage */}
+            <Route path="privacy-policy" element={<PrivacyPolicyPage />} /> {/* Add route for PrivacyPolicyPage */}
           </Route>
           
           {/* Redirect to login if no other route matches and not logged in */}
           <Route path="*" element={user ? <Navigate to="/" /> : <Navigate to="/login" />} />
         </Routes>
       </main>
+      {user && <Footer />} {/* Display footer only if user is logged in */}
     </div>
   );
 }
