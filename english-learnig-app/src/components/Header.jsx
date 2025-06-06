@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import ThemeToggleButton from './ThemeToggleButton'; // Import ThemeToggleButton
 import styles from './Header.module.scss';
 
 const Header = () => {
@@ -62,7 +63,8 @@ const Header = () => {
                         >
                             Политика
                         </NavLink>
-                        <button onClick={handleLogout}>Выйти</button>
+                        <ThemeToggleButton /> {/* Add ThemeToggleButton here */}
+                        <button onClick={handleLogout} className={styles.logoutButton}>Выйти</button> {/* Added class for styling consistency */}
                     </>
                 ) : (
                     <></>

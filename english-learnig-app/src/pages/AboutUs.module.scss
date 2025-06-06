@@ -1,13 +1,121 @@
+// Import global variables (adjust path if necessary, assuming it's accessible)
+// SCSS modules don't directly import global scss files for variables in the same way.
+// We must assume that the build process makes these variables available or use CSS custom properties if defined globally.
+// For this exercise, I will write styles as if variables like $primary-color are available.
+// In a real setup, this might involve :export in global.scss or using CSS custom properties.
+
+// Comments about SCSS variable accessibility removed for brevity.
+// All color definitions should now use var(--css-variable-name) from global.scss.
+
+.aboutUsPage {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  background-color: var(--surface-color); // Use CSS var
+  border-radius: var(--border-radius, 8px); // SCSS var $border-radius or CSS var --border-radius
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // This shadow could be themed too.
+  line-height: 1.7;
+  transition: background-color 0.3s ease; // For theme change
+}
+
+.title {
+  color: var(--primary-color); // Use CSS var
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 600;
+  transition: color 0.3s ease; // For theme change
+}
+
+.subheading {
+  color: var(--secondary-color); // Use CSS var
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  transition: color 0.3s ease; // For theme change
+}
+
+.content {
+  // No specific styles yet
+}
+
+.paragraph {
+  color: var(--text-color); // Use CSS var
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  transition: color 0.3s ease; // For theme change
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.section {
+  margin-bottom: 2rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+// Styling for .aboutUsContainer and its nested elements, assuming this is the active structure.
 .aboutUsContainer {
-  padding: 20px;
-  line-height: 1.8;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  background-color: var(--card-bg-color); // Use CSS var
+  border-radius: var(--border-radius, 8px); // Use SCSS var or fallback
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); // Consider theming shadow later if needed
+  line-height: 1.7;
+  transition: background-color 0.3s ease;
 
   h1 {
+    color: var(--primary-color); // Use CSS var
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
+    font-size: 2.25rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+
+  h2 {
+    color: var(--text-color); // Use CSS var
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.75rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  h3 {
+    color: var(--text-color-muted); // Use a muted text color for H3
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
   }
 
   p {
-    margin-bottom: 15px;
+    color: var(--text-color); // Use CSS var
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: var(--link-color); // Use CSS var
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      text-decoration: underline;
+      color: var(--link-hover-color); // Use CSS var
+    }
   }
 }

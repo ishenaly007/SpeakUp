@@ -1,10 +1,11 @@
 .footer {
-  background-color: #333; // Dark background for the footer
-  color: #fff; // Light text color
-  padding: 20px 0; // Vertical padding, no horizontal padding here
-  width: 100%; // Ensure footer spans full width
+  background-color: var(--footer-bg);
+  color: var(--footer-text-color);
+  padding: 20px 0;
+  width: 100%;
   text-align: center;
-  margin-top: auto; // Pushes footer to the bottom if content is short
+  margin-top: auto;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .footerContent {
@@ -29,14 +30,14 @@
   }
 
   .navLink {
-    color: #f0f0f0; // Slightly off-white for links
+    color: var(--footer-text-color); // Use themed text color for footer links
     text-decoration: none;
-    margin: 0 10px; // Spacing between links
+    margin: 0 10px;
     transition: color 0.3s ease;
 
     &:hover,
-    &.activeLink { // Style for hover and active states
-      color: #007bff; // Use primary color for active/hover, or choose another highlight
+    &.activeLink {
+      color: var(--primary-color); // Use themed primary color for hover/active
       text-decoration: underline;
     }
   }

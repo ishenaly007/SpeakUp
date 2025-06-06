@@ -1,17 +1,146 @@
-.contactsContainer {
-  padding: 20px;
+// All color definitions should now use var(--css-variable-name) from global.scss.
+
+.contactsPage {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 2rem auto;
+  background-color: var(--surface-color); // CSS var
+  border-radius: var(--border-radius, 8px); // SCSS var or CSS var
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); // Consider theming shadow
+  line-height: 1.7;
+  transition: background-color 0.3s ease;
+}
+
+.title {
+  color: var(--primary-color); // CSS var
   text-align: center;
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+.introParagraph {
+  color: var(--text-color); // CSS var
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  transition: color 0.3s ease;
+}
+
+.contactsList {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  font-size: 1.1rem;
+  color: var(--text-color); // Set text color for the item itself
+  transition: color 0.3s ease;
+
+
+  a {
+    color: var(--link-color); // CSS var
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--link-hover-color); // CSS var
+      text-decoration: underline;
+    }
+
+    &::before {
+      margin-right: 0.75em;
+      font-size: 1.2em;
+      // Emoji color is generally not controlled by CSS color property directly
+    }
+  }
+}
+
+.contactLinkEmail::before {
+  content: "✉️";
+}
+
+.contactLinkTelegram::before {
+  content: "✈️";
+}
+
+// Styling for .contactsContainer and its nested elements
+.contactsContainer {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 2rem auto;
+  background-color: var(--card-bg-color); // CSS var
+  border-radius: var(--border-radius, 8px); // SCSS var or fallback
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); // Consider theming shadow
+  line-height: 1.7;
+  transition: background-color 0.3s ease;
 
   h1 {
-    margin-bottom: 20px;
+    color: var(--primary-color); // CSS var
+    text-align: center;
+    font-size: 2.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+  }
+
+  > p {
+    color: var(--text-color); // CSS var
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    transition: color 0.3s ease;
   }
 
   ul {
     list-style: none;
     padding: 0;
+    margin: 0 auto;
+    max-width: 400px;
 
     li {
-      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.1rem;
+      color: var(--text-color); // CSS var
+      transition: color 0.3s ease;
+
+      a {
+        color: var(--link-color); // CSS var
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: var(--link-hover-color); // CSS var
+          text-decoration: underline;
+        }
+
+        &::before {
+          margin-right: 0.75em;
+          font-size: 1.2em;
+        }
+
+        &[href^="mailto:"]::before {
+          content: "✉️";
+        }
+        &[href*="telegram.me"]::before, &[href*="t.me"]::before {
+          content: "✈️";
+        }
+      }
     }
   }
 }

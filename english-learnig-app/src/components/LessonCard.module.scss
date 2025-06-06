@@ -1,12 +1,13 @@
-@import '../styles/global.scss';
+// SCSS import removed, CSS variables are global.
+// $border-radius should be available if SCSS build process allows it.
 
 .lessonCard {
-  background-color: $card-bg;
-  border: 1px solid $border-color;
-  border-radius: $border-radius;
+  background-color: var(--card-bg-color); // CSS var
+  border: 1px solid var(--border-color);   // CSS var
+  border-radius: var(--border-radius, 8px); // Use SCSS var or fallback
   padding: 1.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.07); // Slightly more modern shadow
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between; // Ensures footer items align well if card heights vary slightly
@@ -18,47 +19,53 @@
 
   h3 {
     font-size: 1.5rem;
-    color: $primary-color;
+    color: var(--primary-color); // CSS var
     margin-bottom: 0.75rem;
+    transition: color 0.3s ease;
   }
 
   p {
     font-size: 1rem;
-    color: $text-color;
+    color: var(--text-color); // CSS var
     margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
 
     strong {
-      color: darken($text-color, 10%);
+      color: var(--text-color); // Could define --text-color-strong if needed, for now use standard
+      font-weight: bold; // Ensure strong is actually bold
     }
   }
 
   .description {
     font-size: 0.9rem;
-    color: $secondary-color;
+    color: var(--text-color-muted); // CSS var for secondary/muted text
     margin-bottom: 1rem;
-    flex-grow: 1; // Allows description to take available space
+    flex-grow: 1;
+    transition: color 0.3s ease;
   }
 
   .icon {
     margin-right: 0.5rem;
-    color: $primary-color; // Or $secondary-color if too prominent
-    vertical-align: middle; // Better alignment with text
+    color: var(--primary-color); // CSS var
+    vertical-align: middle;
+    transition: color 0.3s ease;
   }
 
   .completedText {
-    color: $success-color;
+    color: var(--success-color); // CSS var
     font-weight: bold;
     margin-top: 0.5rem;
     text-align: right;
+    transition: color 0.3s ease;
   }
 
   // Styles for completed lessons
   &.completed {
-    border-left: 5px solid $success-color;
-    background-color: lighten($success-color, 48%); // Very light green
+    border-left: 5px solid var(--success-color);       // CSS var
+    background-color: var(--success-color-lighten-48); // CSS var
 
     h3 {
-      color: darken($success-color, 10%);
+      color: var(--success-color-darken-10); // CSS var
     }
   }
 

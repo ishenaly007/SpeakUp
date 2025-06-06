@@ -5,53 +5,147 @@
   box-sizing: border-box;
 }
 
-// Variables
-$primary-color: #007bff;
-$primary-color-light: lighten($primary-color, 15%);
-$secondary-color: #6c757d;
-$success-color: #28a745;
-$danger-color: #dc3545; // Standard danger/error color
-$background-color: #f8f9fa;
-$surface-color: #ffffff; // For elements on top of background, like cards
-$card-bg: #fff; // Specific for cards, can be same as surface
-$text-color: #333;
-$border-color: #dee2e6; // Subtle border color
-$border-radius: 8px; // Common border radius
-$font-family-sans-serif: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-$header-height: 70px; // Example header height
+// SCSS Variables (non-color related, or used as base for CSS vars)
+$border-radius-val: 8px;
+$font-family-sans-serif-val: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+$header-height-val: 70px;
+
+// CSS Custom Properties (Theme Variables)
+:root, html[data-theme='light'] {
+  --primary-color: #007bff;
+  --primary-color-light: #409cff; // Pre-calculated lighten($primary-color, 15%)
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --success-color-lighten-48: #eafaf0; // lighten(#28a745, 48%)
+  --success-color-darken-10: #1e7e34;  // darken(#28a745, 10%)
+  --danger-color: #dc3545;
+
+  --background-color: #f8f9fa;
+  --background-color-lighten-5: #ffffff; // lighten(#f8f9fa, 5%) is approx white
+  --background-color-lighten-3: #fcfdfe; // lighten(#f8f9fa, 3%) is very light
+
+  --surface-color: #ffffff; // For cards, headers etc.
+  --text-color: #212529; // Slightly darker than #333 for better contrast
+  --text-color-muted: #6c757d; // For secondary text
+
+  --border-color: #dee2e6;
+  --card-bg-color: #ffffff;
+
+  // Specific to animated gradient
+  --gradient-color-1: var(--background-color-lighten-5);
+  --gradient-color-2: var(--background-color);
+  --gradient-color-3: var(--surface-color);
+  --gradient-color-4: var(--background-color-lighten-3);
+
+  // General UI elements
+  --link-color: var(--primary-color);
+  --link-hover-color: #0056b3; // Darken primary color
+  --button-bg-color: var(--primary-color);
+  --button-text-color: #ffffff;
+  --header-bg: transparent; // Made transparent in previous step
+  --footer-bg: var(--surface-color);
+  --footer-text-color: var(--text-color);
+}
+
+html[data-theme='dark'] {
+  --primary-color: #4dabf7; // Lighter blue for dark mode
+  --primary-color-light: #8cceff;
+  --secondary-color: #adb5bd;
+  --success-color: #40c057;
+  --success-color-lighten-48: #2c3e32; // A very desaturated/dark green for dark theme background
+  --success-color-darken-10: #369349;  // darken(#40c057, 10%) for dark theme
+  --danger-color: #fa5252;
+
+  --background-color: #121212; // Very dark grey
+  --background-color-lighten-5: #1e1e1e; // Darker shade for gradient
+  --background-color-lighten-3: #1a1a1a; // Another darker shade
+
+  --surface-color: #1e1e1e; // Dark grey for cards, headers
+  --text-color: #e9ecef;   // Light grey for text
+  --text-color-muted: #adb5bd;
+
+  --border-color: #495057; // Darker border
+  --card-bg-color: #1e1e1e;
+
+  // Specific to animated gradient for dark theme
+  --gradient-color-1: #2c2c2c; // Dark gradient color 1
+  --gradient-color-2: #1a1a1a; // Dark gradient color 2
+  --gradient-color-3: #121212; // Dark gradient color 3
+  --gradient-color-4: #222222; // Dark gradient color 4
+
+  // General UI elements for dark theme
+  --link-color: var(--primary-color);
+  --link-hover-color: #8cceff; // Lighter blue for hover
+  --button-bg-color: var(--primary-color);
+  --button-text-color: #121212; // Dark text on light blue button
+  --header-bg: transparent;
+  --footer-bg: var(--surface-color);
+  --footer-text-color: var(--text-color);
+}
+
+// Keep SCSS variables for non-color values or things not themed
+$border-radius: $border-radius-val;
+$font-family-sans-serif: $font-family-sans-serif-val;
+$header-height: $header-height-val;
+
+
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
 body {
   font-family: $font-family-sans-serif;
   line-height: 1.6;
-  background-color: $background-color;
-  color: $text-color;
-  // Padding top is removed here, as it will be handled by the <main> element or specific page containers
-  // to avoid global padding affecting pages like Login/Register if they don't have the fixed Header.
+  background-color: var(--background-color); // Use CSS var
+  color: var(--text-color); // Use CSS var
+
+  // Animated gradient background using CSS variables
+  background: linear-gradient(-45deg, var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-3), var(--gradient-color-4));
+  background-size: 400% 400%;
+  animation: moveGradient 15s ease infinite;
+  min-height: 100vh;
 }
 
 a {
-  color: $primary-color;
+  color: var(--link-color); // Use CSS var
   text-decoration: none;
   &:hover {
     text-decoration: underline;
+    color: var(--link-hover-color); // Use CSS var
   }
 }
 
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.75rem;
   font-weight: 500;
+  color: var(--text-color); // Headings should also use theme text color
 }
 
-// Main content container to provide padding for fixed header
-// This 'main' selector targets the <main> tag used in App.jsx
 main {
-  padding-top: $header-height; // Ensures content isn't hidden by a fixed header
-  padding-left: 1rem; // General horizontal padding
-  padding-right: 1rem; // General horizontal padding
-  padding-bottom: 1rem; // General bottom padding
+  padding-top: $header-height;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
 }
 
-// Utility classes (optional)
+header {
+  // background-color: transparent !important; // Already set, ensure it uses var if needed or stays transparent
+  // If header needs a background for dark theme, it should be handled in Header.module.scss using CSS vars
+  // For now, global.scss keeps it transparent as per previous changes.
+  // background-color: var(--header-bg) !important; // This would make it follow theme
+  // The previous !important transparent was to override potential component styles.
+  // Let's stick to transparent globally and let components override if necessary.
+   background-color: transparent !important;
+}
+
 .container {
   width: 90%;
   max-width: 1200px;

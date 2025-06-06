@@ -1,59 +1,65 @@
-// Using global variables
-@import '../styles/global.scss'; // Assuming variables.scss for global vars or import global.scss
+// SCSS variables from global.scss (like $header-height) are not directly available
+// unless this file is processed by SCSS with global.scss in its context.
+// However, CSS custom properties are globally available.
+// For $header-height, it was defined as $header-height-val in global.scss.
+// We'll assume it's available or use a hardcoded fallback if not.
+// For colors, we MUST use CSS custom properties.
 
 .header {
-  background-color: #f0f0f0; // Could be a global variable e.g., $header-bg-color
-  padding: 1rem 1.5rem;       // Adjusted padding
-  border-bottom: 1px solid #ccc; // Could be $border-color
-  position: fixed; // Make header fixed
+  background-color: var(--surface-color); // Use CSS variable for header background
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color); // Use CSS variable for border
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000; // Ensure it's above other content
-  height: $header-height; // Use variable from global.scss (assuming it's imported or defined)
-  display: flex; // For alignment
-  align-items: center; // Vertically center content
-  justify-content: space-between; // Space between title and nav
+  z-index: 1000;
+  height: 70px; // Fallback for $header-height, or ensure $header-height-val is available
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s ease, border-color 0.3s ease; // Smooth theme transition
 
   .siteTitle {
     text-decoration: none;
-    color: $primary-color; // Use global primary color
-    font-size: 1.5rem; // Larger font for title
-    font-weight: 700; // Bold title
+    color: var(--primary-color); // Use CSS variable
+    font-size: 1.5rem;
+    font-weight: 700;
     transition: color 0.3s ease;
 
     &:hover {
-      color: darken($primary-color, 10%); // Darken on hover
+      color: var(--link-hover-color); // Use CSS variable
     }
   }
 
   .nav {
     display: flex;
-    gap: 1.5rem; // Increased gap
+    gap: 1.5rem;
     align-items: center;
   }
 
   .navLink {
     text-decoration: none;
-    color: $text-color; // Use global text color
-    font-weight: 500;   // Slightly bolder links
-    padding: 0.5rem 0;  // Add some padding for better click area
-    position: relative; // For ::after pseudo-element
+    color: var(--text-color); // Use CSS variable
+    font-weight: 500;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease;
 
-    &:hover, &.activeLink { // Combine hover and active styles
-      color: $primary-color; // Use global primary color
+
+    &:hover, &.activeLink {
+      color: var(--primary-color); // Use CSS variable
     }
 
-    // Underline effect for active/hover
     &::after {
       content: '';
       position: absolute;
       width: 0;
       height: 2px;
-      bottom: -2px; // Position underline slightly below text
+      bottom: -2px;
       left: 0;
-      background-color: $primary-color;
-      transition: width 0.3s ease;
+      background-color: var(--primary-color); // Use CSS variable
+      transition: width 0.3s ease, background-color 0.3s ease;
     }
 
     &:hover::after,
@@ -62,17 +68,20 @@
     }
   }
 
-  button {
-    padding: 0.6rem 1.2rem; // Adjusted padding
-    background-color: $primary-color; // Use global primary color for consistency
-    color: white;
-    border: none;
-    border-radius: 5px; // Standardized border-radius
+  // Standard button styling, assuming .logoutButton class is applied
+  // to the <button> in Header.jsx as done in a previous step.
+  .logoutButton {
+    padding: 0.6rem 1.2rem;
+    background-color: var(--button-bg-color); // Use CSS variable
+    color: var(--button-text-color); // Use CSS variable
+    border: 1px solid transparent; // Add border for consistency, make it transparent
+    border-radius: var(--border-radius, 5px); // Use global var or fallback
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 
     &:hover {
-      background-color: darken($primary-color, 10%); // Darken primary color on hover
+      background-color: var(--link-hover-color); // Or a specific button hover bg var
+      border-color: var(--primary-color); // Show border on hover
     }
   }
 }
@@ -80,28 +89,28 @@
 // Responsive adjustments for Header
 @media (max-width: 768px) {
   .header {
-    height: auto; // Allow header to grow if content wraps
-    padding: 0.75rem 1rem; // Reduce padding on smaller screens
-    flex-direction: column; // Stack title and nav
-    align-items: flex-start; // Align to start
+    height: auto;
+    padding: 0.75rem 1rem;
+    flex-direction: column;
+    align-items: flex-start;
 
     .siteTitle {
-      margin-bottom: 0.5rem; // Space below title
+      margin-bottom: 0.5rem;
     }
 
     .nav {
-      flex-direction: column; // Stack nav items
-      align-items: flex-start; // Align items to the start
-      gap: 0.5rem; // Reduce gap for stacked items
-      width: 100%; // Full width for nav
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      width: 100%;
     }
 
     .navLink {
-      padding: 0.5rem; // Ensure full width clickable area
-      width: 100%; // Make links take full width for easier tapping
-      border-bottom: 1px solid #eee; // Separator for stacked links
+      padding: 0.5rem;
+      width: 100%;
+      border-bottom: 1px solid var(--border-color); // Use CSS variable
 
-      &::after { // Remove underline for stacked links
+      &::after {
         display: none;
       }
 
@@ -110,14 +119,16 @@
       }
     }
 
-    button {
-      margin-top: 0.5rem; // Add some space above button
-      width: 100%; // Make button full width
+    .logoutButton { // Ensure consistent styling for logout button in responsive mode
+      margin-top: 0.5rem;
+      width: 100%;
     }
   }
 }
 
-// Fallback for variables if not imported via a central variables file
-$primary-color: #007bff !default;
-$text-color: #333 !default;
-$header-height: 70px !default;
+// Fallbacks for SCSS variables are no longer needed here if using CSS custom properties.
+// $primary-color, $text-color, $header-height were used.
+// $header-height is the only one not easily replaceable by a CSS var if used for layout calculations in JS,
+// but for CSS `height` property, a static value or another CSS var is fine.
+// The global.scss defined $header-height-val, so if this SCSS file is processed in an environment
+// where that's available, it would be `height: $header-height-val;`. Otherwise, fallback to static 70px.

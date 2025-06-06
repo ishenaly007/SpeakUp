@@ -1,21 +1,124 @@
-.privacyPolicyContainer {
-  padding: 20px;
-  line-height: 1.8;
+// All color definitions should now use var(--css-variable-name) from global.scss.
 
-  h1, h2 {
-    margin-top: 20px;
-    margin-bottom: 10px;
+.privacyPolicyContainer {
+  padding: 2.5rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  background-color: var(--card-bg-color); // CSS var
+  border-radius: var(--border-radius, 8px); // SCSS var or fallback
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); // Consider theming shadow
+  line-height: 1.75;
+  transition: background-color 0.3s ease;
+
+  h1 {
+    color: var(--primary-color); // CSS var
+    text-align: center;
+    font-size: 2.25rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease;
+  }
+
+  em.effectiveDate {
+    display: block;
+    text-align: center;
+    margin-top: -0.5rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+    color: var(--text-color-muted); // CSS var for muted text
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+  }
+
+  h2 {
+    color: var(--text-color); // CSS var
+    font-size: 1.75rem;
+    font-weight: 500;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color); // CSS var
+    padding-bottom: 0.5rem;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+
+  h3 {
+    color: var(--text-color); // CSS var (or text-color-muted if preferred for H3)
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    transition: color 0.3s ease;
+  }
+
+  h4 {
+    color: var(--text-color-muted); // CSS var for muted text
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
   }
 
   p {
-    margin-bottom: 15px;
+    color: var(--text-color); // CSS var
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+    transition: color 0.3s ease;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
   }
 
-  em {
-    display: block;
-    text-align: center;
-    margin-bottom: 20px;
-    font-style: italic;
-    color: #555;
+  a {
+    color: var(--link-color); // CSS var
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+
+    &:hover {
+      text-decoration: underline;
+      color: var(--link-hover-color); // CSS var
+    }
+  }
+
+  ul, ol {
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    padding-left: 1.8rem;
+
+    li {
+      margin-bottom: 0.6rem;
+      color: var(--text-color); // CSS var
+      line-height: 1.7;
+      transition: color 0.3s ease;
+
+      p {
+        margin-bottom: 0.5rem;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    background-color: var(--background-color); // Use background color, slightly different from card
+    border-left: 4px solid var(--primary-color); // CSS var
+    color: var(--text-color); // CSS var
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+
+    p {
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 }

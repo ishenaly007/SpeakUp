@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext'; // Import ThemeProvider
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import PrivateRoute from './components/PrivateRoute';
@@ -26,11 +27,12 @@ function App() {
   }
 
   return (
-    <div className="App">
-      {user && <Header />} {/* Display header only if user is logged in */}
-      <main> {/* Add a main tag for content */}
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
+    <ThemeProvider> {/* Wrap the application with ThemeProvider */}
+      <div className="App">
+        {user && <Header />} {/* Display header only if user is logged in */}
+        <main> {/* Add a main tag for content */}
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           
           <Route path="/" element={<PrivateRoute />}>
@@ -47,10 +49,11 @@ function App() {
           
           {/* Redirect to login if no other route matches and not logged in */}
           <Route path="*" element={user ? <Navigate to="/" /> : <Navigate to="/login" />} />
-        </Routes>
-      </main>
-      {user && <Footer />} {/* Display footer only if user is logged in */}
-    </div>
+          </Routes>
+        </main>
+        {user && <Footer />} {/* Display footer only if user is logged in */}
+      </div>
+    </ThemeProvider>
   );
 }
 
