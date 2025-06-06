@@ -54,7 +54,7 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
   h2 { 
     margin-top: 0; 
     font-size: 1.6rem;
-    color: $primary-color;
+    color: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -65,7 +65,7 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
   }
   p {
     font-size: 1rem;
-    color: $text-color;
+    color: var(--text-color);
     max-width: 600px;
     margin: 0.5rem auto 0;
   }
@@ -83,7 +83,7 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
 }
 
 .loadingText {
-  color: $secondary-color; // Retained from original
+  color: var(--secondary-color); // Retained from original
 }
 
 .errorText {
@@ -123,7 +123,7 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
   }
 
   &.user {
-    background-color: $primary-color;
+    background-color: var(--primary-color);
     color: #fff;
     align-self: flex-end;
     border-bottom-right-radius: 5px; // Updated radius
@@ -132,7 +132,7 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
 
   &.ai {
     background-color: #e9ecef; // Updated background
-    color: $text-color;
+    color: var(--text-color);
     align-self: flex-start;
     border-bottom-left-radius: 5px; // Updated radius
     // border: 1px solid $border-color; // Removed border for AI messages as per new diff
@@ -149,7 +149,7 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
       text-align: right;
     }
     &.ai { // This nesting was incorrect in original provided, fixing
-      color: $secondary-color;
+      color: var(--secondary-color);
       text-align: left;
     }
   }
@@ -160,7 +160,7 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
     text-align: right;
 }
 .message .timestamp.ai { // More specific selector if needed
-    color: $secondary-color;
+    color: var(--secondary-color);
     text-align: left;
 }
 
@@ -171,7 +171,7 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
   padding: 1rem; // Keep existing padding or adjust to 15px top
   padding-top: 15px; // Specific top padding
   border-top: 1px solid #ddd;
-  background-color: $surface-color;
+  background-color: var(--surface-color);
 
   input[type="text"] {
     flex-grow: 1;
@@ -180,7 +180,7 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
     border-radius: 25px;
     margin-right: 10px;
     font-size: 1rem;
-    background-color: $background-color;
+    background-color: var(--background-color);
 
     &:focus {
       outline: none;
@@ -212,7 +212,7 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
 
     &:disabled {
       background-color: #a0a0a0;
-      color: darken($secondary-color, 20%);
+      color: var(--secondary-color); // Fallback for darken($secondary-color, 20%)
       opacity: 0.7; // Added from diff
       cursor: not-allowed;
     }

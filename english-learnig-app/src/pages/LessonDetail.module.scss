@@ -8,7 +8,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
   padding: 1rem; // Adjusted
   max-width: 1300px;
   margin: 1rem auto; // Adjusted
-  background-color: $background-color;
+  background-color: var(--background-color);
   border-radius: $border-radius; // Use global
   box-shadow: none; // Removed shadow from container
 }
@@ -16,46 +16,46 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
 .lessonHeader {
   text-align: center;
   margin-bottom: 2rem;
-  background-color: $surface-color; // Or lighten($primary-color, 48%)
+  background-color: var(--surface-color); // Or lighten($primary-color, 48%)
   padding: 1.5rem;
   border-radius: $border-radius;
   box-shadow: $box-shadow-sm; // Assuming $box-shadow-sm is defined or use a direct value
-  border-top: 4px solid $primary-color;
+  border-top: 4px solid var(--primary-color);
 
   h2 {
     font-size: 2rem; // Adjusted
-    color: $primary-color;
+    color: var(--primary-color);
     margin-bottom: 0.75rem; // Adjusted
   }
 
   p {
     font-size: 1.1rem;
-    color: $text-color; // Use global
+    color: var(--text-color); // Use global
     // Add svg styling if icons are here
     svg {
       margin-right: 0.5rem;
-      color: $secondary-color;
+      color: var(--secondary-color);
     }
   }
 
   .note {
     font-style: italic;
-    color: darken($primary-color, 10%); // Use global vars
-    background-color: lighten($primary-color-light, 25%); // Use global vars
+    color: var(--link-hover-color); // Fallback for darken($primary-color, 10%)
+    background-color: var(--primary-color-light); // Fallback for lighten($primary-color-light, 25%)
     padding: 1rem;
     border-radius: $border-radius; // Use global
     margin-top: 1rem;
     font-size: 1rem;
-    border-left: 4px solid $primary-color; // Use global
+    border-left: 4px solid var(--primary-color); // Use global
     text-align: left; // Added for better readability
     svg { // Styling for potential icon
       margin-right: 0.5rem;
-      color: $primary-color;
+      color: var(--primary-color);
     }
   }
 
   .completed {
-    color: $success-color; // Use global
+    color: var(--success-color); // Use global
     font-weight: bold;
     font-size: 1.1rem; // Adjusted
     margin-top: 0.5rem; // Adjusted
@@ -67,19 +67,19 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
 }
 
 .lessonContent {
-  border: 1px solid $border-color; // Use global
+  border: 1px solid var(--border-color); // Use global
   padding: 1.5rem 2rem; // Adjusted
   border-radius: $border-radius; // Use global
-  background-color: $surface-color; // Use global
+  background-color: var(--surface-color); // Use global
   margin-bottom: 2rem;
   box-shadow: $box-shadow-sm; // Assuming $box-shadow-sm is defined or use a direct value
   // :global selector for dynamically injected HTML (keep as is from previous attempts if it was there)
   :global(.lesson-html-content) {
-    h1, h2, h3 { color: $primary-color; margin-top: 1.5rem; margin-bottom: 0.75rem;}
-    p { color: $text-color; line-height: 1.7; margin-bottom: 1rem;}
+    h1, h2, h3 { color: var(--primary-color); margin-top: 1.5rem; margin-bottom: 0.75rem;}
+    p { color: var(--text-color); line-height: 1.7; margin-bottom: 1rem;}
     ul, ol { margin-left: 1.5rem; margin-bottom: 1rem;}
-    code { background-color: $background-color; padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace;}
-    pre { background-color: $background-color; padding: 1rem; border-radius: $border-radius; overflow-x: auto;}
+    code { background-color: var(--background-color); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace;}
+    pre { background-color: var(--background-color); padding: 1rem; border-radius: $border-radius; overflow-x: auto;}
   }
 }
 
@@ -92,7 +92,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
   padding: 0.8rem 1.5rem;
   font-size: 1.1rem; // Adjusted
   color: #fff; // Ensure contrast
-  background-color: darken($primary-color, 5%); // Already uses global var
+  background-color: var(--primary-color); // Fallback for darken($primary-color, 5%)
   border: none;
   border-radius: $border-radius; // Use global
   cursor: pointer;
@@ -108,12 +108,12 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
   }
 
   &:hover {
-    background-color: darken($primary-color, 15%); // Darken more on hover
+    background-color: var(--link-hover-color); // Fallback for darken($primary-color, 15%)
     box-shadow: $box-shadow-lg; // More prominent shadow
   }
   &:disabled { // Disabled state
-    background-color: $border-color;
-    color: $secondary-color;
+    background-color: var(--border-color);
+    color: var(--secondary-color);
     cursor: not-allowed;
     box-shadow: none;
   }
@@ -124,7 +124,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
   padding: 0.8rem 1.5rem;
   font-size: 1.1rem;
   color: #fff;
-  background-color: $secondary-color; // Use global
+  background-color: var(--secondary-color); // Use global
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
@@ -140,40 +140,40 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
   }
 
   &:hover {
-    background-color: darken($secondary-color, 10%);
+    background-color: var(--secondary-color); // Fallback for darken($secondary-color, 10%)
     box-shadow: $box-shadow-lg;
   }
   &:disabled {
-    background-color: lighten($secondary-color, 20%);
-    color: darken($secondary-color, 20%);
+    background-color: var(--secondary-color); // Fallback for lighten($secondary-color, 20%)
+    color: var(--secondary-color); // Fallback for darken($secondary-color, 20%)
     cursor: not-allowed;
     box-shadow: none;
   }
 }
 
 .testCard {
-  border: 1px solid $border-color; // Use global
+  border: 1px solid var(--border-color); // Use global
   padding: 2rem;
   border-radius: $border-radius; // Use global
-  background-color: $surface-color; // Use global
+  background-color: var(--surface-color); // Use global
   margin: 2rem auto; // Adjusted
   max-width: 700px;
   box-shadow: $box-shadow-lg; // Use defined shadow
 
   .questionCounter {
     font-size: 1rem; // Adjusted
-    color: $secondary-color; // Use global
+    color: var(--secondary-color); // Use global
     margin-bottom: 1rem; // Adjusted
     svg { // Styling for potential icon
       margin-right: 0.5rem;
-      color: $primary-color;
+      color: var(--primary-color);
     }
   }
 
   .timerBarContainer {
     width: 100%;
     height: 12px; // Adjusted
-    background-color: $border-color; // Use global
+    background-color: var(--border-color); // Use global
     border-radius: $border-radius; // Use global
     margin-bottom: 1.5rem; // Adjusted
     overflow: hidden;
@@ -181,7 +181,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
 
   .timerBar {
     height: 100%;
-    background-color: $success-color; // Use global
+    background-color: var(--success-color); // Use global
     border-radius: $border-radius; // Use global
     transition: width 0.1s linear;
   }
@@ -189,12 +189,12 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
   .questionWord {
     font-size: 2.2rem; // Adjusted
     font-weight: bold;
-    color: $text-color; // Use global
+    color: var(--text-color); // Use global
     margin-bottom: 2rem; // Adjusted
     padding: 1.5rem; // Adjusted
-    background-color: lighten($background-color, 2%); // Use global with adjustment
+    background-color: var(--background-color-lighten-3); // Use global with adjustment
     border-radius: $border-radius; // Use global
-    border: 1px solid $border-color; // Use global
+    border: 1px solid var(--border-color); // Use global
     text-align: center;
   }
 
@@ -207,24 +207,24 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
   .optionButton {
     padding: 0.8rem 1rem; // Adjusted
     font-size: 1rem;
-    background-color: $surface-color; // Use global
-    border: 2px solid $primary-color; // Adjusted border
-    color: $primary-color; // Use global
+    background-color: var(--surface-color); // Use global
+    border: 2px solid var(--primary-color); // Adjusted border
+    color: var(--primary-color); // Use global
     border-radius: $border-radius; // Use global
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease; // Added transform
     text-align: center;
 
     &:hover:not(:disabled) {
-      background-color: $primary-color;
+      background-color: var(--primary-color);
       color: #fff; // Ensure contrast
       transform: translateY(-2px); // Add hover effect
     }
 
     &:disabled {
-      background-color: $border-color; // Use global
-      color: $secondary-color; // Use global
-      border-color: darken($border-color, 10%); // Use global with adjustment
+      background-color: var(--border-color); // Use global
+      color: var(--secondary-color); // Use global
+      border-color: var(--border-color); // Fallback for darken($border-color, 10%)
       cursor: not-allowed;
     }
   }
@@ -241,7 +241,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
 
   h2 {
     font-size: 2.2rem; // Adjusted
-    color: $success-color; // Use global
+    color: var(--success-color); // Use global
     margin-bottom: 1rem;
     display: flex; // For icon alignment
     align-items: center;
@@ -254,18 +254,18 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
 
   p {
     font-size: 1.1rem;
-    color: $text-color; // Use global
+    color: var(--text-color); // Use global
     margin-bottom: 0.75rem;
   }
 
   .note { // Consistent styling for note
     font-style: italic;
-    color: darken($secondary-color, 10%); // Use global vars
-    background-color: lighten($secondary-color, 45%); // Use global vars
+    color: var(--secondary-color); // Fallback for darken($secondary-color, 10%)
+    background-color: var(--secondary-color); // Fallback for lighten($secondary-color, 45%)
     padding: 1rem;
     border-radius: $border-radius; // Use global
     margin: 1.5rem 0; // Adjusted
-    border-left: 4px solid $secondary-color; // Use global
+    border-left: 4px solid var(--secondary-color); // Use global
     text-align: left;
   }
 
@@ -286,9 +286,9 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1); // Define here as it will be used la
 }
 
 .errorMessage { // Renamed and styled with global vars
-  color: $danger-color;
-  background-color: lighten($danger-color, 35%);
-  border: 1px solid lighten($danger-color, 20%);
+  color: var(--danger-color);
+  background-color: var(--danger-color); // Fallback for lighten($danger-color, 35%)
+  border: 1px solid var(--danger-color); // Fallback for lighten($danger-color, 20%)
   // Ensure .loadingMessage has some basic styling if needed, or remove if not distinct
 }
 

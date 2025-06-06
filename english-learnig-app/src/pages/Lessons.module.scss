@@ -2,12 +2,12 @@
 
 .lessonsContainer {
   padding: 1rem; // Basic padding, can be adjusted
-  background-color: $background-color; // Ensure consistency
+  background-color: var(--background-color); // Ensure consistency
   min-height: calc(100vh - #{$header-height}); // Full viewport height minus header
 }
 
 .lessonsHeader {
-  background-color: lighten($primary-color, 48%); // Very light blue
+  background-color: var(--primary-color-light); // Fallback for lighten($primary-color, 48%)
   padding: 2rem 1.5rem;
   border-radius: $border-radius;
   margin-bottom: 2rem;
@@ -17,13 +17,13 @@
     max-width: 150px; // Example size
     border-radius: 50%; // Circular image
     margin-bottom: 1rem;
-    border: 3px solid $primary-color-light;
+    border: 3px solid var(--primary-color-light);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
 
   h2 {
     font-size: 2.5rem;
-    color: $primary-color;
+    color: var(--primary-color);
     margin-bottom: 0.75rem;
     display: flex;
     align-items: center;
@@ -36,7 +36,7 @@
 
   p {
     font-size: 1.1rem;
-    color: darken($text-color, 10%); // Slightly darker for better readability on light bg
+    color: var(--text-color-muted); // Fallback for darken($text-color, 10%)
     max-width: 700px; // Constrain width for better readability
     margin-left: auto;
     margin-right: auto;
@@ -44,7 +44,7 @@
 }
 
 .motivationSection {
-  background-color: $secondary-color;
+  background-color: var(--secondary-color);
   color: #fff; // White text on dark background
   padding: 1.5rem;
   text-align: center;
@@ -60,7 +60,7 @@
 
   p {
     font-size: 1rem;
-    color: lighten($secondary-color, 60%); // Lighter text for contrast
+    color: var(--text-color); // Fallback for lighten($secondary-color, 60%)
   }
 }
 
@@ -76,11 +76,11 @@
   text-align: center;
   font-size: 1.2rem;
   padding: 2rem;
-  color: $secondary-color;
+  color: var(--secondary-color);
 }
 
 .errorMessage {
-  color: $danger-color; // Assuming $danger-color is defined in global.scss or use a fallback
+  color: var(--danger-color); // Assuming $danger-color is defined in global.scss or use a fallback
 }
 
 // Responsive adjustments

@@ -2,17 +2,17 @@
 
 .profileContainer {
   padding: 2rem;
-  background-color: $background-color; // Fallback, will try gradient below
+  background-color: var(--background-color); // Fallback, will try gradient below
   // Example gradient, adjust as needed
-  background-image: linear-gradient(to top right, lighten($background-color, 5%), darken($background-color, 5%));
+  background-image: linear-gradient(to top right, var(--background-color-lighten-5), var(--background-color));
 }
 
 .profileCard {
-  background-color: $surface-color;
+  background-color: var(--surface-color);
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.05);
-  border-top: 4px solid $primary-color;
+  border-top: 4px solid var(--primary-color);
   max-width: 700px;
   margin: 0 auto;
 }
@@ -22,17 +22,17 @@
   align-items: center;
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid var(--border-color);
 
   .avatarPlaceholder {
     margin-right: 1.5rem;
-    color: $secondary-color; // Placeholder color
+    color: var(--secondary-color); // Placeholder color
   }
 
   .username {
     font-size: 2.5rem;
     font-weight: bold;
-    color: $primary-color;
+    color: var(--primary-color);
   }
 }
 
@@ -41,16 +41,16 @@
   display: flex;
   align-items: center;
   font-size: 1rem;
-  color: $text-color;
+  color: var(--text-color);
 
   strong {
-    color: $primary-color;
+    color: var(--primary-color);
     margin-right: 0.5rem;
   }
 
   svg { // For icons next to items like email
     margin-right: 0.75rem;
-    color: $secondary-color;
+    color: var(--secondary-color);
     font-size: 1.2rem;
   }
 }
@@ -63,11 +63,11 @@
 
 .sectionTitle {
   font-size: 1.5rem;
-  color: $primary-color;
+  color: var(--primary-color);
   margin-top: 2rem;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid $primary-color-light;
+  border-bottom: 2px solid var(--primary-color-light);
 }
 
 .statsSection {
@@ -76,26 +76,26 @@
   gap: 1.5rem;
   margin-top: 1rem;
   padding: 1rem;
-  background-color: lighten($background-color, 2%);
+  background-color: var(--background-color-lighten-3);
   border-radius: 6px;
 
   .statItem {
-    background-color: $surface-color;
+    background-color: var(--surface-color);
     padding: 1rem;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     display: flex;
     align-items: center;
     font-size: 0.95rem;
-    color: $text-color;
+    color: var(--text-color);
 
     svg {
       margin-right: 0.75rem;
-      color: $primary-color;
+      color: var(--primary-color);
       font-size: 1.5rem; // Icon size for stats
     }
     strong{
-      color: $text-color; // Stat labels
+      color: var(--text-color); // Stat labels
     }
   }
 }

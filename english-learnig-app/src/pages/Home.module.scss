@@ -32,7 +32,7 @@
   .title {
     font-size: 2.8rem;
     margin-bottom: 1rem;
-    color: $text-color;
+    color: var(--text-color);
     font-weight: 700;
     animation: fadeIn 1s ease-in;
   }
@@ -40,7 +40,7 @@
   .subtitle {
     font-size: 1.2rem;
     margin-bottom: 2rem;
-    color: darken($text-color, 15%);
+    color: var(--text-color-muted); // Fallback for darken($text-color, 15%)
     font-weight: 500;
   }
 
@@ -48,7 +48,7 @@
     padding: 12px 32px;
     font-size: 1.2rem;
     color: #fff;
-    background-color: $primary-color;
+    background-color: var(--primary-color);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -58,7 +58,7 @@
     letter-spacing: 1px;
 
     &:hover {
-      background-color: darken($primary-color, 10%);
+      background-color: var(--link-hover-color); // Fallback for darken($primary-color, 10%)
       transform: translateY(-2px);
     }
   }
@@ -70,7 +70,7 @@
 
   .sectionTitle {
     font-size: 2rem;
-    color: $text-color;
+    color: var(--text-color);
     margin-bottom: 3rem;
     font-weight: 600;
   }
@@ -96,20 +96,20 @@
 
     .featureIcon {
       font-size: 2.5rem;
-      color: $primary-color;
+      color: var(--primary-color);
       margin-bottom: 1rem;
     }
 
     .featureTitle {
       font-size: 1.5rem;
-      color: $text-color;
+      color: var(--text-color);
       margin-bottom: 0.5rem;
       font-weight: 600;
     }
 
     .featureDescription {
       font-size: 1rem;
-      color: darken($text-color, 10%);
+      color: var(--text-color-muted); // Fallback for darken($text-color, 10%)
     }
   }
 }
@@ -120,7 +120,7 @@
 
   .sectionTitle {
     font-size: 2rem;
-    color: $text-color;
+    color: var(--text-color);
     margin-bottom: 3rem;
     font-weight: 600;
   }
@@ -150,21 +150,21 @@
 
     .stepNumber {
       font-size: 2rem;
-      color: $primary-color;
+      color: var(--primary-color);
       margin-bottom: 0.5rem;
       font-weight: 700;
     }
 
     .stepTitle {
       font-size: 1.3rem;
-      color: $text-color;
+      color: var(--text-color);
       margin-bottom: 0.5rem;
       font-weight: 600;
     }
 
     .stepDescription {
       font-size: 1rem;
-      color: darken($text-color, 10%);
+      color: var(--text-color-muted); // Fallback for darken($text-color, 10%)
     }
   }
 }
@@ -175,7 +175,7 @@
 
   .sectionTitle {
     font-size: 2rem;
-    color: $text-color;
+    color: var(--text-color);
     margin-bottom: 3rem;
     font-weight: 600;
   }
@@ -200,14 +200,14 @@
 
     .testimonialText {
       font-size: 1rem;
-      color: darken($text-color, 10%);
+      color: var(--text-color-muted); // Fallback for darken($text-color, 10%)
       margin-bottom: 1rem;
       font-style: italic;
     }
 
     .testimonialAuthor {
       font-size: 1rem;
-      color: $text-color;
+      color: var(--text-color);
       font-weight: 600;
     }
   }
@@ -215,7 +215,7 @@
 
 .ctaSection {
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, $primary-color, darken($primary-color, 20%));
+  background: linear-gradient(135deg, var(--primary-color), var(--link-hover-color)); // Fallback for darken($primary-color, 20%)
   color: #fff;
   text-align: center;
 
@@ -236,7 +236,7 @@
   .ctaButton {
     padding: 12px 32px;
     font-size: 1.1rem;
-    color: $primary-color;
+    color: var(--primary-color);
     background: #fff;
     border: none;
     border-radius: 8px;
@@ -370,7 +370,3 @@
     }
   }
 }
-
-$primary-color: #007bff !default;
-$text-color: #333 !default;
-$background-color: #f8f9fa !default;

@@ -8,10 +8,10 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  background-color: $surface-color; // Use global
+  background-color: var(--surface-color); // Use global
   border-radius: $border-radius; // Use global
   box-shadow: $box-shadow-lg; // Use defined local var
-  border-top: 4px solid $primary-color; // Use global
+  border-top: 4px solid var(--primary-color); // Use global
   text-align: center;
 }
 
@@ -25,7 +25,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
 
 .title {
   font-size: 2rem; // Adjusted
-  color: $primary-color; // Use global
+  color: var(--primary-color); // Use global
   margin-bottom: 1.5rem; // Adjusted
 }
 
@@ -33,7 +33,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
   padding: 0.8rem 1.5rem;
   font-size: 1.1rem; // Adjusted
   color: #fff; // Ensure contrast
-  background-color: $primary-color; // Use global
+  background-color: var(--primary-color); // Use global
   border: none;
   border-radius: $border-radius; // Use global
   cursor: pointer;
@@ -50,13 +50,13 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
   }
 
   &:hover {
-    background-color: darken($primary-color, 10%);
+    background-color: var(--link-hover-color); // Fallback for darken($primary-color, 10%)
     box-shadow: $box-shadow-lg;
   }
 
   &:disabled {
-    background-color: lighten($secondary-color, 20%); // Use global vars
-    color: darken($secondary-color, 20%); // Use global vars
+    background-color: var(--secondary-color); // Fallback for lighten($secondary-color, 20%)
+    color: var(--secondary-color); // Fallback for darken($secondary-color, 20%)
     cursor: not-allowed;
     box-shadow: none;
   }
@@ -67,7 +67,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
   padding: 0.8rem 1.5rem;
   font-size: 1.1rem;
   color: #fff;
-  background-color: $secondary-color; // Use global
+  background-color: var(--secondary-color); // Use global
   border: none;
   border-radius: $border-radius;
   cursor: pointer;
@@ -84,28 +84,28 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
   }
 
   &:hover {
-    background-color: darken($secondary-color, 10%);
+    background-color: var(--secondary-color); // Fallback for darken($secondary-color, 10%)
     box-shadow: $box-shadow-lg;
   }
   &:disabled {
-    background-color: lighten($secondary-color, 30%);
-    color: darken($secondary-color, 30%);
+    background-color: var(--secondary-color); // Fallback for lighten($secondary-color, 30%)
+    color: var(--secondary-color); // Fallback for darken($secondary-color, 30%)
     cursor: not-allowed;
     box-shadow: none;
   }
 }
 
 .errorText { // For larger error blocks
-  color: $danger-color; // Use global
-  background-color: lighten($danger-color, 35%); // Use global with adjustment
-  border: 1px solid lighten($danger-color, 20%); // Use global with adjustment
+  color: var(--danger-color); // Use global
+  background-color: var(--danger-color); // Fallback for lighten($danger-color, 35%)
+  border: 1px solid var(--danger-color); // Fallback for lighten($danger-color, 20%)
   padding: 1rem;
   border-radius: $border-radius; // Use global
   margin-bottom: 1rem;
 }
 
 .errorTextSmall { // For inline small error messages
-  color: $danger-color; // Use global
+  color: var(--danger-color); // Use global
   font-size: 0.9rem;
   margin-top: 0.5rem;
   display: block; // Ensure it takes space
@@ -114,12 +114,12 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
 .initialView {
   h2 { // This is the main title like "Test Your Knowledge!"
     font-size: 2.2rem; // Larger
-    color: $primary-color; // Use global
+    color: var(--primary-color); // Use global
     margin-bottom: 1rem; // Adjusted
   }
   p { // This is the introductory text
     font-size: 1.2rem; // Larger
-    color: $text-color; // Use global
+    color: var(--text-color); // Use global
     margin-bottom: 2rem; // Adjusted
   }
 }
@@ -133,7 +133,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
 .activeQuizView {
   .questionCounter {
     font-size: 1rem; // Adjusted
-    color: $secondary-color; // Use global
+    color: var(--secondary-color); // Use global
     margin-bottom: 0.75rem; // Adjusted
     svg {
       margin-right: 0.3rem;
@@ -144,7 +144,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
   .timerBarContainer {
     width: 100%;
     height: 12px; // Adjusted
-    background-color: $border-color; // Use global
+    background-color: var(--border-color); // Use global
     border-radius: $border-radius; // Use global
     margin-bottom: 0.75rem; // Adjusted
     overflow: hidden;
@@ -152,14 +152,14 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
 
   .timerBar {
     height: 100%;
-    background-color: $success-color; // Use global (or $primary-color)
+    background-color: var(--success-color); // Use global (or $primary-color)
     border-radius: $border-radius; // Use global
     transition: width 0.1s linear;
   }
 
   .timerText {
     font-size: 1rem; // Adjusted
-    color: $secondary-color; // Use global
+    color: var(--secondary-color); // Use global
     margin-bottom: 1.5rem;
     svg {
       margin-right: 0.3rem;
@@ -170,12 +170,12 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
   .questionWord {
     font-size: 2.2rem; // Adjusted
     font-weight: bold;
-    color: $text-color; // Use global
+    color: var(--text-color); // Use global
     margin-bottom: 2rem; // Adjusted
     padding: 1.5rem; // Adjusted
-    background-color: $background-color; // Use global (page background for contrast)
+    background-color: var(--background-color); // Use global (page background for contrast)
     border-radius: $border-radius; // Use global
-    border: 1px solid $border-color; // Use global
+    border: 1px solid var(--border-color); // Use global
     text-align: center;
   }
 
@@ -188,24 +188,24 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
   .optionButton {
     padding: 0.8rem 1rem; // Adjusted
     font-size: 1rem;
-    background-color: $surface-color; // Use global
-    border: 2px solid $primary-color; // Adjusted border
-    color: $primary-color; // Use global
+    background-color: var(--surface-color); // Use global
+    border: 2px solid var(--primary-color); // Adjusted border
+    color: var(--primary-color); // Use global
     border-radius: $border-radius; // Use global
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
     text-align: center;
 
     &:hover:not(:disabled) {
-      background-color: $primary-color;
+      background-color: var(--primary-color);
       color: #fff; // Ensure contrast
       transform: translateY(-2px);
     }
 
     &:disabled {
-      background-color: $border-color; // Use global
-      color: $secondary-color; // Use global
-      border-color: darken($border-color, 10%); // Use global with adjustment
+      background-color: var(--border-color); // Use global
+      color: var(--secondary-color); // Use global
+      border-color: var(--border-color); // Fallback for darken($border-color, 10%)
       cursor: not-allowed;
     }
   }
@@ -215,7 +215,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
   padding: 2rem; // Added padding for consistency
   h2 {
     font-size: 2.2rem; // Adjusted
-    color: $success-color; // Use global
+    color: var(--success-color); // Use global
     margin-bottom: 1.5rem; // Adjusted
     display: flex;
     align-items: center;
@@ -226,10 +226,10 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
   }
   p {
     font-size: 1.2rem; // Adjusted
-    color: $text-color; // Use global
+    color: var(--text-color); // Use global
     margin-bottom: 1rem; // Adjusted
     strong { // For emphasizing parts of the score string
-        color: $primary-color;
+        color: var(--primary-color);
     }
   }
   .resultsActions {
@@ -338,7 +338,7 @@ $box-shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
 // Loading and generic message styling
 .loadingMessage, .infoMessage {
   font-size: 1.2rem;
-  color: $secondary-color;
+  color: var(--secondary-color);
   padding: 2rem;
   text-align: center;
 }
