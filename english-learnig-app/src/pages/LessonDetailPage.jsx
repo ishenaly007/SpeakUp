@@ -198,7 +198,7 @@ const LessonDetailPage = () => {
             {!showResults && lesson.tests && lesson.tests.length > 0 && ( // Ensure tests exist before showing section
                 <div className={styles.testsSection}>
                     {!showTests && (
-                         <button onClick={handleShowTests} className={styles.actionButton}> {/* Changed class */}
+                         <button onClick={handleShowTests} className={styles.testButton}> {/* Changed class */}
                             <FaQuestionCircle /> Пройти тест
                         </button>
                     )}
@@ -236,7 +236,7 @@ const LessonDetailPage = () => {
                     <p>Получено XP: {testResults.reduce((sum, result) => sum + (result.xpChange || 0), 0)}</p>
                     {lesson.note && <p className={styles.note}><FaInfoCircle /> Подсказка: {lesson.note}</p>}
                     <div className={styles.resultsActions}>
-                        <button onClick={handleRestartLesson} className={styles.actionButton}> {/* Changed class */}
+                        <button onClick={handleRestartLesson} className={styles.secondaryButton}> {/* Changed class */}
                             <FaRedo /> Начать урок заново
                         </button>
                         <button onClick={navigateToLessons} className={styles.secondaryButton}> {/* Changed class */}

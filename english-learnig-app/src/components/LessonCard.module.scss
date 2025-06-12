@@ -55,11 +55,6 @@
   // Styles for completed lessons
   &.completed {
     border-left: 5px solid $success-color;
-    background-color: lighten($success-color, 48%); // Very light green
-
-    h3 {
-      color: darken($success-color, 10%);
-    }
   }
 
   // Responsive width calculations based on parent grid gap of 1rem

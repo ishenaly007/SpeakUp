@@ -2,7 +2,6 @@
 
 .lessonsContainer {
   padding: 1rem; // Basic padding, can be adjusted
-  background-color: $background-color; // Ensure consistency
   min-height: calc(100vh - #{$header-height}); // Full viewport height minus header
 }
 

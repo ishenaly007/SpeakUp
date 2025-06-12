@@ -1,16 +1,24 @@
 .contactsContainer {
   padding: 20px;
   text-align: center;
+  color: #f9f9f9;
 
   h1 {
+    color: #f9f9f9;
     margin-bottom: 20px;
   }
 
+  a{
+    color: #5cff37;
+  }
+
   ul {
+    color: #f9f9f9;
     list-style: none;
     padding: 0;
 
     li {
+      color: #f9f9f9;
       margin-bottom: 10px;
     }
   }

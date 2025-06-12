@@ -215,7 +215,6 @@ const QuizPage = () => {
                   style={{ width: `${(timer / 10) * 100}%` }}
               />
             </div>
-            <p className={styles.timerText}><FaClock /> Осталось времени: {timer.toFixed(1)}с</p>
             <h3 className={styles.questionWord}>{question.englishWord}</h3>
             <div className={styles.optionsContainer}>
               {question.options.map((opt, index) => (

@@ -31,7 +31,7 @@ VALUES ('Colors in English',
           <p>
             <strong>Произношение:</strong> /rɛd/, /bluː/, /ˈjɛloʊ/. Повторяйте за видео:
           </p>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/3Q5jXgdKQZk" title="Pronunciation of Colors" frameborder="0" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/O08xBTevmOo?si=tUpAD3TlUydwF1nT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </section>
 
         <section id="secondary-colors" class="section-colors">
@@ -54,7 +54,7 @@ VALUES ('Colors in English',
           <p>
             <strong>Произношение:</strong> /griːn/, /məˈdʒentə/, /ˈɔrɪndʒ/. Посмотрите пример в этом видео:
           </p>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/IC7-sjFZEmw" title="Secondary Colors Explanation" frameborder="0" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/v9gIj0j7Ba0?si=ofNFJlXGSub1Leh6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </section>',
         '/* colors.css */
       * {
@@ -148,7 +148,7 @@ VALUES ('Colors in English',
           <p>
             <strong>Видео-пример:</strong>
           </p>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/1Owj0dQ_0yY" title="Formal Greetings" frameborder="0" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/WzgLYGyKnUc?si=IZevMW7ffTsze-lU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </section>
 
         <section id="informal-greetings" class="section-greetings">
@@ -169,7 +169,7 @@ VALUES ('Colors in English',
           <p>
             <strong>Видео-пример:</strong>
           </p>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/LfH1_3k3EyA" title="Informal Greetings" frameborder="0" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/WzgLYGyKnUc?si=KXmJZZluJhwNCxSm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </section>',
         '/* greetings.css */
       * {

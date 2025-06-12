@@ -7,7 +7,8 @@ $box-shadow-sm: 0 1px 3px rgba(0,0,0,0.1) !default;
 $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
 
 .animatedBackground {
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(-45deg, #eef528, #ed49ff, #23a6d5, #23d5ab);
+  border-radius: 8px;
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
   min-height: calc(100vh - #{$header-height}); // Use SASS var for header height
@@ -30,6 +31,7 @@ $box-shadow-lg: 0 4px 12px rgba(0,0,0,0.15) !default;
 }
 
 .chatContainer {
+  opacity: 0.95;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
